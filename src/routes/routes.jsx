@@ -167,6 +167,7 @@ import IndexTravel from "../pages/index/indexTravel";
 import IndexPodcast from "../pages/index/indexPodcast";
 import UiComponents from "../pages/uiComponents";
 import Homepage from "../pages/pf-home";
+import Sample from "../pages/sample";
 
 const PFRoutes = () => {
   return (
@@ -175,6 +176,9 @@ const PFRoutes = () => {
       <Routes>
         {/* ------------MainRoutes start here------------ */}
         <Route exact path="/" element={<Homepage />} />
+        <Route exact path="/login" element={<p>Login</p>} />
+        <Route exact path="/contact" element={<ContactOne />} />
+        <Route exact path="/sample" element={<Sample />} />
         {/* ------------MainRoutes ends here------------ */}
         <Route exact path="/user-social" element={<UserSocial />} />
         <Route exact path="/shop-account" element={<ShopAccount />} />
