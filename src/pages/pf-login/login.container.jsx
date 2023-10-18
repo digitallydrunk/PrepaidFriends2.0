@@ -29,7 +29,6 @@ const LoginPage = () => {
     },
     validate,
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
       console.log(values);
     },
   });
@@ -59,7 +58,7 @@ const LoginPage = () => {
                     {formik.touched.email && formik.errors.email ? (
                       <div>
                         {" "}
-                        <p className={styles.red} >{formik.errors.email}</p>{" "}
+                        <p className={styles.red}>{formik.errors.email}</p>{" "}
                       </div>
                     ) : null}
                   </div>
