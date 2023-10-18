@@ -1,8 +1,39 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo_icon_64 from "../../assets/images/logo-icon-64.png";
+import { useFormik } from "formik";
+import PFInput from "../../component/input";
+import styles from "./login.container.module.css";
 
 const LoginPage = () => {
+  const validate = (values) => {
+    const errors = {};
+    if (!values.email) {
+      errors.email = "Required";
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+      errors.email = "Invalid email address";
+    }
+    if (!values.password) {
+      errors.password = "Required";
+    }
+
+    return errors;
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validate,
+    onSubmit: (values) => {
+      // alert(JSON.stringify(values, null, 2));
+      console.log(values);
+    },
+  });
+
   return (
     <>
       <section className="md:h-screen py-36 flex items-center bg-[url('../../assets/images/cta.jpg')] bg-no-repeat bg-center bg-cover">
@@ -14,30 +45,39 @@ const LoginPage = () => {
                 <img src={logo_icon_64} className="mx-auto" alt="" />
               </Link>
               <h5 className="my-6 text-xl font-semibold">Login</h5>
-              <form className="text-start">
+              <form onSubmit={formik.handleSubmit} className="text-start">
                 <div className="grid grid-cols-1">
                   <div className="mb-4">
-                    <label className="font-semibold" htmlFor="LoginEmail">
-                      Email Address:
-                    </label>
-                    <input
-                      id="LoginEmail"
+                    <PFInput
+                      label="Email"
+                      id="email"
+                      name="email"
                       type="email"
-                      className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
-                      placeholder="name@example.com"
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
                     />
+                    {formik.touched.email && formik.errors.email ? (
+                      <div>
+                        {" "}
+                        <p className={styles.red} >{formik.errors.email}</p>{" "}
+                      </div>
+                    ) : null}
                   </div>
 
                   <div className="mb-4">
-                    <label className="font-semibold" htmlFor="LoginPassword">
-                      Password:
-                    </label>
-                    <input
-                      id="LoginPassword"
+                    <PFInput
+                      label="Password"
+                      id="password"
+                      name="password"
                       type="password"
-                      className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
-                      placeholder="Password:"
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
                     />
+                    {formik.touched.password && formik.errors.password ? (
+                      <div>
+                        <p className={styles.red}>{formik.errors.password}</p>
+                      </div>
+                    ) : null}
                   </div>
 
                   <div className="flex justify-between mb-4">
