@@ -1,4 +1,5 @@
 import PFInput from "../../component/input";
+import Tablecomp from "../../component/Table";
 
 const Sample = () => {
   return (

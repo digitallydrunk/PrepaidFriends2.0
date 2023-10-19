@@ -1,3 +1,5 @@
-import {Table } from "./table.container";
 
-export default Table;
+import Tablecomp from "./table.container";
+
+
+export default Tablecomp;

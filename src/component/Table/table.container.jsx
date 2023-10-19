@@ -1,58 +1,92 @@
-import React from 'react';
+import React ,{useState,useEffect} from 'react';
+import DataTable from 'react-data-table-component';
+
+
 
 import "./table.css";
 
-function Table () {
+const Tablecomp = ()=>{
 
-    const data =[
+     const columns =[
         {
-        Name:"rituraj",
-        Email:"riturajsingh5454@gmail.com ",
-        Order:"10",
-        Paymentstatus:"success",
-        Address:"bachhrawan raebareli",
-        Contact:"6392665454",
-        Businessdetails:"sailes",
-        }
-    ]
+            name:"NO.",
+            selector:row =>row.id
+        },
+        {
+            name:"ITEM",
+            selector:row =>row.item
+        },
+         { 
+            name:"QTY",
+             selector: row =>row.qty
+         },
+         {
+             name:"RATE($)",
+             selector: row =>row.rate
+         },
+      
+         {
+             name:"TOTAL($)",
+             selector: row =>row.total
+         },
+    ];
+
+    const data = [
+       {
+        id:1,
+        item:"musclegainer",
+        qty:"1",
+        rate:"5000",
+        total:"5000",
+       },
+       {
+        id:2,
+        item:"skincare",
+        qty:"2",
+        rate:"250",
+        total:"500",
+
+       },
+       {
+        id:3,
+        item:"suncream",
+        qty:"1",
+        rate:"79",
+        total:"79",
+
+       },
+       {
+        id:4,
+        item:"dryfoot",
+        qty:"2",
+        rate:"300",
+        total:"600",
+
+       },
+       {
+        id:5,
+        item:"toys",
+        qty:"7",
+        rate:"50",
+        total:"350",
+
+       }
+       
+    ];
  
+
     return(
-        <>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Order</th>
-                    <th>Paymentstatus</th>
-                    <th>Address</th>
-                    <th>Contact</th>
-                    <th>Business details</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-            {
-              data.map((val,i)=>{
-               return(
-               <tr>
-                        <td>{val.Name}</td>
-                        <td>{val.Email}</td>
-                        <td>{val.Order}</td>
-                        <td>{val.Paymentstatus}</td>
-                        <td>{val.Address}</td>
-                        <td>{val.Contact}</td>
-                        <td>{val.Businessdetails}</td>
-                    </tr>
-                    )
-              })
-              }
-            </tbody>
-        </table>
-        </>
-    )
-}
+  <div className='container mt-5'>
+   <DataTable
+       columns={columns}
+       data={data}
+        SelectableRows
+        fixedHeader
+        pagination
+   ></DataTable>
 
+  </div>
+     );
+};
 
-export default Table;
+export default Tablecomp;
