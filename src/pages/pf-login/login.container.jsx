@@ -1,9 +1,10 @@
 import React from "react";
+import logo_icon_64 from "../../assets/images/logo-icon-64.png";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import logo_icon_64 from "../../assets/images/logo-icon-64.png";
 import { useFormik } from "formik";
-import PFInput, { PFCheckbox } from "../../component/input";
+import PFInput from "../../component/input";
+import PFCheckbox from "../../component/checkbox";
 import styles from "./login.container.module.css";
 
 const LoginPage = () => {
@@ -88,6 +89,7 @@ const LoginPage = () => {
                   <div className="flex justify-between mb-4">
                     <PFCheckbox
                       id="RememberMe"
+                      htmlFor="RememberMe"
                       label="Remember me"
                       checked={rememberMe}
                       onChange={handleRememberMeChange}

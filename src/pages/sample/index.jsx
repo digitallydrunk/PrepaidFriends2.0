@@ -1,4 +1,5 @@
-import PFInput, { PFCheckbox } from "../../component/input";
+import PFCheckbox from "../../component/checkbox";
+import PFInput from "../../component/input";
 import { LoginPage } from "../pf-login/login.container";
 
 const Sample = () => {
