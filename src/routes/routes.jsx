@@ -1,12 +1,12 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import "../assets/libs/@mdi/font/css/materialdesignicons.min.css";
-import ContactOne from "../pages/contact/contactOne";
 import Homepage from "../pages/pf-home";
 import Sample from "../pages/sample";
 import Layout from "../component/layout";
 import { URLs } from "./urls";
 import LoginPage from "../pages/pf-login";
+import Contact from "../pages/pf-contact";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       },
       {
         path: URLs.CONTACT,
-        element: <ContactOne />,
+        element: <Contact />,
       },
       {
         path: URLs.SAMPLE,
