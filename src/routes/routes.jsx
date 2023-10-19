@@ -168,6 +168,7 @@ import IndexPodcast from "../pages/index/indexPodcast";
 import UiComponents from "../pages/uiComponents";
 import Homepage from "../pages/pf-home";
 import Sample from "../pages/sample";
+import SingleOrder from "../pages/pf-single-order/singleorder.container";
 
 const PFRoutes = () => {
   return (
@@ -179,6 +180,7 @@ const PFRoutes = () => {
         <Route exact path="/login" element={<p>Login</p>} />
         <Route exact path="/contact" element={<ContactOne />} />
         <Route exact path="/sample" element={<Sample />} />
+        <Route exact path="/single-order" element={<SingleOrder />} />
         {/* ------------MainRoutes ends here------------ */}
         <Route exact path="/user-social" element={<UserSocial />} />
         <Route exact path="/shop-account" element={<ShopAccount />} />
