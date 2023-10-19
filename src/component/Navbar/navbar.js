@@ -7,6 +7,8 @@ import { useState, useEffect } from 'react';
 import { Settings, ShoppingCart } from 'feather-icons-react';
 import { Link } from 'react-router-dom';
 
+
+
 export default function Navbar(props) {
     const { navClass, navJustify } = props;
 
@@ -531,6 +533,7 @@ export default function Navbar(props) {
                     </ul>
                 </div>
             </div >
+            
         </nav >
     </>
     return (
