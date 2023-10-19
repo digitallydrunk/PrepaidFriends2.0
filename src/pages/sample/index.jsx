@@ -1,4 +1,4 @@
-import PFInput from "../../component/input";
+import PFInput, { PFCheckbox } from "../../component/input";
 import { LoginPage } from "../pf-login/login.container";
 
 const Sample = () => {
@@ -14,6 +14,7 @@ const Sample = () => {
         htmlFor={"email"}
       />
       <LoginPage/>
+      <PFCheckbox/>
     </>
   );
 };

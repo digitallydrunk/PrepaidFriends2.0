@@ -1,11 +1,13 @@
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo_icon_64 from "../../assets/images/logo-icon-64.png";
 import { useFormik } from "formik";
-import PFInput from "../../component/input";
+import PFInput, { PFCheckbox } from "../../component/input";
 import styles from "./login.container.module.css";
 
 const LoginPage = () => {
+  const [rememberMe, setRememberMe] = useState(false);
   const validate = (values) => {
     const errors = {};
     if (!values.email) {
@@ -32,6 +34,10 @@ const LoginPage = () => {
       console.log(values);
     },
   });
+
+  const handleRememberMeChange = () => {
+    setRememberMe(!rememberMe);
+  };
 
   return (
     <>
@@ -80,20 +86,12 @@ const LoginPage = () => {
                   </div>
 
                   <div className="flex justify-between mb-4">
-                    <div className="flex items-center mb-0">
-                      <input
-                        className="form-checkbox rounded border-gray-200 dark:border-gray-800 text-indigo-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 me-2"
-                        type="checkbox"
-                        value=""
-                        id="RememberMe"
-                      />
-                      <label
-                        className="form-checkbox-label text-slate-400"
-                        htmlFor="RememberMe"
-                      >
-                        Remember me
-                      </label>
-                    </div>
+                    <PFCheckbox
+                      id="RememberMe"
+                      label="Remember me"
+                      checked={rememberMe}
+                      onChange={handleRememberMeChange}
+                    />
                     <p className="text-slate-400 mb-0">
                       <Link to="/auth-re-password" className="text-slate-400">
                         Forgot password ?
