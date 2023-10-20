@@ -7,6 +7,7 @@ import Layout from "../component/layout";
 import { URLs } from "./urls";
 import LoginPage from "../pages/pf-login";
 import Contact from "../pages/pf-contact";
+import SingleOrder from "../pages/pf-single-order/singleorder.container";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: URLs.SAMPLE,
         element: <Sample />,
+      },
+      {
+        path: URLs.SINGLE_ORDER,
+        element: <SingleOrder />,
       },
     ],
   },
