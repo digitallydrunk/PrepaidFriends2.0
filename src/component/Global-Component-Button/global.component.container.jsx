@@ -1,16 +1,12 @@
-import React from 'react';
-import './global.component.container.module.css'
+import React from "react";
+import styles from "./global.component.container.module.css";
 
 const GlobalComponentContainer = ({ label, onClick, ...props }) => {
   return (
-    <button
-      className="global-button" 
-      onClick={onClick}
-      {...props}
-    >
+    <button className={styles["button"]} onClick={onClick} {...props}>
       {label}
     </button>
   );
 };
 
-export default  GlobalComponentContainer ;
+export default GlobalComponentContainer;

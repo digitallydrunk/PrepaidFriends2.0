@@ -1,16 +1,21 @@
+import GlobalComponentContainer from "../../component/Global-Component-Button/global.component.container";
 import PFInput from "../../component/input";
 
 const Sample = () => {
   return (
-    <PFInput
-      name={"email"}
-      addOnAfter="EML"
-      id={"email"}
-      type="email"
-      label={"Email"}
-      placeholder={"Enter email address..."}
-      htmlFor={"email"}
-    />
+    <>
+      <GlobalComponentContainer label={"Click Me"} />
+      <br />
+      <PFInput
+        name={"email"}
+        addOnAfter="EML"
+        id={"email"}
+        type="email"
+        label={"Email"}
+        placeholder={"Enter email address..."}
+        htmlFor={"email"}
+      />
+    </>
   );
 };
 
