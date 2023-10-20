@@ -6,9 +6,6 @@ import { useFormik } from "formik";
 import PFInput from "../../component/input";
 import PFCheckbox from "../../component/checkbox";
 import styles from "./login.container.module.css";
-import { useFormik } from 'formik';
-
-
 
 const LoginPage = () => {
   const [rememberMe, setRememberMe] = useState(false);
@@ -98,7 +95,10 @@ const LoginPage = () => {
                       onChange={handleRememberMeChange}
                     />
                     <p className="text-slate-400 mb-0">
-                      <Link to="/auth-re-password" className="text-slate-400">
+                      <Link
+                        to={URLs.FORGOT_PASSWORD}
+                        className="text-slate-400"
+                      >
                         Forgot password ?
                       </Link>
                     </p>
@@ -117,7 +117,7 @@ const LoginPage = () => {
                       Don't have an account ?
                     </span>{" "}
                     <Link
-                      to="/auth-signup"
+                      to={URLs.SIGN_UP}
                       className="text-black dark:text-white font-bold inline-block"
                     >
                       Sign Up
