@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles/global.component.container.css'
+import './global.component.container.module.css'
 
 const GlobalComponentContainer = ({ label, onClick, ...props }) => {
   return (
