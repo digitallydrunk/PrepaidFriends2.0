@@ -1,11 +1,8 @@
 import React from "react";
 import logo_icon_64 from "../../assets/images/logo-icon-64.png";
-<<<<<<< HEAD
-=======
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
->>>>>>> 2009a4e239b881f1e8a8f6f53df1d27984187a48
 import PFInput from "../../component/input";
 import PFCheckbox from "../../component/checkbox";
 import styles from "./login.container.module.css";
