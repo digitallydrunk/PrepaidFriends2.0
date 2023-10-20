@@ -1,16 +1,21 @@
-import PFInput from "../../component/input";
+import PFSelect from "../../component/select";
+import { useState } from "react";
 
 const Sample = () => {
+  const [selectedOption, setSelectedOption] = useState('IT');
+  const Options = [
+    { value: 'IT', label: 'Information Technology' },
+    { value: 'CSE', label: 'Computer Science' },
+    { value: 'AI', label: 'Artificail Intelligence' },
+  ];
+  
   return (
-    <PFInput
-      name={"email"}
-      addOnAfter="EML"
-      id={"email"}
-      type="email"
-      label={"Email"}
-      placeholder={"Enter email address..."}
-      htmlFor={"email"}
-    />
+    <PFSelect
+        label="Choose Your Branch"
+        options={Options}
+        value={selectedOption}
+        onChange={setSelectedOption}
+      />
   );
 };
 
