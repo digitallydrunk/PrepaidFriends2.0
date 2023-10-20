@@ -1,5 +1,6 @@
 import PFCheckbox from "../../component/checkbox";
 import PFInput from "../../component/input";
+import LoginPage from "../pf-login";
 
 const Sample = () => {
   return (
@@ -13,8 +14,8 @@ const Sample = () => {
         placeholder={"Enter email address..."}
         htmlFor={"email"}
       />
-      <LoginPage/>
-      <PFCheckbox/>
+      <LoginPage />
+      <PFCheckbox />
     </>
   );
 };

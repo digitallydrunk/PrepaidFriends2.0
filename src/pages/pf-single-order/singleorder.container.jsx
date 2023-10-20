@@ -1,16 +1,16 @@
-import React, { useState } from "react"
-import CookieModal from "../../component/cookieModal"
-import "./singleorder.container.css"
-import { PFInput } from "../../component/input/input.container.jsx"
+import React, { useState } from "react";
+import CookieModal from "../../component/cookieModal";
+import "./singleorder.container.css";
+import { PFInput } from "../../component/input/input.container.jsx";
 
 export default function SingleOrder() {
-  const [selectedAmount, setSelectedAmount] = useState("")
-  const [showCharges, setShowCharges] = useState(false)
+  const [selectedAmount, setSelectedAmount] = useState("");
+  const [showCharges, setShowCharges] = useState(false);
 
   const handleAmountSelect = (amount) => {
-    setSelectedAmount(amount)
-    setShowCharges(true)
-  }
+    setSelectedAmount(amount);
+    setShowCharges(true);
+  };
 
   return (
     <>
@@ -66,8 +66,8 @@ export default function SingleOrder() {
                           addOnAfter={<p className="afterprop">USD</p>}
                           value={selectedAmount}
                           onChange={(e) => {
-                            setSelectedAmount(e.target.value)
-                            setShowCharges(!!e.target.value)
+                            setSelectedAmount(e.target.value);
+                            setShowCharges(!!e.target.value);
                           }}
                         />
                       </div>
@@ -154,15 +154,11 @@ export default function SingleOrder() {
                 </div>
               </div>
             </div>
-            <div className="relative animate-[spin_30s_linear_infinite] -z-1">
-              <span className="after:absolute after:start-0 after:bottom-1/2 after:translate-y-1/2 after:h-2 after:w-8 after:rounded-md after:bg-indigo-600/20 relative after:z-10"></span>
-              <span className="after:absolute after:start-0 after:bottom-1/2 after:translate-y-1/2 after:rotate-90 after:h-2 after:w-8 after:rounded-md after:bg-indigo-600/20 relative after:z-10"></span>
-            </div>
           </div>
         </div>
         {/* <MobileApp /> */}
       </section>
       <CookieModal />
     </>
-  )
+  );
 }
