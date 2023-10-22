@@ -1,3 +1,3 @@
-import { Homepage } from "./homepage.container";
+import { Tag } from "./tag.container";
 
-export default Homepage;
+export default Tag;
