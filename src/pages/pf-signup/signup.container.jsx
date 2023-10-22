@@ -86,6 +86,7 @@ export function Signup() {
                     id="RegisterLastName"
                     name="RegisterLastName"
                     type="text"
+                    required
                     placeholder="Enter your last name"
                     value={formData.RegisterLastName}
                     onChange={handleChange}
