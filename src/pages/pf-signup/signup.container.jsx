@@ -1,9 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo_icon_64 from '../../assets/images/logo-icon-64';
-import PFInput from '../../component/input/input.container' ;
+import Logo_icon_64 from '../../assets/images/logo-icon-64.png';
+import {PFInput} from '../../component/input/input.container';
 
-export default function AuthSignup() {
+export function Signup() {
+  const [formData, setFormData] = useState({
+    RegisterFirstName: '',
+    RegisterLastName: '',
+    LoginEmail: '',
+    BusinessName: '',
+    AcceptTandC: false,
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    const newValue = type === 'checkbox' ? checked : value;
+    setFormData({ ...formData, [name]: newValue });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.RegisterFirstName.trim()) {
+      newErrors.RegisterFirstName = 'First name is required';
+    }
+
+    if (!formData.LoginEmail.trim()) {
+      newErrors.LoginEmail = 'Email is required';
+    } else if (!isValidEmail(formData.LoginEmail)) {
+      newErrors.LoginEmail = 'Invalid email format';
+    }
+
+    if (!formData.BusinessName.trim()) {
+      newErrors.BusinessName = 'Business name is required';
+    }
+
+    if (!formData.AcceptTandC) {
+      newErrors.AcceptTandC = 'You must accept the Terms and Conditions';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (validateForm()) {
+      console.log(formData);
+    }
+  };
+
+  const isValidEmail = (email) => {
+    return email.includes('@');
+  };
+
   return (
     <>
       <section className="md:h-screen py-36 flex items-center bg-[url('../../assets/images/cta.jpg')] bg-no-repeat bg-center bg-cover">
@@ -12,38 +65,54 @@ export default function AuthSignup() {
           <div className="flex justify-center">
             <div className="max-w-[400px] w-full m-auto p-6 bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-800 rounded-md">
               <Link to="/index">
-                <img src={logo_icon_64} className="mx-auto" alt="" />
+                <img src={Logo_icon_64} className="mx-auto" alt="" />
               </Link>
               <h5 className="my-6 text-xl font-semibold">Signup</h5>
-              <form action="auth-signup-success" className="text-start">
+              <form onSubmit={handleSubmit} className="text-start">
                 <div className="grid grid-cols-1">
                   <PFInput
                     label="Enter First Name"
                     id="RegisterFirstName"
+                    name="RegisterFirstName"
                     type="text"
                     required
                     placeholder="Enter your first name"
+                    value={formData.RegisterFirstName}
+                    onChange={handleChange}
                   />
+                  {errors.RegisterFirstName && <p className="text-red-500">{errors.RegisterFirstName}</p>}
                   <PFInput
                     label="Enter Last Name"
                     id="RegisterLastName"
+                    name="RegisterLastName"
                     type="text"
                     placeholder="Enter your last name"
+                    value={formData.RegisterLastName}
+                    onChange={handleChange}
                   />
+                  {errors.RegisterLastName && <p className="text-red-500">{errors.RegisterLastName}</p>}
                   <PFInput
                     label="Email Address"
                     id="LoginEmail"
+                    name="LoginEmail"
                     type="email"
                     required
                     placeholder="name@example.com"
+                    value={formData.LoginEmail}
+                    onChange={handleChange}
                   />
+                  {errors.LoginEmail && <p className="text-red-500">{errors.LoginEmail}</p>}
                   <PFInput
                     label="Business Name"
                     id="BusinessName"
+                    name="BusinessName"
                     type="text"
                     required
                     placeholder="Enter your business name"
+                    value={formData.BusinessName}
+                    onChange={handleChange}
                   />
+                  {errors.BusinessName && <p className="text-red-500">{errors.BusinessName}</p>}
                   <div className="mb-4">
                     <div className="flex items-center w-full mb-0">
                       <input
@@ -51,11 +120,15 @@ export default function AuthSignup() {
                         type="checkbox"
                         value=""
                         id="AcceptT&C"
+                        name="AcceptTandC"
+                        checked={formData.AcceptTandC}
+                        onChange={handleChange}
                       />
                       <label className="form-check-label text-slate-400" htmlFor="AcceptT&C">
                         I Accept <Link className="text-indigo-600">Terms And Condition</Link>
                       </label>
                     </div>
+                    {errors.AcceptTandC && <p className="text-red-500">{errors.AcceptTandC}</p>}
                   </div>
                   <div className="mb-4">
                     <input
