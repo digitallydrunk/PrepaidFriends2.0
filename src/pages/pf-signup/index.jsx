@@ -1,3 +1,3 @@
-import { Homepage } from "./homepage.container";
+import { Signuppage } from "./signup.container";
 
-export default Homepage;
+export default Signuppage;
