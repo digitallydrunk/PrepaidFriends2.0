@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo_dark from "../../assets/images/logo-dark.png";
 import logo_light from "../../assets/images/logo-light.png";
 
@@ -11,9 +11,12 @@ import {
 import { URLs } from "../../routes/urls";
 
 const Navbar = () => {
+  const nav = useNavigate();
   const [isMenu, setisMenu] = useState(false);
   const [navbarSticky, setNavbarSticky] = useState(false);
   const [isAccount, setIsAccount] = useState(false);
+  // Should be managed through real authentication
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   window.addEventListener("scroll", windowScroll);
   function windowScroll() {
@@ -156,7 +159,9 @@ const Navbar = () => {
         <ul className="buy-button list-none mb-0">
           <li className="dropdown inline-block relative ms-1">
             <button
-              onClick={() => setIsAccount(!isAccount)}
+              onClick={() =>
+                isLoggedIn ? setIsAccount(!isAccount) : nav(URLs.LOGIN)
+              }
               data-dropdown-toggle="dropdown"
               className="dropdown-toggle h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-indigo-600 hover:bg-indigo-700 border border-indigo-600 hover:border-indigo-700 text-white"
               type="button"
