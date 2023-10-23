@@ -1,5 +1,4 @@
 
-import Tablecomp from "./table.container";
+import {PFTablecomp} from "./table.container";
 
-
-export default Tablecomp;
+export  default PFTablecomp;

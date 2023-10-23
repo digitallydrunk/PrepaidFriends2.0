@@ -17,9 +17,11 @@ const PFInput = ({
   const [hidden, setHidden] = useState(true);
   return (
     <>
-      <label className="font-semibold" htmlFor={htmlFor}>
-        {`${label}`}:
-      </label>
+      {label && (
+        <label className="font-semibold" htmlFor={htmlFor}>
+          {`${label}`}:
+        </label>
+      )}
       {type === "password" ? (
         <div className="relative">
           <input
