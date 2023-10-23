@@ -28,7 +28,7 @@ const tagConfigurations = {
   },
 };
 
-function DynamicTags({ variant = 'Default', label }) {
+function PFTag({ variant = 'Default', label, onClick }) {
   const tagConfiguration = tagConfigurations[variant];
 
   if (!tagConfiguration) {
@@ -38,7 +38,10 @@ function DynamicTags({ variant = 'Default', label }) {
   const { bgColor, textColor, icon } = tagConfiguration;
 
   return (
-    <div className={`text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 rounded-full ${bgColor} ${textColor} border`}>
+    <div
+      className={`text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 rounded-full ${bgColor} ${textColor} border`}
+      onClick={onClick}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -56,4 +59,4 @@ function DynamicTags({ variant = 'Default', label }) {
   );
 }
 
-export default DynamicTags;
+export  {PFTag};

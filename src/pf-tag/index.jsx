@@ -1,3 +1,3 @@
-import { Tag } from "./tag.container";
+import { PFTag } from "./tag.container";
 
-export default Tag;
+export default PFTag;
