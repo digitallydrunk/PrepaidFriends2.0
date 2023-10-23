@@ -1,3 +1,3 @@
-import { GlobalComponentContainer } from "./global.component.container";
+import { Button } from "./button.container";
 
-export default GlobalComponentContainer;
+export default Button;
