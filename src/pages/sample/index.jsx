@@ -1,10 +1,12 @@
 import PFCheckbox from "../../component/checkbox";
 import PFInput from "../../component/input";
+import BulkOrder from "../pf-bulkOrder";
 import LoginPage from "../pf-login";
 
 const Sample = () => {
   return (
     <>
+    <BulkOrder/>
       <PFInput
         name={"email"}
         id={"email"}
