@@ -1,20 +1,23 @@
 import React, { useState } from "react";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-import styles from './accordion.module.css';
 
-const PFAccordion = ({ items }) => {
-  const [activeIndexes, setActiveIndexes] = useState([]);
 
-  const handleClick = (index) => {
-    if (activeIndexes.includes(index)) {
-      setActiveIndexes(activeIndexes.filter((item) => item !== index));
-    } else {
-      setActiveIndexes([...activeIndexes, index]);
-    }
-  };
+import SingleAccordion from "./SingleAccordion";
 
+const PFAccordion = ({ data }) => {
   return (
-    <div>
+    <main>
+    {data?.map((item,i)=>{
+        return <div key={item.content}>
+            <SingleAccordion item={item} />
+        </div>
+    })}
+</main>
+  );
+};
+
+export { PFAccordion };
+
+{/* <div>
       {items?.map((item, index) => (
         <div key={item.content}>
           <div className="border-b border-black py-4">
@@ -42,8 +45,4 @@ const PFAccordion = ({ items }) => {
           </div>
         </div>
       ))}
-    </div>
-  );
-};
-
-export { PFAccordion };
+    </div> */}
