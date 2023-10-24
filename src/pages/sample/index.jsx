@@ -1,9 +1,11 @@
 import { useState } from "react";
 import PFSelect from "../../component/select";
 import PFCheckbox from "../../component/checkbox";
+import { jobGrid } from "../../data/data";
 import PFInput from "../../component/input";
 import { FeaturesCard } from "../../component/features-card/features-card.container";
 import LoginPage from "../pf-login";
+import PFTablecomp from "../../component/table";
 
 const Sample = () => {
   const [selectedOption, setSelectedOption] = useState("IT");
@@ -12,9 +14,18 @@ const Sample = () => {
     { value: "CSE", label: "Computer Science" },
     { value: "AI", label: "Artificail Intelligence" },
   ];
+  const columns = [
+    { field: "id", header: "ID" },
+    { field: "name", header: "NAME" },
+    { field: "company", header: "COMPANY" },
+    { field: "title", header: "TITLE" },
+    { field: "city", header: "CITY" },
+    { field: "place", header: "PLACE" },
+  ];
 
   return (
     <>
+    <PFTablecomp data={jobGrid} columns={columns} />
       <PFSelect
         label="Choose Your Branch"
         options={Options}
