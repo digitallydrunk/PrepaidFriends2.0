@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 
-function GlobalRadioButton({ label, checked, onClick }) {
+function Radio({ label, checked, onClick }) {
   const [isChecked, setChecked] = useState(checked || false);
 
- 
-  const Radio = () => {
+  const handleRadioClick = () => {
     setChecked(!isChecked);
     if (onClick) {
       onClick(!isChecked);
@@ -19,7 +18,7 @@ function GlobalRadioButton({ label, checked, onClick }) {
         name="radio-colors"
         value="1"
         checked={isChecked}
-        readOnly 
+        readOnly
         onClick={handleRadioClick}
       />
       {label}
