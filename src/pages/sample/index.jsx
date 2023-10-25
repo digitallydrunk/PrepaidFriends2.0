@@ -5,11 +5,11 @@ import PFTag from "../../component/pf-tag";
 const Sample = () => {
   return (
     <>
-      <PFTag variant="Primary" label="Primary Tag" />
-      <PFTag variant="Success" label="Success Tag" />
-      <PFTag variant="Warning" label="Warning Tag" />
-      <PFTag variant="Error" label="Error Tag" />
-      <PFTag label="Default Tag" />
+      <PFTag variant="primary" label="Primary Tag" />
+      <PFTag variant="success" label="Success Tag" />
+      <PFTag variant="warning" label="Warning Tag" />
+      <PFTag variant="error" label="Error Tag" />
+      <PFTag label="Default" />
       <PFInput
         name={"email"}
         id={"email"}
