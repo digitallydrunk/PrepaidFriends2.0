@@ -1,3 +1,3 @@
-import {singleorderCheckout} from "./singleorder.container";
+import {SingleOrderCheckout, singleorderCheckout} from "./singleorder.container";
 
-export default singleorderCheckout;
+export default SingleOrderCheckout;
