@@ -24,7 +24,7 @@ const Sample = () => {
       <PFTag variant="warning" label="Warning Tag" />
       <PFTag variant="error" label="Error Tag" />
       <PFTag label="Default" />
-      <PFSelect
+      <PFSelect 
         label="Choose Your Branch"
         options={Options}
         value={selectedOption}
