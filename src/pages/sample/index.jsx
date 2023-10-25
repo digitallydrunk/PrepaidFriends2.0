@@ -4,7 +4,7 @@ import PFCheckbox from "../../component/checkbox";
 import PFInput from "../../component/input";
 import { FeaturesCard } from "../../component/features-card/features-card.container";
 import LoginPage from "../pf-login";
-
+import PFTag from "../../component/pf-tag";
 const Sample = () => {
   const [selectedOption, setSelectedOption] = useState("IT");
   const Options = [
@@ -15,6 +15,11 @@ const Sample = () => {
 
   return (
     <>
+      <PFTag variant="primary" label="Primary Tag" />
+      <PFTag variant="success" label="Success Tag" />
+      <PFTag variant="warning" label="Warning Tag" />
+      <PFTag variant="error" label="Error Tag" />
+      <PFTag label="Default" />
       <PFSelect
         label="Choose Your Branch"
         options={Options}
