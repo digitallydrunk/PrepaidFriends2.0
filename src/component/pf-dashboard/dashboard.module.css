@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 
+=======
+/* Style for the Orders button */
+>>>>>>> 90908aa (add accordion in dashboard)
 #dashboard-tab{
  background-color: blanchedalmond;
   }
   
+<<<<<<< HEAD
 
 .individual {
   padding: 4px 16px;
@@ -31,3 +36,27 @@
   cursor: pointer;
   font-weight: bold;
 }
+=======
+  /* Style for the Individual Order button */
+  .individual-order-button {
+    background-color: #FF5733; 
+    color: white; 
+    border: 1px solid #FF5733; 
+    padding: 8px 16px; 
+    margin: 5px;
+    border-radius: 5px; 
+    cursor: pointer; 
+  }
+  
+  /* Style for the Bulk Order button */
+  .bulk-order-button {
+    background-color: #007ACC;
+    color: white; 
+    border: 1px solid #007ACC; 
+    padding: 8px 16px; 
+    margin: 5px; 
+    border-radius: 5px; 
+    cursor: pointer;
+  }
+  
+>>>>>>> 90908aa (add accordion in dashboard)

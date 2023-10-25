@@ -3,6 +3,7 @@ import { useState } from "react";
 import PFSelect from "../../component/select";
 import PFCheckbox from "../../component/checkbox";
 import PFInput from "../../component/input";
+import Dashboard from "../../component/pf-dashboard/dashboard.container";
 import LoginPage from "../pf-login";
 import Radio from "../../component/pf-radio";
 import PFTag from "../../component/pf-tag";
@@ -73,30 +74,6 @@ const Sample = () => {
       />
       <LoginPage />
       <PFCheckbox />
-      <PFCheckbox />
-      <Radio
-        label="Option 1"
-        value={"option-1"}
-        checked={selectedOption === "option-1"}
-        onChange={handleRadioChange}
-      />
-      <br />
-      <Radio
-        label="Option 2"
-        value={"option-2"}
-        checked={selectedOption === "option-2"}
-        onChange={handleRadioChange}
-      />
-      <br />
-      <Radio
-        label="Option 3"
-        value={"option-3"}
-        checked={selectedOption === "option-3"}
-        onChange={handleRadioChange}
-      />
-=======
-      
->>>>>>> 754fd5b (update)
     </>
   );
 };
