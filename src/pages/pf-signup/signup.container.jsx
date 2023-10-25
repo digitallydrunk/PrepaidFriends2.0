@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Logo_icon_64 from '../../assets/images/logo-icon-64.png';
 import {PFInput} from '../../component/input/input.container';
+import style from "./signup.container.module.css"
 
-export function Signup() {
+const Signuppage = () => {
   const [formData, setFormData] = useState({
     RegisterFirstName: '',
     RegisterLastName: '',
@@ -24,17 +25,20 @@ export function Signup() {
     const newErrors = {};
 
     if (!formData.RegisterFirstName.trim()) {
-      newErrors.RegisterFirstName = 'First name is required';
+      newErrors.RegisterFirstName = 'Required*';
+    }
+    if (!formData.RegisterLastName.trim()) {
+      newErrors.RegisterLastName = 'Required*';
     }
 
     if (!formData.LoginEmail.trim()) {
-      newErrors.LoginEmail = 'Email is required';
+      newErrors.LoginEmail = 'Required*';
     } else if (!isValidEmail(formData.LoginEmail)) {
       newErrors.LoginEmail = 'Invalid email format';
     }
 
     if (!formData.BusinessName.trim()) {
-      newErrors.BusinessName = 'Business name is required';
+      newErrors.BusinessName = 'Required*';
     }
 
     if (!formData.AcceptTandC) {
@@ -54,7 +58,7 @@ export function Signup() {
   };
 
   const isValidEmail = (email) => {
-    return email.includes('@');
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
   return (
@@ -69,53 +73,57 @@ export function Signup() {
               </Link>
               <h5 className="my-6 text-xl font-semibold">Signup</h5>
               <form onSubmit={handleSubmit} className="text-start">
-                <div className="grid grid-cols-1">
-                  <PFInput
-                    label="Enter First Name"
-                    id="RegisterFirstName"
-                    name="RegisterFirstName"
-                    type="text"
-                    required
-                    placeholder="Enter your first name"
-                    value={formData.RegisterFirstName}
-                    onChange={handleChange}
-                  />
-                  {errors.RegisterFirstName && <p className="text-red-500">{errors.RegisterFirstName}</p>}
-                  <PFInput
-                    label="Enter Last Name"
-                    id="RegisterLastName"
-                    name="RegisterLastName"
-                    type="text"
-                    required
-                    placeholder="Enter your last name"
-                    value={formData.RegisterLastName}
-                    onChange={handleChange}
-                  />
-                  {errors.RegisterLastName && <p className="text-red-500">{errors.RegisterLastName}</p>}
-                  <PFInput
-                    label="Email Address"
-                    id="LoginEmail"
-                    name="LoginEmail"
-                    type="email"
-                    required
-                    placeholder="name@example.com"
-                    value={formData.LoginEmail}
-                    onChange={handleChange}
-                  />
-                  {errors.LoginEmail && <p className="text-red-500">{errors.LoginEmail}</p>}
-                  <PFInput
-                    label="Business Name"
-                    id="BusinessName"
-                    name="BusinessName"
-                    type="text"
-                    required
-                    placeholder="Enter your business name"
-                    value={formData.BusinessName}
-                    onChange={handleChange}
-                  />
-                  {errors.BusinessName && <p className="text-red-500">{errors.BusinessName}</p>}
-                  <div className="mb-4">
-                    <div className="flex items-center w-full mb-0">
+                <div className="grid grid-cols-1 gap-4">
+                  <div>
+                    <PFInput
+                      label="Enter First Name"
+                      id="RegisterFirstName"
+                      name="RegisterFirstName"
+                      type="text"
+                      placeholder="Enter your first name"
+                      value={formData.RegisterFirstName}
+                      onChange={handleChange}
+                    />
+                    {errors.RegisterFirstName && <p className={style.red}>{errors.RegisterFirstName}</p>}
+                  </div>
+                  <div>
+                    <PFInput
+                      label="Enter Last Name"
+                      id="RegisterLastName"
+                      name="RegisterLastName"
+                      type="text"
+                      placeholder="Enter your last name"
+                      value={formData.RegisterLastName}
+                      onChange={handleChange}
+                    />
+                    {errors.RegisterLastName && <p className={style.red}>{errors.RegisterLastName}</p>}
+                  </div>
+                  <div>
+                    <PFInput
+                      label="Email Address"
+                      id="LoginEmail"
+                      name="LoginEmail"
+                      type="text"
+                      placeholder="name@example.com"
+                      value={formData.LoginEmail}
+                      onChange={handleChange}
+                    />
+                    {errors.LoginEmail && <p className={style.red}>{errors.LoginEmail}</p>}
+                  </div>
+                  <div>
+                    <PFInput
+                      label="Business Name"
+                      id="BusinessName"
+                      name="BusinessName"
+                      type="text"
+                      placeholder="Enter your business name"
+                      value={formData.BusinessName}
+                      onChange={handleChange}
+                    />
+                    {errors.BusinessName && <p className={style.red}>{errors.BusinessName}</p>}
+                  </div>
+                  <div>
+                    <div className="flex items-center mb-0">
                       <input
                         className="form-checkbox rounded border-gray-200 dark:border-gray-800 text-indigo-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 me-2"
                         type="checkbox"
@@ -129,9 +137,9 @@ export function Signup() {
                         I Accept <Link className="text-indigo-600">Terms And Condition</Link>
                       </label>
                     </div>
-                    {errors.AcceptTandC && <p className="text-red-500">{errors.AcceptTandC}</p>}
+                    {errors.AcceptTandC && <p className={style.red}>{errors.AcceptTandC}</p>}
                   </div>
-                  <div className="mb-4">
+                  <div>
                     <input
                       type="submit"
                       className="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full"
@@ -152,4 +160,6 @@ export function Signup() {
       </section>
     </>
   );
-}
+};
+
+export {Signuppage};
