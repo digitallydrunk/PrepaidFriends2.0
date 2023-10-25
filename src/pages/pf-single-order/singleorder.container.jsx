@@ -4,23 +4,26 @@ import styles from "./singleorder.container.module.css"
 import { PFInput } from "../../component/input/input.container.jsx"
 
 export default function SingleOrder() {
-  const [selectedAmount, setSelectedAmount] = useState("");
-  const [showCharges, setShowCharges] = useState(false);
+  const [selectedAmount, setSelectedAmount] = useState("")
+  const [showCharges, setShowCharges] = useState(false)
 
   const handleAmountSelect = (amount) => {
-    setSelectedAmount(amount);
-    setShowCharges(true);
+    setSelectedAmount(amount)
+    setShowCharges(true)
   }
-  
+
   const handleManualAmountInput = (e) => {
-    setSelectedAmount(e.target.value);
-    setShowCharges(!!e.target.value);
+    const inputValue = parseFloat(e.target.value)
+    if (!isNaN(inputValue) && inputValue >= 0) {
+      setSelectedAmount(inputValue.toString())
+      setShowCharges(!!inputValue)
+    }
   }
 
   return (
     <>
       <span className="fixed blur-[200px] w-[600px] h-[600px] rounded-full top-1/2 -translate-y-1/2 start-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 bg-indigo-600/20"></span>
-      <section className="relative overflow-hidden md:pt-44 md:pb-24 pb-16">
+      <section className="relative overflow-hidden md:pt-6 md:pb-24 pb-16">
         <div className="container relative">
           <div className="grid md:grid-cols-2 grid-cols-1 items-center mt-8 gap-[30px] relative">
             <div className="md:me-6">
@@ -66,9 +69,10 @@ export default function SingleOrder() {
                           label="Enter Prepaid Card Amount"
                           placeholder="$0.00"
                           type="number"
+                          min="0"
                           addOnAfter={<p className={styles.afterprop}>USD</p>}
                           value={selectedAmount}
-                         onChange={handleManualAmountInput}
+                          onChange={handleManualAmountInput}
                         />
                       </div>
                       <div className="mt-3">
@@ -78,8 +82,8 @@ export default function SingleOrder() {
                             key={amount}
                             className={`text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 rounded-full bg-white text-gray-700 border ${styles.tags}`}
                             onClick={() => {
-                              setSelectedAmount(`${amount}`);
-                              setShowCharges(true);
+                              setSelectedAmount(`${amount}`)
+                              setShowCharges(true)
                             }}
                           >
                             ${amount}
@@ -97,7 +101,9 @@ export default function SingleOrder() {
                           <>
                             <div className="py-2">
                               <div className={styles.info}>
-                                <span className={styles.label}>BTC Exchange Fee:</span>
+                                <span className={styles.label}>
+                                  BTC Exchange Fee:
+                                </span>
                                 <span className={styles.value}>0.52 USD</span>
                               </div>
                             </div>
@@ -125,7 +131,9 @@ export default function SingleOrder() {
                                 <span className={styles.label}>
                                   Total (Amount in BTC):
                                 </span>
-                                <span className={styles.value}>0.008145 BTC</span>
+                                <span className={styles.value}>
+                                  0.008145 BTC
+                                </span>
                               </div>
                             </div>
                           </>
@@ -142,5 +150,5 @@ export default function SingleOrder() {
       </section>
       <CookieModal />
     </>
-  );
+  )
 }
