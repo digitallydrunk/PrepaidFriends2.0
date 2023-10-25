@@ -1,29 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 
-function Radio({ label, checked, onClick }) {
-  const [isChecked, setChecked] = useState(checked || false);
-
-  const handleRadioClick = () => {
-    setChecked(!isChecked);
-    if (onClick) {
-      onClick(!isChecked);
-    }
-  };
-
+function Radio({ label, checked, onChange }) {
   return (
     <label>
       <input
         type="radio"
-        className="form-radio border-gray-200 dark:border-gray-800 text-indigo-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 me-2"
-        name="radio-colors"
-        value="1"
-        checked={isChecked}
-        readOnly
-        onClick={handleRadioClick}
+        className="form-radio border-gray-300 dark:border-gray-900 text-indigo-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 me-2"
+        value={label}
+        checked={checked}
+        onChange={onChange}
       />
       {label}
     </label>
   );
 }
 
-export {Radio};
+export { Radio };
