@@ -23,12 +23,7 @@ const Sample = () => {
       <PFTag variant="warning" label="Warning Tag" />
       <PFTag variant="error" label="Error Tag" />
       <PFTag label="Default" />
-      <PFSelect 
-        label="Choose Your Branch"
-        options={Options}
-        value={selectedOption}
-        onChange={setSelectedOption}
-      />
+      
       <FeaturesCard
         imageSrc="https://templatekit.tokomoo.com/paymentkit2/wp-content/uploads/sites/112/2022/11/feature-1.png"
         title="Grow Your Business"
