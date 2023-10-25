@@ -1,5 +1,5 @@
 
-.global-button {
+.globalbutton {
     background-color: #007BFF;
     color: #FFFFFF;
     border: none;
@@ -9,7 +9,7 @@
     transition: background-color 0.3s;
   }
   
-  .global-button:hover {
+  .globalbutton:hover {
     background-color: #0056b3;
   }
   
