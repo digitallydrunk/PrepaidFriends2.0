@@ -1,0 +1,10 @@
+.maxWidth{
+    max-width: 1200px;
+}
+.background{
+    background-color: aqua;
+}
+.required{
+    font-size: small;
+    color: red;
+}

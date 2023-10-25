@@ -2,21 +2,22 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import PFInput from "../../component/input/index";
 import PFCheckbox from "../../component/checkbox/index";
+import styles from "./bulkorder.module.css"
 const BulkOrder = () => {
   const validate = (values) => {
     const errors = {};
     if (!values.email) {
-      errors.email = "Required";
+      errors.email = "Required*";
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
     ) {
       errors.email = "Invalid email address";
     }
     if (!values.cardQuantity) {
-      errors.cardQuantity = "Required";
+      errors.cardQuantity = "Required*";
     }
     if (!values.loadAmount) {
-      errors.loadAmount = "Required";
+      errors.loadAmount = "Required*";
     }
 
     return errors;
@@ -36,8 +37,11 @@ const BulkOrder = () => {
 
   return (
     <>
-      <section className="relative md:py-24 py-16 flex justify-center">
-        <div className="container">
+      <section className="relative my-2 flex justify-center">
+        <div
+        //  className="container"
+        className={`${styles.maxWidth}`}
+        >
           <form onSubmit={formik.handleSubmit}>
             <div className="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 gap-[30px]">
               <div className="lg:col-span-8">
@@ -57,7 +61,7 @@ const BulkOrder = () => {
                     />
                     {formik.touched.email && formik.errors.email ? (
                       <div>
-                        <p>{formik.errors.email}</p>
+                        <p className={styles.required} >{formik.errors.email}</p>
                       </div>
                     ) : null}
                   </div>
@@ -82,7 +86,7 @@ const BulkOrder = () => {
                       {formik.touched.cardQuantity &&
                       formik.errors.cardQuantity ? (
                         <div>
-                          <p>{formik.errors.cardQuantity}</p>
+                          <p className={styles.required}  >{formik.errors.cardQuantity}</p>
                         </div>
                       ) : null}
                     </div>
@@ -97,7 +101,7 @@ const BulkOrder = () => {
                       />
                       {formik.touched.loadAmount && formik.errors.loadAmount ? (
                         <div>
-                          <p>{formik.errors.loadAmount}</p>
+                          <p className={styles.required}  >{formik.errors.loadAmount}</p>
                         </div>
                       ) : null}
                     </div>
