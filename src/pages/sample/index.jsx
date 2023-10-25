@@ -1,5 +1,4 @@
 import { useState } from "react";
-import PFSelect from "../../component/select";
 import PFCheckbox from "../../component/checkbox";
 import PFInput from "../../component/input";
 import { FeaturesCard } from "../../component/features-card/features-card.container";
