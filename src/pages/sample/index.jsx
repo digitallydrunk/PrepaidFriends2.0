@@ -3,7 +3,7 @@ import { useState } from "react";
 import PFSelect from "../../component/select";
 import PFCheckbox from "../../component/checkbox";
 import PFInput from "../../component/input";
-import { FeaturesCard } from "../../component/features-card/features-card.container";
+import Dashboard from "../../component/pf-dashboard/dashboard.container";
 import LoginPage from "../pf-login";
 import Radio from "../../component/pf-radio";
 import PFTag from "../../component/pf-tag";
