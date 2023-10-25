@@ -8,6 +8,7 @@ const Button = ({ label, onClick, ...props }) => {
       onClick={onClick}
       {...props}
     >
+    
       {label}
     </button>
   );
