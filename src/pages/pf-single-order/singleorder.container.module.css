@@ -1,9 +1,9 @@
 .form{
-    background-color: #7B74EC;
+    background-color: #4F46E5;
     text-align: center;
     font-weight: 600;
-    font-size: 2rem;
-    color: black;
+    font-size: 1.7rem;
+    color: rgb(255, 255, 255);
     padding: 1rem;
     border-top-right-radius: 0.3rem;
     border-top-left-radius: 0.3rem;
@@ -13,6 +13,9 @@
     cursor: pointer;
 }
 .tags:hover{
+    border-color: #7B74EC !important;
+}
+.tags::selection{
     border-color: #7B74EC !important;
 }
 .afterprop{
@@ -34,4 +37,11 @@
 .value {
     flex: 1;
     text-align: right;
+}
+.orderbutton{
+margin: auto;
+width: 100%;
+text-align: center;
+margin-top: 1rem;
+font-size: 1.7rem;
 }

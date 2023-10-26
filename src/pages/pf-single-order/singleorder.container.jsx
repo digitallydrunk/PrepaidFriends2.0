@@ -2,15 +2,11 @@ import React, { useState } from "react"
 import CookieModal from "../../component/cookieModal"
 import styles from "./singleorder.container.module.css"
 import { PFInput } from "../../component/input/input.container.jsx"
+import PFButton from "../../component/pf-button"
 
 export default function SingleOrder() {
   const [selectedAmount, setSelectedAmount] = useState("")
   const [showCharges, setShowCharges] = useState(false)
-
-  const handleAmountSelect = (amount) => {
-    setSelectedAmount(amount)
-    setShowCharges(true)
-  }
 
   const handleManualAmountInput = (e) => {
     const inputValue = parseFloat(e.target.value)
@@ -61,8 +57,8 @@ export default function SingleOrder() {
               <div className="relative container mx-auto px-6 text-gray-500 md:px-12 xl:px-40">
                 <div className="mx-auto md:w-8/12 lg:w-6/12 xl:w-6/12">
                   <div className="rounded-xl bg-white shadow-xl">
-                    <div className="p-6 sm:p-16">
-                      <div className={styles.form}>Buy Prepaid Cards</div>
+                    <div className="px-6 py-4 sm:p-16">
+                      {/* <div className={styles.form}>Buy Prepaid Cards</div> */}
                       <br />
                       <div>
                         <PFInput
@@ -80,7 +76,8 @@ export default function SingleOrder() {
                         {[25, 50, 75, 100, 200].map((amount) => (
                           <div
                             key={amount}
-                            className={`text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 rounded-full bg-white text-gray-700 border ${styles.tags}`}
+                            className={`text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 rounded-full bg-white text-gray-700 border ${
+                              selectedAmount === (`${amount}`) ? 'border-blue-500' : ''} ${styles.tags}`}
                             onClick={() => {
                               setSelectedAmount(`${amount}`)
                               setShowCharges(true)
@@ -96,6 +93,15 @@ export default function SingleOrder() {
                           type="email"
                         />
                       </div>
+                      <PFButton
+                        type="submit"
+                        id="orderButton"
+                        name="orderButton"
+                        buttonText={"Order Now"}
+                        // onClick={onClick}
+                        className={styles.orderbutton}
+                      />
+
                       <div className="mt-3 px-1 text-sm">
                         {showCharges && (
                           <>
