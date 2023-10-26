@@ -3,7 +3,6 @@ import PFSelect from "../../component/select";
 import PFCheckbox from "../../component/checkbox";
 import PFInput from "../../component/input";
 import { FeaturesCard } from "../../component/features-card/features-card.container";
-import BulkOrder from "../pf-bulkOrder";
 import LoginPage from "../pf-login";
 import Radio from "../../component/pf-radio";
 import PFTag from "../../component/pf-tag";
@@ -32,7 +31,6 @@ const Sample = () => {
         title="Grow Your Business"
         description="If the distribution of letters and words is random, the reader will not be distracted from making."
       />
-    <BulkOrder/>
       <PFInput
         name={"email"}
         id={"email"}

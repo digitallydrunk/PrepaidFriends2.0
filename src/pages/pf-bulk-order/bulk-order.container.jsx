@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import PFInput from "../../component/input/index";
 import PFCheckbox from "../../component/checkbox/index";
 import PFSelect from "../../component/select/index";
-import styles from "./bulkorder.module.css";
-const BulkOrder = () => {
+import styles from "./bulk-order.module.css";
+import { emailValidation, requiredValidation } from "../../utils/validation";
+import PFButton from "../../component/pf-button";
+
+const PFBulkOrder = () => {
   const countries = [
     {
       value: "USA",
@@ -20,6 +22,7 @@ const BulkOrder = () => {
       label: "England",
     },
   ];
+
   const states = [
     {
       value: "NY",
@@ -34,55 +37,55 @@ const BulkOrder = () => {
       label: "London",
     },
   ];
-  const cards = [
+
+  const cardTypes = [
     {
-      value: "Master Card/Visa",
+      value: "master/visa",
       label: "Master Card/Visa",
     },
     {
-      value: "Master Card",
-      label: "Master Card",
+      value: "master",
+      label: "Master Card Only",
     },
     {
-      value: "Visa",
-      label: "Visa",
+      value: "visa",
+      label: "Visa Card Only",
     },
   ];
-  const [selectedOption, setSelectedOption] = useState("USA");
+  const [selectedCountry, setSelectedCountry] = useState("USA");
   const [selectedState, setSelectedState] = useState("NY");
-  const [selectedCard, setSelectedCard] = useState("Master Card/Visa");
+  const [selectedCardType, setSelectedCardType] = useState("master/visa");
+
   const validate = (values) => {
     const errors = {};
     if (!values.email) {
-      errors.email = "Required*";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
-      errors.email = "Invalid email address";
+      errors.email = requiredValidation?.error;
+    } else if (emailValidation?.regEx?.test(values.email)) {
+      errors.email = emailValidation?.error;
     }
     if (!values.cardQuantity) {
-      errors.cardQuantity = "Required*";
+      errors.cardQuantity = requiredValidation?.error;
     }
     if (!values.loadAmount) {
-      errors.loadAmount = "Required*";
+      errors.loadAmount = requiredValidation?.error;
     }
     if (!values.firstName) {
-      errors.firstName = "Required*";
+      errors.firstName = requiredValidation?.error;
     }
     if (!values.lastName) {
-      errors.lastName = "Required*";
+      errors.lastName = requiredValidation?.error;
     }
     if (!values.address) {
-      errors.address = "Required*";
+      errors.address = requiredValidation?.error;
     }
     if (!values.phone) {
-      errors.phone = "Required*";
+      errors.phone = requiredValidation?.error;
     }
     if (!values.zip) {
-      errors.zip = "Required*";
+      errors.zip = requiredValidation?.error;
     }
     if (!values.city) {
-      errors.city = "Required*";
+      errors.city = requiredValidation?.error;
     }
 
     return errors;
@@ -104,6 +107,7 @@ const BulkOrder = () => {
     },
     validate,
     onSubmit: (values) => {
+      // handle form submit here
       console.log(values);
     },
   });
@@ -111,10 +115,7 @@ const BulkOrder = () => {
   return (
     <>
       <section className="relative my-2 flex justify-center">
-        <div
-          //  className="container"
-          className={`${styles.maxWidth}`}
-        >
+        <div className={`${styles.maxWidth}`}>
           <form onSubmit={formik.handleSubmit}>
             <div className="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 align-bottom gap-[30px]">
               <div className="lg:col-span-7 col-span-8">
@@ -138,18 +139,16 @@ const BulkOrder = () => {
                       </div>
                     ) : null}
                   </div>
-                  {/* </form> */}
                   <br />
                   <h3 className="text-xl leading-normal font-semibold">
                     Card Information
                   </h3>
 
-                
                   <div className="grid lg:grid-cols-2 grid-cols-1 gap-5">
                     <PFSelect
-                      options={cards}
-                      value={selectedCard}
-                      onChange={setSelectedCard}
+                      options={cardTypes}
+                      value={selectedCardType}
+                      onChange={setSelectedCardType}
                     />
 
                     <div>
@@ -189,16 +188,15 @@ const BulkOrder = () => {
                     </div>
 
                     <PFInput placeholder="Broker ID" />
-                    <PFSelect />
+                    <PFSelect placeholder="BIN" />
 
-                    <PFCheckbox label="Allow International Purchase?" />
+                    <PFCheckbox label="Allow International Purchases?" />
                   </div>
-                 
 
                   <h3 className="text-xl leading-normal font-semibold mt-6">
                     Business Information
                   </h3>
-                  
+
                   <div className="grid lg:grid-cols-12 grid-cols-1 mt-6 gap-5">
                     <div className="lg:col-span-6">
                       <PFInput
@@ -245,12 +243,11 @@ const BulkOrder = () => {
                     </div>
 
                     <div className="lg:col-span-6">
-                     
                       <PFSelect
                         placeholder="Country"
                         options={countries}
-                        value={selectedOption}
-                        onChange={setSelectedOption}
+                        value={selectedCountry}
+                        onChange={setSelectedCountry}
                       />
                     </div>
 
@@ -272,7 +269,6 @@ const BulkOrder = () => {
                     </div>
 
                     <div className="lg:col-span-4">
-                      
                       <PFInput
                         placeholder="City"
                         id="city"
@@ -283,7 +279,6 @@ const BulkOrder = () => {
                     </div>
 
                     <div className="lg:col-span-4">
-                      
                       <PFSelect
                         placeholder="State"
                         options={states}
@@ -293,7 +288,6 @@ const BulkOrder = () => {
                     </div>
 
                     <div className="lg:col-span-4">
-                     
                       <PFInput
                         placeholder="ZIP Code*"
                         id="zip"
@@ -331,13 +325,12 @@ const BulkOrder = () => {
                       placeholder="Other Notes"
                     />
                   </div>
-                  
 
                   <div className="mt-4">
-                    <input
+                    <PFButton
                       type="submit"
-                      className="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full"
-                      value="Add to Invoice"
+                      buttonText="Add to Invoice"
+                      className="w-full"
                     />
                   </div>
                 </div>
@@ -357,29 +350,13 @@ const BulkOrder = () => {
                     <div className="p-3 flex justify-between items-center">
                       <div>
                         <h5 className="font-semibold">Cost per Card</h5>
-                        {/* <p className="text-sm text-slate-400">
-                          Brief description
-                        </p> */}
                       </div>
 
                       <p className="text-slate-400 font-semibold">$ 12</p>
                     </div>
                     <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                       <div>
-                        <h5 className="font-semibold">Value per Card</h5>
-                        {/* <p className="text-sm text-slate-400">
-                          Brief description
-                        </p> */}
-                      </div>
-
-                      <p className="text-slate-400 font-semibold">$ 18</p>
-                    </div>
-                    <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
-                      <div>
-                        <h5 className="font-semibold">Wire Transfer Fees:</h5>
-                        {/* <p className="text-sm text-slate-400">
-                          Brief description
-                        </p> */}
+                        <h5 className="font-semibold">Wire Transfer Fee:</h5>
                       </div>
 
                       <p className="text-slate-400 font-semibold">$ 20</p>
@@ -387,9 +364,6 @@ const BulkOrder = () => {
                     <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                       <div>
                         <h5 className="font-semibold">Wire Identifier Fee:</h5>
-                        {/* <p className="text-sm text-slate-400">
-                          Brief description
-                        </p> */}
                       </div>
 
                       <p className="text-slate-400 font-semibold">$ 20</p>
@@ -426,17 +400,23 @@ const BulkOrder = () => {
 
                       <p className="font-semibold">$ 30</p>
                     </div>
+                    <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
+                      <div>
+                        <h5 className="font-semibold">Total (BTC)</h5>
+                      </div>
+
+                      <p className="font-semibold">0.122323</p>
+                    </div>
                     <div className="p-3">
                       <PFCheckbox label="Agree terms & Conditions" />
                     </div>
                   </div>
                   <div className="py-3">
-                    <button
-                      className="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full"
+                    <PFButton
+                      className={"w-full"}
                       type="submit"
-                    >
-                      Add to Invoice
-                    </button>
+                      buttonText={"Add to Invoice"}
+                    ></PFButton>
                   </div>
                 </div>
               </div>
@@ -448,4 +428,4 @@ const BulkOrder = () => {
   );
 };
 
-export { BulkOrder };
+export { PFBulkOrder };

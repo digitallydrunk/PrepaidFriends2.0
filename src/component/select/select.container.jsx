@@ -1,4 +1,11 @@
-const PFSelect = ({ label, options, onChange, placeholder,value, ...props }) => {
+const PFSelect = ({
+  label,
+  options,
+  onChange,
+  placeholder,
+  value,
+  ...props
+}) => {
   const handleChange = (event) => {
     const selectedValue = event.target.value;
     onChange(selectedValue);
