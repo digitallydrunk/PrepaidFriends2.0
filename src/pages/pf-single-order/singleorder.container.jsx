@@ -1,20 +1,19 @@
-import React, { useState } from "react"
-import CookieModal from "../../component/cookieModal"
-import styles from "./singleorder.container.module.css"
-import { PFInput } from "../../component/input/input.container.jsx"
-import PFButton from "../../component/pf-button"
+import React, { useState } from "react";
+import CookieModal from "../../component/cookieModal";
+import styles from "./singleorder.container.module.css";
+import { PFInput } from "../../component/input/input.container.jsx";
+import PFButton from "../../component/pf-button";
+import PFTag from "../../component/pf-tag";
 
 export default function SingleOrder() {
-  const [selectedAmount, setSelectedAmount] = useState("")
-  const [showCharges, setShowCharges] = useState(false)
+  const [selectedAmount, setSelectedAmount] = useState("");
 
   const handleManualAmountInput = (e) => {
-    const inputValue = parseFloat(e.target.value)
+    const inputValue = parseFloat(e.target.value);
     if (!isNaN(inputValue) && inputValue >= 0) {
-      setSelectedAmount(inputValue.toString())
-      setShowCharges(!!inputValue)
+      setSelectedAmount(inputValue.toString());
     }
-  }
+  };
 
   return (
     <>
@@ -58,7 +57,6 @@ export default function SingleOrder() {
                 <div className="mx-auto md:w-8/12 lg:w-6/12 xl:w-6/12">
                   <div className="rounded-xl bg-white shadow-xl">
                     <div className="px-6 py-4 sm:p-16">
-                      {/* <div className={styles.form}>Buy Prepaid Cards</div> */}
                       <br />
                       <div>
                         <PFInput
@@ -66,25 +64,26 @@ export default function SingleOrder() {
                           placeholder="$0.00"
                           type="number"
                           min="0"
-                          addOnAfter={<p className={styles.afterprop}>USD</p>}
+                          addOnAfter={
+                            <p className={styles["add-on-after-input"]}>USD</p>
+                          }
                           value={selectedAmount}
                           onChange={handleManualAmountInput}
                         />
                       </div>
                       <div className="mt-3">
-                        <span className="py-3">Popular Amounts</span>
+                        <span className="py-3 mr-2">Popular Amounts</span>
                         {[25, 50, 75, 100, 200].map((amount) => (
-                          <div
-                            key={amount}
-                            className={`text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 rounded-full bg-white text-gray-700 border ${
-                              selectedAmount === (`${amount}`) ? 'border-blue-500' : ''} ${styles.tags}`}
+                          <PFTag
+                            label={`$${amount}`}
+                            variant={
+                              selectedAmount === amount ? "primary" : "default"
+                            }
+                            className={"mr-2"}
                             onClick={() => {
-                              setSelectedAmount(`${amount}`)
-                              setShowCharges(true)
+                              setSelectedAmount(amount);
                             }}
-                          >
-                            ${amount}
-                          </div>
+                          />
                         ))}
                       </div>
                       <div className="mt-3">
@@ -98,46 +97,91 @@ export default function SingleOrder() {
                         id="orderButton"
                         name="orderButton"
                         buttonText={"Order Now"}
-                        // onClick={onClick}
-                        className={styles.orderbutton}
+                        className={"w-full mt-3"}
                       />
 
                       <div className="mt-3 px-1 text-sm">
-                        {showCharges && (
+                        {selectedAmount && (
                           <>
                             <div className="py-2">
-                              <div className={styles.info}>
-                                <span className={styles.label}>
+                              <div
+                                className={`flex justify-space-between items-center`}
+                              >
+                                <span
+                                  className={
+                                    styles["additional-transaction-label"]
+                                  }
+                                >
                                   BTC Exchange Fee:
                                 </span>
-                                <span className={styles.value}>0.52 USD</span>
+                                <span
+                                  className={
+                                    styles["additional-transaction-value"]
+                                  }
+                                >
+                                  $0.52 USD
+                                </span>
                               </div>
                             </div>
                             <hr />
                             <div className="py-2">
-                              <div className={styles.info}>
-                                <span className={styles.label}>
+                              <div
+                                className={`flex justify-space-between items-center`}
+                              >
+                                <span
+                                  className={
+                                    styles["additional-transaction-label"]
+                                  }
+                                >
                                   Prepaid Card Purchase Price:
                                 </span>
-                                <span className={styles.value}>1.95 USD</span>
+                                <span
+                                  className={
+                                    styles["additional-transaction-value"]
+                                  }
+                                >
+                                  $1.95 USD
+                                </span>
                               </div>
                             </div>
                             <hr />
                             <div className="py-2">
-                              <div className={styles.info}>
-                                <span className={styles.label}>
+                              <div
+                                className={`flex justify-space-between items-center`}
+                              >
+                                <span
+                                  className={
+                                    styles["additional-transaction-label"]
+                                  }
+                                >
                                   Total (Amount in USD):
                                 </span>
-                                <span className={styles.value}>52.47 USD</span>
+                                <span
+                                  className={
+                                    styles["additional-transaction-value"]
+                                  }
+                                >
+                                  $52.47 USD
+                                </span>
                               </div>
                             </div>
                             <hr />
                             <div className="py-2">
-                              <div className={styles.info}>
-                                <span className={styles.label}>
+                              <div
+                                className={`flex justify-space-between items-center`}
+                              >
+                                <span
+                                  className={
+                                    styles["additional-transaction-label"]
+                                  }
+                                >
                                   Total (Amount in BTC):
                                 </span>
-                                <span className={styles.value}>
+                                <span
+                                  className={
+                                    styles["additional-transaction-value"]
+                                  }
+                                >
                                   0.008145 BTC
                                 </span>
                               </div>
@@ -152,9 +196,8 @@ export default function SingleOrder() {
             </div>
           </div>
         </div>
-        {/* <MobileApp /> */}
       </section>
       <CookieModal />
     </>
-  )
+  );
 }
