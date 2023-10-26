@@ -6,6 +6,8 @@ import { jobGrid } from "../../data/data";
 import PFInput from "../../component/input";
 import { FeaturesCard } from "../../component/features-card/features-card.container";
 import LoginPage from "../pf-login";
+import PFTablecomp from "../../component/table";
+
 const Sample = () => {
   const [selectedOption, setSelectedOption] = useState("IT");
   const Options = [
@@ -15,6 +17,7 @@ const Sample = () => {
   ];
   return (
     <>
+    <PFTablecomp data={jobGrid} columns={columns} />
       <PFSelect
         label="Choose Your Branch"
         value={selectedOption}
