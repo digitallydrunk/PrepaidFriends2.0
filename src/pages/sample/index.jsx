@@ -1,4 +1,4 @@
-import PFAccordion from "../../component/pf-accordion";
+
 import { useState } from "react";
 import PFSelect from "../../component/select";
 import PFCheckbox from "../../component/checkbox";
@@ -44,6 +44,7 @@ const Sample = () => {
   };
   return (
     <>
+<<<<<<< HEAD
       <PFButton buttonText={"Button Test"} />
       <PFTag />
       <PFTag variant="primary" />
@@ -93,6 +94,9 @@ const Sample = () => {
         checked={selectedOption === "option-3"}
         onChange={handleRadioChange}
       />
+=======
+      
+>>>>>>> 754fd5b (update)
     </>
   );
 };
