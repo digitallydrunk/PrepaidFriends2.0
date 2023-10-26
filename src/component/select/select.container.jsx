@@ -2,7 +2,7 @@ const PFSelect = ({ label, options, onChange, value, ...props }) => {
   const handleChange = (event) => {
     const selectedValue = event.target.value;
     onChange(selectedValue);
-  };i
+  };
   return (
     <>
       <div className="lg:col-span-4">
