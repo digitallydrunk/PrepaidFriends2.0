@@ -45,14 +45,14 @@ const Sample = () => {
   };
   return (
     <>
-      {/* <PFButton buttonText={"Button Test"} />
+      <PFButton buttonText={"Button Test"} />
       <PFTag />
       <PFTag variant="primary" />
       <PFTag variant="error" />
       <PFTag variant="warning" />
-      <PFTag variant="success" /> */}
+      <PFTag variant="success" />
       <PFAccordion data={faqData} />
-      {/* <PFSelect
+      <PFSelect
         label="Choose Your Branch"
         value={selectedOption}
         onChange={setSelectedOption}
@@ -93,7 +93,7 @@ const Sample = () => {
         value={"option-3"}
         checked={selectedOption === "option-3"}
         onChange={handleRadioChange}
-      /> */}
+      />
     </>
   );
 };
