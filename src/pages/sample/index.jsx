@@ -1,28 +1,21 @@
 import { useState } from "react";
 import PFSelect from "../../component/select";
 import PFCheckbox from "../../component/checkbox";
+import { jobGrid } from "../../data/data";
 import PFInput from "../../component/input";
 import { FeaturesCard } from "../../component/features-card/features-card.container";
 import LoginPage from "../pf-login";
-import PFTag from "../../component/pf-tag";
-const Sample = () => {
-  const [selectedOption, setSelectedOption] = useState("IT");
-  const Options = [
-    { value: "IT", label: "Information Technology" },
-    { value: "CSE", label: "Computer Science" },
-    { value: "AI", label: "Artificail Intelligence" },
-  ];
+import Radio from "../../component/pf-radio";
 
+const Sample = () => {
+  const [selectedOption, setSelectedOption] = useState("option-1");
+  const handleRadioChange = (e) => {
+    setSelectedOption(e.target.value);
+  };
   return (
     <>
-      <PFTag variant="primary" label="Primary Tag" />
-      <PFTag variant="success" label="Success Tag" />
-      <PFTag variant="warning" label="Warning Tag" />
-      <PFTag variant="error" label="Error Tag" />
-      <PFTag label="Default" />
       <PFSelect
         label="Choose Your Branch"
-        options={Options}
         value={selectedOption}
         onChange={setSelectedOption}
       />
@@ -40,8 +33,28 @@ const Sample = () => {
         placeholder={"Enter email address..."}
         htmlFor={"email"}
       />
-      <LoginPage />
-      <PFCheckbox />
+      {/* <LoginPage />
+      <PFCheckbox /> */}
+      <Radio
+        label="Option 1"
+        value={"option-1"}
+        checked={selectedOption === "option-1"}
+        onChange={handleRadioChange}
+      />
+      <br />
+      <Radio
+        label="Option 2"
+        value={"option-2"}
+        checked={selectedOption === "option-2"}
+        onChange={handleRadioChange}
+      />
+      <br />
+      <Radio
+        label="Option 3"
+        value={"option-3"}
+        checked={selectedOption === "option-3"}
+        onChange={handleRadioChange}
+      />
     </>
   );
 };
