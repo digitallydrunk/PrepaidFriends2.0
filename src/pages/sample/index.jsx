@@ -73,6 +73,7 @@ const Sample = () => {
       />
       <LoginPage />
       <PFCheckbox />
+      <PFCheckbox />
       <Radio
         label="Option 1"
         value={"option-1"}
