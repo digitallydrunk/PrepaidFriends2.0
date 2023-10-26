@@ -31,16 +31,17 @@ function SingleOrderCheckout() {
           <div className="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 gap-[30px]">
             <div className="lg:col-span-7">
               <div className="p-6 rounded-md shadow dark:shadow-gray-800">
-                <h3 className="text-xl leading-normal font-semibold">
+                <h2 className="text-xl leading-normal font-semibold">
                   Order Deatils
-                </h3>
-
-                <form>
+                </h2>
+                <div className="lg:col-span-6">
+                   <img src="https://prepaidfriends.com/static/media/Visacartpage.09617a67e50bb7c4004c.png"/>
+                </div>
                   <div>
                     <div className="lg:col-span-6">
                       <label className="form-label font-semibold">
                          Email Address: <span className="text-red-600">*</span>
-                      </label>
+                      </label><br/>
                       <input
                         type="email"
                         className="form-input py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2"
@@ -52,16 +53,25 @@ function SingleOrderCheckout() {
 
                     <div className="lg:col-span-4">
                       <label className="font-semibold">Payement Mode:</label>
-                      <select className="form-select form-input mt-2 py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                      <br/>
+                      <input
+                        type="text"
+                        className="form-input py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2"
+                        placeholder="Bitcoin"
+                        name="payment mode"
+                        required=""
+                      />
+                      {/* <select className="form-select form-input mt-2 py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                         <option value="BITCOIN">Bitcoin</option>
                         <option value="CARD">Card</option>
                         <option value="VISA">Visa</option>
-                      </select>
+                      </select> */}
                     </div>
                     <div className="lg:col-span-6">
                       <label className="form-label font-semibold">
                         Invice ID : <span className="text-red-600">*</span>
                       </label>
+                      <br/>
                       <input
                         type="text"
                         className="form-input  py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2"
@@ -71,14 +81,31 @@ function SingleOrderCheckout() {
                       />
                     </div>
                   </div>
-                </form>
-
-                <h3 className="text-xl leading-normal font-semibold mt-6">
+                  <hr/>
+                  <div className="lg:col-span-6">
+                   <div className="lg:col-span-2" >
+                    <img src="https://prepaidfriends.com/static/media/Visacartpage.09617a67e50bb7c4004c.png"/>
+                   </div>
+                   <div className="lg:col-span-2">
+                    <h4>Prepaid Card <br/>1.56</h4>
+                   </div>
+                   <div className="lg:col-span-2">
+                    <h5>0.655690BTC</h5>
+                   </div>
+                  </div>
+             <h3 className="text-xl leading-normal font-semibold mt-6">
                   Prepaid card exchange fee 1*$1.98
                 </h3>
                 <h3 className="text-xl leading-normal font-semibold mt-6">
                   BTC Exchange Fee $0.98
                 </h3>
+              </div>
+              <div className="lg:col-span-6">
+              <h3 className="text-xl leading-normal font-semibold mt-6">
+                  TOTAL
+                </h3>  
+                
+
               </div>
             </div>
 
@@ -120,10 +147,8 @@ function SingleOrderCheckout() {
             </div>
           </div>
         </div>
-       </div>
-
-      
-      </section>
+         </div>
+       </section>
     
     </>
   );
