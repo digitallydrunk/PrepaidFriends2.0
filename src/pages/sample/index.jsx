@@ -1,11 +1,12 @@
 import { useState } from "react";
 import PFSelect from "../../component/select";
 import PFCheckbox from "../../component/checkbox";
-import { jobGrid } from "../../data/data";
 import PFInput from "../../component/input";
 import { FeaturesCard } from "../../component/features-card/features-card.container";
 import LoginPage from "../pf-login";
 import Radio from "../../component/pf-radio";
+import PFTag from "../../component/pf-tag";
+import PFButton from "../../component/pf-button";
 
 const Sample = () => {
   const [selectedOption, setSelectedOption] = useState("option-1");
@@ -14,6 +15,12 @@ const Sample = () => {
   };
   return (
     <>
+      <PFButton buttonText={"Button Test"} />
+      <PFTag />
+      <PFTag variant="primary" />
+      <PFTag variant="error" />
+      <PFTag variant="warning" />
+      <PFTag variant="success" />
       <PFSelect
         label="Choose Your Branch"
         value={selectedOption}
@@ -33,8 +40,8 @@ const Sample = () => {
         placeholder={"Enter email address..."}
         htmlFor={"email"}
       />
-      {/* <LoginPage />
-      <PFCheckbox /> */}
+      <LoginPage />
+      <PFCheckbox />
       <Radio
         label="Option 1"
         value={"option-1"}
