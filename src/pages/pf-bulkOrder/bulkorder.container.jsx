@@ -34,8 +34,23 @@ const BulkOrder = () => {
       label: "London",
     },
   ];
+  const cards = [
+    {
+      value: "Master Card/Visa",
+      label: "Master Card/Visa",
+    },
+    {
+      value: "Master Card",
+      label: "Master Card",
+    },
+    {
+      value: "Visa",
+      label: "Visa",
+    },
+  ];
   const [selectedOption, setSelectedOption] = useState("USA");
   const [selectedState, setSelectedState] = useState("NY");
+  const [selectedCard, setSelectedCard] = useState("Master Card/Visa");
   const validate = (values) => {
     const errors = {};
     if (!values.email) {
@@ -66,6 +81,9 @@ const BulkOrder = () => {
     if (!values.zip) {
       errors.zip = "Required*";
     }
+    if (!values.city) {
+      errors.city = "Required*";
+    }
 
     return errors;
   };
@@ -75,13 +93,14 @@ const BulkOrder = () => {
       email: "",
       cardQuantity: 1,
       loadAmount: "",
-      firstName:"",
-      brokerId:"",
-      lastName:"",
-      buissnessName:"",
-      zip:"",
-      address:"",
-      phone:"",
+      firstName: "",
+      brokerId: "",
+      lastName: "",
+      businessName: "",
+      city: "",
+      zip: "",
+      address: "",
+      phone: "",
     },
     validate,
     onSubmit: (values) => {
@@ -94,7 +113,7 @@ const BulkOrder = () => {
       <section className="relative my-2 flex justify-center">
         <div
           //  className="container"
-          className={`${styles.maxWidth} ${styles.background}`}
+          className={`${styles.maxWidth}`}
         >
           <form onSubmit={formik.handleSubmit}>
             <div className="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 align-bottom gap-[30px]">
@@ -125,9 +144,13 @@ const BulkOrder = () => {
                     Card Information
                   </h3>
 
-                  {/* <form onSubmit={formik.handleSubmit}> */}
+                
                   <div className="grid lg:grid-cols-2 grid-cols-1 gap-5">
-                    <PFSelect placeholder="Visa/Master Card" />
+                    <PFSelect
+                      options={cards}
+                      value={selectedCard}
+                      onChange={setSelectedCard}
+                    />
 
                     <div>
                       <PFInput
@@ -170,91 +193,145 @@ const BulkOrder = () => {
 
                     <PFCheckbox label="Allow International Purchase?" />
                   </div>
-                  {/* </form> */}
+                 
 
                   <h3 className="text-xl leading-normal font-semibold mt-6">
-                    Buissness Information
+                    Business Information
                   </h3>
-                  {/* <form> */}
+                  
                   <div className="grid lg:grid-cols-12 grid-cols-1 mt-6 gap-5">
                     <div className="lg:col-span-6">
-                      <PFInput id="firstName"
-                      name="firstName" placeholder="First Name*" value={formik.values.firstName}
-                      onChange={formik.handleChange}/>
+                      <PFInput
+                        id="firstName"
+                        name="firstName"
+                        placeholder="First Name*"
+                        value={formik.values.firstName}
+                        onChange={formik.handleChange}
+                      />
                       {formik.touched.firstName && formik.errors.firstName ? (
-                      <div>
-                        <p className={styles.required}>{formik.errors.firstName}</p>
-                      </div>
-                    ) : null}
+                        <div>
+                          <p className={styles.required}>
+                            {formik.errors.firstName}
+                          </p>
+                        </div>
+                      ) : null}
                     </div>
 
                     <div className="lg:col-span-6">
-                      <PFInput placeholder="Last Name*" id="lastName"
-                      name="lastName" value={formik.values.lastName}
-                      onChange={formik.handleChange} />
+                      <PFInput
+                        placeholder="Last Name*"
+                        id="lastName"
+                        name="lastName"
+                        value={formik.values.lastName}
+                        onChange={formik.handleChange}
+                      />
                       {formik.touched.lastName && formik.errors.lastName ? (
-                      <div>
-                        <p className={styles.required}>{formik.errors.lastName}</p>
-                      </div>
-                    ) : null}
+                        <div>
+                          <p className={styles.required}>
+                            {formik.errors.lastName}
+                          </p>
+                        </div>
+                      ) : null}
                     </div>
 
                     <div className="lg:col-span-6">
-                      <PFInput placeholder="Buissness Name" id="buissnessName"
-                      name="buissnessName" value={formik.values.buissnessName}
-                      onChange={formik.handleChange} />
+                      <PFInput
+                        placeholder="Business Name"
+                        id="businessName"
+                        name="businessName"
+                        value={formik.values.businessName}
+                        onChange={formik.handleChange}
+                      />
                     </div>
 
                     <div className="lg:col-span-6">
-                      <PFInput placeholder="Select a Country" />
+                     
+                      <PFSelect
+                        placeholder="Country"
+                        options={countries}
+                        value={selectedOption}
+                        onChange={setSelectedOption}
+                      />
                     </div>
 
                     <div className="lg:col-span-12">
-                      <PFInput placeholder="House Number or Street Number*" id="address"
-                      name="address" value={formik.values.address}
-                      onChange={formik.handleChange}/>
+                      <PFInput
+                        placeholder="House Number or Street Number*"
+                        id="address"
+                        name="address"
+                        value={formik.values.address}
+                        onChange={formik.handleChange}
+                      />
                       {formik.touched.address && formik.errors.address ? (
-                      <div>
-                        <p className={styles.required}>{formik.errors.address}</p>
-                      </div>
-                    ) : null}
+                        <div>
+                          <p className={styles.required}>
+                            {formik.errors.address}
+                          </p>
+                        </div>
+                      ) : null}
                     </div>
 
                     <div className="lg:col-span-4">
-                      {/* <label className="font-semibold">Country:</label> */}
-                      <PFSelect options={countries} value={selectedOption} onChange={setSelectedOption} />
+                      
+                      <PFInput
+                        placeholder="City"
+                        id="city"
+                        name="city"
+                        value={formik.values.city}
+                        onChange={formik.handleChange}
+                      />
                     </div>
 
                     <div className="lg:col-span-4">
-                      {/* <label className="font-semibold">State:</label> */}
-                      <PFSelect options={states} value={selectedState} onChange={setSelectedState} />
+                      
+                      <PFSelect
+                        placeholder="State"
+                        options={states}
+                        value={selectedState}
+                        onChange={setSelectedState}
+                      />
                     </div>
 
                     <div className="lg:col-span-4">
-                      {/* <label className="form-label font-semibold">
-                        Zip Code : <span className="text-red-600">*</span>
-                      </label> */}
-                      <PFInput placeholder="Zip*" id="zip"
-                      name="zip" value={formik.values.zip}
-                      onChange={formik.handleChange} />
+                     
+                      <PFInput
+                        placeholder="ZIP Code*"
+                        id="zip"
+                        name="zip"
+                        value={formik.values.zip}
+                        onChange={formik.handleChange}
+                      />
                       {formik.touched.zip && formik.errors.zip ? (
-                      <div>
-                        <p className={styles.required}>{formik.errors.zip}</p>
-                      </div>
-                    ) : null}
+                        <div>
+                          <p className={styles.required}>{formik.errors.zip}</p>
+                        </div>
+                      ) : null}
                     </div>
                     <div className="lg:col-span-12">
-                      <PFInput placeholder="Phone Number" id="phone"
-                      name="phone" value={formik.values.phone}
-                      onChange={formik.handleChange}/>
-                       {formik.touched.phone && formik.errors.phone ? (
-                      <div>
-                        <p className={styles.required}>{formik.errors.phone}</p>
-                      </div>
-                    ) : null}
+                      <PFInput
+                        placeholder="Phone Number"
+                        id="phone"
+                        name="phone"
+                        value={formik.values.phone}
+                        onChange={formik.handleChange}
+                      />
+                      {formik.touched.phone && formik.errors.phone ? (
+                        <div>
+                          <p className={styles.required}>
+                            {formik.errors.phone}
+                          </p>
+                        </div>
+                      ) : null}
                     </div>
+
+                    <textarea
+                      style={{ resize: "none" }}
+                      className="lg:col-span-12 form-input mt-3 w-full py-2 px-3 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 "
+                      rows="6"
+                      placeholder="Other Notes"
+                    />
                   </div>
-                  {/* </form> */}
+                  
 
                   <div className="mt-4">
                     <input
@@ -309,9 +386,7 @@ const BulkOrder = () => {
                     </div>
                     <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                       <div>
-                        <h5 className="font-semibold">
-                          Invoice Identifier Fee:
-                        </h5>
+                        <h5 className="font-semibold">Wire Identifier Fee:</h5>
                         {/* <p className="text-sm text-slate-400">
                           Brief description
                         </p> */}
@@ -334,7 +409,7 @@ const BulkOrder = () => {
 
                     <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                       <div>
-                        <h5 className="font-semibold" style={{maxWidth:'80%'}}>
+                        <h5 className={styles.cartdescp}>
                           International Transaction Fee :
                         </h5>
                         {/* <p className="text-sm text-slate-400">
