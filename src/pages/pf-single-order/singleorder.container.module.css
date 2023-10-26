@@ -1,37 +1,34 @@
-.single-form-header{
-    background-color: #7B74EC;
-    text-align: center;
-    font-weight: 600;
-    font-size: 2rem;
-    color: black;
-    padding: 1rem;
-    border-top-right-radius: 0.3rem;
-    border-top-left-radius: 0.3rem;
+.form {
+  background-color: #4f46e5;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.7rem;
+  color: rgb(255, 255, 255);
+  padding: 1rem;
+  border-top-right-radius: 0.3rem;
+  border-top-left-radius: 0.3rem;
 }
-.tags{
-    margin-left: 0.5rem;
-    cursor: pointer;
+.tags {
+  margin-left: 0.5rem;
+  cursor: pointer;
 }
-.tags:hover{
-    border-color: #7B74EC !important;
+.tags:hover {
+  border-color: #7b74ec !important;
 }
-.afterprop{
-    margin-right: 2rem;
-    padding-top: 2rem;
-    font-size: 0.8rem;
-    font-weight: 500;
+.tags::selection {
+  border-color: #7b74ec !important;
 }
-.info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.add-on-after-input {
+  padding-top: 2rem;
+  font-size: 0.8rem;
+  font-weight: 500;
 }
 
-.label {
-    flex: 1;
+.additional-transaction-label {
+  flex: 1;
 }
 
-.value {
-    flex: 1;
-    text-align: right;
+.additional-transaction-value {
+  flex: 1;
+  text-align: right;
 }
