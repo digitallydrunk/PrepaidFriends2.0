@@ -1,9 +1,41 @@
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+// import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import PFInput from "../../component/input/index";
 import PFCheckbox from "../../component/checkbox/index";
-import styles from "./bulkorder.module.css"
+import PFSelect from "../../component/select/index";
+import styles from "./bulkorder.module.css";
 const BulkOrder = () => {
+  const countries = [
+    {
+      value: "USA",
+      label: "America",
+    },
+    {
+      value: "IND",
+      label: "India",
+    },
+    {
+      value: "ENG",
+      label: "England",
+    },
+  ];
+  const states = [
+    {
+      value: "NY",
+      label: "New York",
+    },
+    {
+      value: "DEL",
+      label: "Delhi",
+    },
+    {
+      value: "LON",
+      label: "London",
+    },
+  ];
+  const [selectedOption, setSelectedOption] = useState("USA");
+  const [selectedState, setSelectedState] = useState("NY");
   const validate = (values) => {
     const errors = {};
     if (!values.email) {
@@ -19,6 +51,21 @@ const BulkOrder = () => {
     if (!values.loadAmount) {
       errors.loadAmount = "Required*";
     }
+    if (!values.firstName) {
+      errors.firstName = "Required*";
+    }
+    if (!values.lastName) {
+      errors.lastName = "Required*";
+    }
+    if (!values.address) {
+      errors.address = "Required*";
+    }
+    if (!values.phone) {
+      errors.phone = "Required*";
+    }
+    if (!values.zip) {
+      errors.zip = "Required*";
+    }
 
     return errors;
   };
@@ -28,6 +75,13 @@ const BulkOrder = () => {
       email: "",
       cardQuantity: 1,
       loadAmount: "",
+      firstName:"",
+      brokerId:"",
+      lastName:"",
+      buissnessName:"",
+      zip:"",
+      address:"",
+      phone:"",
     },
     validate,
     onSubmit: (values) => {
@@ -39,12 +93,12 @@ const BulkOrder = () => {
     <>
       <section className="relative my-2 flex justify-center">
         <div
-        //  className="container"
-        className={`${styles.maxWidth}`}
+          //  className="container"
+          className={`${styles.maxWidth} ${styles.background}`}
         >
           <form onSubmit={formik.handleSubmit}>
-            <div className="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 gap-[30px]">
-              <div className="lg:col-span-8">
+            <div className="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 align-bottom gap-[30px]">
+              <div className="lg:col-span-7 col-span-8">
                 <div className="p-6 rounded-md shadow dark:shadow-gray-800">
                   <h3 className="text-xl leading-normal font-semibold">
                     Contact Information
@@ -61,19 +115,20 @@ const BulkOrder = () => {
                     />
                     {formik.touched.email && formik.errors.email ? (
                       <div>
-                        <p className={styles.required} >{formik.errors.email}</p>
+                        <p className={styles.required}>{formik.errors.email}</p>
                       </div>
                     ) : null}
                   </div>
                   {/* </form> */}
-
+                  <br />
                   <h3 className="text-xl leading-normal font-semibold">
                     Card Information
                   </h3>
 
                   {/* <form onSubmit={formik.handleSubmit}> */}
                   <div className="grid lg:grid-cols-2 grid-cols-1 gap-5">
-                    <PFInput />
+                    <PFSelect placeholder="Visa/Master Card" />
+
                     <div>
                       <PFInput
                         placeholder="Card Quantity*"
@@ -86,7 +141,9 @@ const BulkOrder = () => {
                       {formik.touched.cardQuantity &&
                       formik.errors.cardQuantity ? (
                         <div>
-                          <p className={styles.required}  >{formik.errors.cardQuantity}</p>
+                          <p className={styles.required}>
+                            {formik.errors.cardQuantity}
+                          </p>
                         </div>
                       ) : null}
                     </div>
@@ -101,13 +158,16 @@ const BulkOrder = () => {
                       />
                       {formik.touched.loadAmount && formik.errors.loadAmount ? (
                         <div>
-                          <p className={styles.required}  >{formik.errors.loadAmount}</p>
+                          <p className={styles.required}>
+                            {formik.errors.loadAmount}
+                          </p>
                         </div>
                       ) : null}
                     </div>
 
                     <PFInput placeholder="Broker ID" />
-                    <PFInput placeholder="Select Provider" />
+                    <PFSelect />
+
                     <PFCheckbox label="Allow International Purchase?" />
                   </div>
                   {/* </form> */}
@@ -118,15 +178,31 @@ const BulkOrder = () => {
                   {/* <form> */}
                   <div className="grid lg:grid-cols-12 grid-cols-1 mt-6 gap-5">
                     <div className="lg:col-span-6">
-                      <PFInput placeholder="First Name*" />
+                      <PFInput id="firstName"
+                      name="firstName" placeholder="First Name*" value={formik.values.firstName}
+                      onChange={formik.handleChange}/>
+                      {formik.touched.firstName && formik.errors.firstName ? (
+                      <div>
+                        <p className={styles.required}>{formik.errors.firstName}</p>
+                      </div>
+                    ) : null}
                     </div>
 
                     <div className="lg:col-span-6">
-                      <PFInput placeholder="Last Name*" />
+                      <PFInput placeholder="Last Name*" id="lastName"
+                      name="lastName" value={formik.values.lastName}
+                      onChange={formik.handleChange} />
+                      {formik.touched.lastName && formik.errors.lastName ? (
+                      <div>
+                        <p className={styles.required}>{formik.errors.lastName}</p>
+                      </div>
+                    ) : null}
                     </div>
 
                     <div className="lg:col-span-6">
-                      <PFInput placeholder="Buissness Name" />
+                      <PFInput placeholder="Buissness Name" id="buissnessName"
+                      name="buissnessName" value={formik.values.buissnessName}
+                      onChange={formik.handleChange} />
                     </div>
 
                     <div className="lg:col-span-6">
@@ -134,42 +210,48 @@ const BulkOrder = () => {
                     </div>
 
                     <div className="lg:col-span-12">
-                      <PFInput placeholder="House Number or Street Number*" />
+                      <PFInput placeholder="House Number or Street Number*" id="address"
+                      name="address" value={formik.values.address}
+                      onChange={formik.handleChange}/>
+                      {formik.touched.address && formik.errors.address ? (
+                      <div>
+                        <p className={styles.required}>{formik.errors.address}</p>
+                      </div>
+                    ) : null}
                     </div>
 
                     <div className="lg:col-span-4">
-                      <label className="font-semibold">Country:</label>
-                      <select className="form-select form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                        <option value="USA">USA</option>
-                        <option value="CAD">Canada</option>
-                        <option value="CHINA">China</option>
-                      </select>
+                      {/* <label className="font-semibold">Country:</label> */}
+                      <PFSelect options={countries} value={selectedOption} onChange={setSelectedOption} />
                     </div>
 
                     <div className="lg:col-span-4">
-                      <label className="font-semibold">State:</label>
-                      <select className="form-select form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                        <option value="CAL">California</option>
-                        <option value="TEX">Texas</option>
-                        <option value="FLOR">Florida</option>
-                      </select>
+                      {/* <label className="font-semibold">State:</label> */}
+                      <PFSelect options={states} value={selectedState} onChange={setSelectedState} />
                     </div>
 
                     <div className="lg:col-span-4">
-                      <label className="form-label font-semibold">
+                      {/* <label className="form-label font-semibold">
                         Zip Code : <span className="text-red-600">*</span>
-                      </label>
-                      <input
-                        type="number"
-                        className="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2"
-                        placeholder="Zip:"
-                        id="zipcode"
-                        name="number"
-                        required=""
-                      />
+                      </label> */}
+                      <PFInput placeholder="Zip*" id="zip"
+                      name="zip" value={formik.values.zip}
+                      onChange={formik.handleChange} />
+                      {formik.touched.zip && formik.errors.zip ? (
+                      <div>
+                        <p className={styles.required}>{formik.errors.zip}</p>
+                      </div>
+                    ) : null}
                     </div>
                     <div className="lg:col-span-12">
-                      <PFInput placeholder="Phone Number" />
+                      <PFInput placeholder="Phone Number" id="phone"
+                      name="phone" value={formik.values.phone}
+                      onChange={formik.handleChange}/>
+                       {formik.touched.phone && formik.errors.phone ? (
+                      <div>
+                        <p className={styles.required}>{formik.errors.phone}</p>
+                      </div>
+                    ) : null}
                     </div>
                   </div>
                   {/* </form> */}
@@ -178,20 +260,20 @@ const BulkOrder = () => {
                     <input
                       type="submit"
                       className="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full"
-                      value="Continue to checkout"
+                      value="Add to Invoice"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="lg:col-span-4">
+              <div className="lg:col-span-5 col-span-4 ">
                 <div className="p-6 rounded-md shadow dark:shadow-gray-800">
                   <div className="flex justify-between items-center">
                     <h5 className="text-lg font-semibold">Your Cart</h5>
 
-                    <Link className="bg-indigo-600 flex justify-center items-center text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full h-5">
-                      3
-                    </Link>
+                    <p className="bg-indigo-600 flex justify-center items-center text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full h-5">
+                      {formik.values.cardQuantity}
+                    </p>
                   </div>
 
                   <div className="mt-4 rounded-md shadow dark:shadow-gray-800">
@@ -252,7 +334,7 @@ const BulkOrder = () => {
 
                     <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                       <div>
-                        <h5 className="font-semibold">
+                        <h5 className="font-semibold" style={{maxWidth:'80%'}}>
                           International Transaction Fee :
                         </h5>
                         {/* <p className="text-sm text-slate-400">
