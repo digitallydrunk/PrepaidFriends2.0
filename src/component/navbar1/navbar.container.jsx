@@ -142,7 +142,7 @@ const Navbar = () => {
 
         <div className="menu-extras">
           <div className="menu-item">
-            <Link
+            <span
               className={`navbar-toggle ${isMenu ? "open" : ""}`}
               id="isToggle"
               onClick={() => toggleMenu()}
@@ -152,7 +152,7 @@ const Navbar = () => {
                 <span></span>
                 <span></span>
               </div>
-            </Link>
+            </span>
           </div>
         </div>
 
