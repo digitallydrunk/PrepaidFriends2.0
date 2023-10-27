@@ -1,6 +1,8 @@
 import PFCheckbox from "../../component/checkbox";
 import PFInput from "../../component/input";
+import Dashboard from "../../component/pf-dashboard";
 import LoginPage from "../pf-login";
+
 
 const Sample = () => {
   return (
@@ -16,6 +18,7 @@ const Sample = () => {
       />
       <LoginPage />
       <PFCheckbox />
+      <Dashboard/>
     </>
   );
 };
