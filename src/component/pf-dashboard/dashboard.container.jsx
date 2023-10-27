@@ -1,12 +1,19 @@
-import React,{useState} from 'react'
-import { Link } from 'react-router-dom'
-import image from '../../assets/images/client/05.jpg';
-import ShopFooter from '../Footer/shopFooter';
-import EcommerceNavbar from '../Navbar/ecommerceNavbar';
-import * as Icon from 'react-feather'
-import {MdKeyboardArrowRight, FiPhone, FiEdit, FaArrowRight, AiOutlineUser,AiOutlineDashboard, LiaSignOutAltSolid, RiMapPinLine, HiOutlineListBullet, BsArrowDownCircle} from '../../assets/icons/icons'
-import './dashboard.module.css'
-import { Button } from '@mui/material';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import image from "../../assets/images/client/05.jpg";
+import ShopFooter from "../Footer/shopFooter";
+import * as Icon from "react-feather";
+import {
+  FiPhone,
+  FiEdit,
+  FaArrowRight,
+  AiOutlineUser,
+  AiOutlineDashboard,
+  LiaSignOutAltSolid,
+  RiMapPinLine,
+  IoIosArrowDropdownCircle,
+} from "../../assets/icons/icons";
+import styles from "./dashboard.module.css";
 
 const Dashboard = () => {
   const [isOpenTab, setisOpen] = useState(0);
@@ -652,4 +659,5 @@ const Dashboard = () => {
     </>
   );
 }
->>>>>>> 90908aa (add accordion in dashboard)
+export {Dashboard}
+

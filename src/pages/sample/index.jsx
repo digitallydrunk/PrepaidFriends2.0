@@ -8,6 +8,7 @@ import LoginPage from "../pf-login";
 import Radio from "../../component/pf-radio";
 import PFTag from "../../component/pf-tag";
 import PFButton from "../../component/pf-button";
+ 
 const faqData = [
   {
     key: "1",
@@ -45,24 +46,24 @@ const Sample = () => {
   };
   return (
     <>
-<<<<<<< HEAD
+      
       <PFButton buttonText={"Button Test"} />
       <PFTag />
       <PFTag variant="primary" />
       <PFTag variant="error" />
       <PFTag variant="warning" />
       <PFTag variant="success" />
-      <PFAccordion data={faqData} />
+      {/* <PFAccordion data={faqData} />
       <PFSelect
         label="Choose Your Branch"
         value={selectedOption}
         onChange={setSelectedOption}
-      />
-      <FeaturesCard
+      /> */}
+      {/* <FeaturesCard
         imageSrc="https://templatekit.tokomoo.com/paymentkit2/wp-content/uploads/sites/112/2022/11/feature-1.png"
         title="Grow Your Business"
         description="If the distribution of letters and words is random, the reader will not be distracted from making."
-      />
+      /> */}
       <PFInput
         name={"email"}
         id={"email"}
@@ -74,6 +75,27 @@ const Sample = () => {
       />
       <LoginPage />
       <PFCheckbox />
+      <PFCheckbox />
+      <Radio
+        label="Option 1"
+        value={"option-1"}
+        checked={selectedOption === "option-1"}
+        onChange={handleRadioChange}
+      />
+      <br />
+      <Radio
+        label="Option 2"
+        value={"option-2"}
+        checked={selectedOption === "option-2"}
+        onChange={handleRadioChange}
+      />
+      <br />
+      <Radio
+        label="Option 3"
+        value={"option-3"}
+        checked={selectedOption === "option-3"}
+        onChange={handleRadioChange}
+      />
       <Dashboard></Dashboard>
     </>
   );
