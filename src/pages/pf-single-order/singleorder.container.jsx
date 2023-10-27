@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 import CookieModal from "../../component/cookieModal";
-import "./singleorder.container.css";
+import styles from "./singleorder.container.module.css";
 import { PFInput } from "../../component/input/input.container.jsx";
+import PFButton from "../../component/pf-button";
+import PFTag from "../../component/pf-tag";
 
 export default function SingleOrder() {
   const [selectedAmount, setSelectedAmount] = useState("");
-  const [showCharges, setShowCharges] = useState(false);
 
-  const handleAmountSelect = (amount) => {
-    setSelectedAmount(amount);
-    setShowCharges(true);
+  const handleManualAmountInput = (e) => {
+    const inputValue = parseFloat(e.target.value);
+    if (!isNaN(inputValue) && inputValue >= 0) {
+      setSelectedAmount(inputValue.toString());
+    }
   };
 
   return (
     <>
       <span className="fixed blur-[200px] w-[600px] h-[600px] rounded-full top-1/2 -translate-y-1/2 start-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 bg-indigo-600/20"></span>
-      <section className="relative overflow-hidden md:pt-44 md:pb-24 pb-16">
+      <section className="relative overflow-hidden md:pt-6 md:pb-24 pb-16">
         <div className="container relative">
           <div className="grid md:grid-cols-2 grid-cols-1 items-center mt-8 gap-[30px] relative">
             <div className="md:me-6">
@@ -53,56 +56,35 @@ export default function SingleOrder() {
               <div className="relative container mx-auto px-6 text-gray-500 md:px-12 xl:px-40">
                 <div className="mx-auto md:w-8/12 lg:w-6/12 xl:w-6/12">
                   <div className="rounded-xl bg-white shadow-xl">
-                    <div className="p-6 sm:p-16">
-                      <div className="single-form-header">
-                        Buy Prepaid Cards
-                      </div>
+                    <div className="px-6 py-4 sm:p-16">
                       <br />
                       <div>
                         <PFInput
                           label="Enter Prepaid Card Amount"
                           placeholder="$0.00"
                           type="number"
-                          addOnAfter={<p className="afterprop">USD</p>}
+                          min="0"
+                          addOnAfter={
+                            <p className={styles["add-on-after-input"]}>USD</p>
+                          }
                           value={selectedAmount}
-                          onChange={(e) => {
-                            setSelectedAmount(e.target.value);
-                            setShowCharges(!!e.target.value);
-                          }}
+                          onChange={handleManualAmountInput}
                         />
                       </div>
                       <div className="mt-3">
-                        <span className="py-3">Popular Amounts</span>
-                        <div
-                          className="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 rounded-full bg-white text-gray-700 border tags"
-                          onClick={() => handleAmountSelect("$25")}
-                        >
-                          $25
-                        </div>
-                        <div
-                          className="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 rounded-full bg-white text-gray-700 border tags"
-                          onClick={() => handleAmountSelect("$50")}
-                        >
-                          $50
-                        </div>
-                        <div
-                          className="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 rounded-full bg-white text-gray-700 border tags"
-                          onClick={() => handleAmountSelect("$75")}
-                        >
-                          $75
-                        </div>
-                        <div
-                          className="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 rounded-full bg-white text-gray-700 border tags"
-                          onClick={() => handleAmountSelect("$100")}
-                        >
-                          $100
-                        </div>
-                        <div
-                          className="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 rounded-full bg-white text-gray-700 border tags"
-                          onClick={() => handleAmountSelect("$200")}
-                        >
-                          $200
-                        </div>
+                        <span className="py-3 mr-2">Popular Amounts</span>
+                        {[25, 50, 75, 100, 200].map((amount) => (
+                          <PFTag
+                            label={`$${amount}`}
+                            variant={
+                              selectedAmount === amount ? "primary" : "default"
+                            }
+                            className={"mr-2"}
+                            onClick={() => {
+                              setSelectedAmount(amount);
+                            }}
+                          />
+                        ))}
                       </div>
                       <div className="mt-3">
                         <PFInput
@@ -110,40 +92,98 @@ export default function SingleOrder() {
                           type="email"
                         />
                       </div>
+                      <PFButton
+                        type="submit"
+                        id="orderButton"
+                        name="orderButton"
+                        buttonText={"Order Now"}
+                        className={"w-full mt-3"}
+                      />
+
                       <div className="mt-3 px-1 text-sm">
-                        {showCharges && (
+                        {selectedAmount && (
                           <>
                             <div className="py-2">
-                              <div class="info">
-                                <span class="label">BTC Exchange Fee:</span>
-                                <span class="value">0.52 USD</span>
+                              <div
+                                className={`flex justify-space-between items-center`}
+                              >
+                                <span
+                                  className={
+                                    styles["additional-transaction-label"]
+                                  }
+                                >
+                                  BTC Exchange Fee:
+                                </span>
+                                <span
+                                  className={
+                                    styles["additional-transaction-value"]
+                                  }
+                                >
+                                  $0.52 USD
+                                </span>
                               </div>
                             </div>
                             <hr />
                             <div className="py-2">
-                              <div class="info">
-                                <span class="label">
+                              <div
+                                className={`flex justify-space-between items-center`}
+                              >
+                                <span
+                                  className={
+                                    styles["additional-transaction-label"]
+                                  }
+                                >
                                   Prepaid Card Purchase Price:
                                 </span>
-                                <span class="value">1.95 USD</span>
+                                <span
+                                  className={
+                                    styles["additional-transaction-value"]
+                                  }
+                                >
+                                  $1.95 USD
+                                </span>
                               </div>
                             </div>
                             <hr />
                             <div className="py-2">
-                              <div class="info">
-                                <span class="label">
+                              <div
+                                className={`flex justify-space-between items-center`}
+                              >
+                                <span
+                                  className={
+                                    styles["additional-transaction-label"]
+                                  }
+                                >
                                   Total (Amount in USD):
                                 </span>
-                                <span class="value">52.47 USD</span>
+                                <span
+                                  className={
+                                    styles["additional-transaction-value"]
+                                  }
+                                >
+                                  $52.47 USD
+                                </span>
                               </div>
                             </div>
                             <hr />
                             <div className="py-2">
-                              <div class="info">
-                                <span class="label">
+                              <div
+                                className={`flex justify-space-between items-center`}
+                              >
+                                <span
+                                  className={
+                                    styles["additional-transaction-label"]
+                                  }
+                                >
                                   Total (Amount in BTC):
                                 </span>
-                                <span class="value">0.008145 BTC</span>
+                                <span
+                                  className={
+                                    styles["additional-transaction-value"]
+                                  }
+                                >
+                                  0.008145 BTC
+                                </span>
                               </div>
                             </div>
                           </>
@@ -156,7 +196,6 @@ export default function SingleOrder() {
             </div>
           </div>
         </div>
-        {/* <MobileApp /> */}
       </section>
       <CookieModal />
     </>
