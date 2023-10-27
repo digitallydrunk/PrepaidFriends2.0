@@ -6,8 +6,12 @@ import PFSelect from "../../component/select/index";
 import styles from "./bulk-order.module.css";
 import { emailValidation, requiredValidation } from "../../utils/validation";
 import PFButton from "../../component/pf-button";
+import { Radio } from "../../component/pf-radio/radio.container";
 
 const PFBulkOrder = () => {
+  const [total, setTotal] = useState(60);
+  const [isChecked, setIsChecked] = useState(false);
+
   const countries = [
     {
       value: "USA",
@@ -55,6 +59,13 @@ const PFBulkOrder = () => {
   const [selectedCountry, setSelectedCountry] = useState("USA");
   const [selectedState, setSelectedState] = useState("NY");
   const [selectedCardType, setSelectedCardType] = useState("master/visa");
+  const [selectedPayment, setSelectedPayment] = useState("WireTransfer");
+  const handleRadioChange = (e) => {
+    setSelectedPayment(e.target.value);
+  };
+  const handleCheckboxChange = (event) => {
+    setIsChecked(event.target.checked);
+  };
 
   const validate = (values) => {
     const errors = {};
@@ -190,14 +201,42 @@ const PFBulkOrder = () => {
                     <PFInput placeholder="Broker ID" />
                     <PFSelect placeholder="BIN" />
 
-                    <PFCheckbox label="Allow International Purchases?" />
+                    <PFCheckbox
+                      label="Allow International Purchases?"
+                      checked={isChecked}
+                      onChange={handleCheckboxChange}
+                    />
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl leading-normal font-semibold mt-6 mb-2">
+                      Select Payment Method
+                    </h3>
+                    <Radio
+                      label="Wire Transfer"
+                      value={"WireTransfer"}
+                      checked={selectedPayment === "WireTransfer"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className={styles.gap}></span>
+
+                    <Radio
+                      label="BTC"
+                      value={"BTC"}
+                      checked={selectedPayment === "BTC"}
+                      onChange={handleRadioChange}
+                      disabled={formik.values.loadAmount > 500}
+                      // className={
+                      //   formik.values.loadAmount > 500 ? styles.notAllowed : styles.pointer
+                      // }
+                    />
                   </div>
 
                   <h3 className="text-xl leading-normal font-semibold mt-6">
                     Business Information
                   </h3>
 
-                  <div className="grid lg:grid-cols-12 grid-cols-1 mt-6 gap-5">
+                  <div className="grid lg:grid-cols-12 grid-cols-1 mt-3 gap-5">
                     <div className="lg:col-span-6">
                       <PFInput
                         id="firstName"
@@ -356,30 +395,43 @@ const PFBulkOrder = () => {
                     </div>
                     <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                       <div>
-                        <h5 className="font-semibold">Wire Transfer Fee:</h5>
+                        <h5 className="font-semibold">Value Per Card:</h5>
                       </div>
 
                       <p className="text-slate-400 font-semibold">$ 20</p>
                     </div>
-                    <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
-                      <div>
-                        <h5 className="font-semibold">Wire Identifier Fee:</h5>
-                      </div>
+                    {selectedPayment === "WireTransfer" && (
+                      <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
+                        <div>
+                          <h5 className="font-semibold">Wire Transfer Fee:</h5>
+                        </div>
 
-                      <p className="text-slate-400 font-semibold">$ 20</p>
-                    </div>
-                    <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
-                      <div>
-                        <h5 className="font-semibold">
-                          Invoice Identifier Fee:
-                        </h5>
-                        {/* <p className="text-sm text-slate-400">
+                        <p className="text-slate-400 font-semibold">$ 20</p>
+                      </div>
+                    )}
+                    {selectedPayment === "BTC" && (
+                      <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
+                        <div>
+                          <h5 className="font-semibold">BTC Exchange Fee:</h5>
+                        </div>
+
+                        <p className="text-slate-400 font-semibold">$ 20</p>
+                      </div>
+                    )}
+                    {selectedPayment === "WireTransfer" && (
+                      <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
+                        <div>
+                          <h5 className="font-semibold">
+                            Invoice Identifier Fee:
+                          </h5>
+                          {/* <p className="text-sm text-slate-400">
                           Brief description
                         </p> */}
-                      </div>
+                        </div>
 
-                      <p className="text-slate-400 font-semibold">$ 20</p>
-                    </div>
+                        <p className="text-slate-400 font-semibold">$ 20</p>
+                      </div>
+                    )}
 
                     <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                       <div>
@@ -391,22 +443,24 @@ const PFBulkOrder = () => {
                         </p> */}
                       </div>
 
-                      <p className="text-slate-400 font-semibold">$ 20</p>
+                      {isChecked===true?<p className="text-slate-400 font-semibold">$ 20</p>: <p className="text-slate-400 font-semibold">$0</p> }
                     </div>
                     <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                       <div>
                         <h5 className="font-semibold">Total (USD)</h5>
                       </div>
 
-                      <p className="font-semibold">$ 30</p>
+                      <p className="font-semibold">$ {total}</p>
                     </div>
-                    <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
-                      <div>
-                        <h5 className="font-semibold">Total (BTC)</h5>
-                      </div>
+                    {selectedPayment === "BTC" && (
+                      <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
+                        <div>
+                          <h5 className="font-semibold">Total (BTC)</h5>
+                        </div>
 
-                      <p className="font-semibold">0.122323</p>
-                    </div>
+                        <p className="font-semibold">0.122323</p>
+                      </div>
+                    )}
                     <div className="p-3">
                       <PFCheckbox label="Agree terms & Conditions" />
                     </div>
