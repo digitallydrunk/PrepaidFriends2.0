@@ -9,6 +9,7 @@ import LoginPage from "../pages/pf-login";
 import Contact from "../pages/pf-contact";
 import SingleOrder from "../pages/pf-single-order/singleorder.container";
 import BulkOrder from "../pages/pf-bulk-order";
+import OrderInvoice from "../pages/pf-order-invoice";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: URLs.BULK_ORDER,
         element: <BulkOrder />,
+      },
+      {
+        path: URLs.ORDER_INVOICE,
+        element: <OrderInvoice />,
       },
     ],
   },
