@@ -15,7 +15,6 @@ import {
 } from "../../assets/icons/icons";
 import styles from "./dashboard.module.css";
 
-// export default function Dashboard() {
 const Dashboard = () => {
   const [isOpenTab, setisOpen] = useState(0);
 
@@ -660,5 +659,5 @@ const Dashboard = () => {
     </>
   );
 }
-
 export {Dashboard}
+
