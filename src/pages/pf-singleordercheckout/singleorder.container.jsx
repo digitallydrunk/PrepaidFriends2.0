@@ -7,11 +7,11 @@ function SingleOrderCheckout() {
     <>
       <EcommerceNavbar />
        <section className="relative md:py-24 py-16">
-        <div className="container">
+        <div className="container ">
           <div className="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 gap-[30px]">
             <div className="lg:col-span-5">
               <div className="p-6 rounded-md shadow dark:shadow-gray-800">
-                <h2 className="text-xl leading-normal font-semibold">
+                <h2 className="text-xl leading-normal font-bold">
                   Order Deatils
                 </h2>
                 <hr/>
@@ -52,7 +52,7 @@ function SingleOrderCheckout() {
                 <h3 className="leading-normal font-bold mt-6">
                   BTC Exchange Fee: $0.98
                 </h3>
-              </div>
+              
               <h3 className="font-bold ">
                   TOTAL
                 </h3>  
@@ -60,13 +60,13 @@ function SingleOrderCheckout() {
                  <p>$5.52</p>
                  <p>0.00153965BTC</p>
                 </div>
-             
+                </div>
             </div>
 
             <div className="lg:col-span-7">
               <div className="p-6 rounded-md shadow dark:shadow-gray-800">
                 <div className="flex justify-between items-center">
-                  <h5 className="text-lg font-semibold">Pay with Bitcoin</h5>
+                  <h5 className="text-lg font-bold">Pay with Bitcoin</h5>
                    </div>
 
                 <div>
