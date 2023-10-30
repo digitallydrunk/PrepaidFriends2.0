@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import CookieModal from "../../component/cookieModal";
 import styles from "./singleorder.container.module.css";
 import { PFInput } from "../../component/input/input.container.jsx";
 import PFButton from "../../component/pf-button";
 import PFTag from "../../component/pf-tag";
+import { useFormik } from "formik";
+import { requiredValidation, validateEmail } from "../../utils/validation";
 
 export default function SingleOrder() {
   const [selectedAmount, setSelectedAmount] = useState("");
@@ -14,6 +15,24 @@ export default function SingleOrder() {
       setSelectedAmount(inputValue.toString());
     }
   };
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      selectedAmount: "",
+    },
+    validate: (values) => {
+      const errors = {};
+      errors.email = validateEmail(values?.email);
+      if (!values.selectedAmount) {
+        errors.selectedAmount = requiredValidation?.error;
+      }
+      return errors;
+    },
+    onSubmit: (values) => {
+      console.log("Form submitted with values:", values);
+    },
+  });
 
   return (
     <>
@@ -69,7 +88,15 @@ export default function SingleOrder() {
                           }
                           value={selectedAmount}
                           onChange={handleManualAmountInput}
+                          onBlur={formik.handleBlur}
                         />
+                        {formik.touched.selectedAmount &&
+                        formik.errors.selectedAmount &&
+                        !selectedAmount ? (
+                          <div className={`${styles["error-message"]}`}>
+                            {formik.errors.selectedAmount}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="mt-3">
                         <span className="py-3 mr-2">Popular Amounts</span>
@@ -90,7 +117,16 @@ export default function SingleOrder() {
                         <PFInput
                           placeholder="Enter Email Address"
                           type="email"
+                          name="email"
+                          value={formik.values.email}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
+                        {formik.touched.email && formik.errors.email ? (
+                          <p className={`${styles["error-message"]}`}>
+                            {formik.errors.email}
+                          </p>
+                        ) : null}
                       </div>
                       <PFButton
                         type="submit"
@@ -98,8 +134,8 @@ export default function SingleOrder() {
                         name="orderButton"
                         buttonText={"Order Now"}
                         className={"w-full mt-3"}
+                        onClick={formik.handleSubmit}
                       />
-
                       <div className="mt-3 px-1 text-sm">
                         {selectedAmount && (
                           <>
@@ -197,7 +233,6 @@ export default function SingleOrder() {
           </div>
         </div>
       </section>
-      <CookieModal />
     </>
   );
 }
