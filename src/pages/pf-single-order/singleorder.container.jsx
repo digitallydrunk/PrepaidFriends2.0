@@ -1,19 +1,44 @@
-import React, { useState } from "react";
-import CookieModal from "../../component/cookieModal";
-import styles from "./singleorder.container.module.css";
-import { PFInput } from "../../component/input/input.container.jsx";
-import PFButton from "../../component/pf-button";
-import PFTag from "../../component/pf-tag";
+import React, { useState } from "react"
+import CookieModal from "../../component/cookieModal"
+import styles from "./singleorder.container.module.css"
+import { PFInput } from "../../component/input/input.container.jsx"
+import PFButton from "../../component/pf-button"
+import PFTag from "../../component/pf-tag"
+import { useFormik } from "formik"
 
 export default function SingleOrder() {
-  const [selectedAmount, setSelectedAmount] = useState("");
+  const [selectedAmount, setSelectedAmount] = useState("")
 
   const handleManualAmountInput = (e) => {
-    const inputValue = parseFloat(e.target.value);
+    const inputValue = parseFloat(e.target.value)
     if (!isNaN(inputValue) && inputValue >= 0) {
-      setSelectedAmount(inputValue.toString());
+      setSelectedAmount(inputValue.toString())
     }
-  };
+  }
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      selectedAmount: "",
+    },
+    validate: (values) => {
+      const errors = {}
+      if (!values.email) {
+        errors.email = "Email is required*"
+      } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+      ) {
+        errors.email = "Invalid email format"
+      }
+      if (!values.selectedAmount) {
+        errors.selectedAmount = "Amount is required*"
+      }
+      return errors
+    },
+    onSubmit: (values) => {
+      console.log("Form submitted with values:", values)
+    },
+  })
 
   return (
     <>
@@ -69,7 +94,17 @@ export default function SingleOrder() {
                           }
                           value={selectedAmount}
                           onChange={handleManualAmountInput}
+                          onBlur={formik.handleBlur}
                         />
+                        {formik.touched.selectedAmount &&
+                        formik.errors.selectedAmount &&
+                        !selectedAmount ? (
+                          <div
+                            className={`${styles.required} ${styles["error-message"]}`}
+                          >
+                            {formik.errors.selectedAmount}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="mt-3">
                         <span className="py-3 mr-2">Popular Amounts</span>
@@ -81,7 +116,7 @@ export default function SingleOrder() {
                             }
                             className={"mr-2"}
                             onClick={() => {
-                              setSelectedAmount(amount);
+                              setSelectedAmount(amount)
                             }}
                           />
                         ))}
@@ -90,7 +125,18 @@ export default function SingleOrder() {
                         <PFInput
                           placeholder="Enter Email Address"
                           type="email"
+                          name="email"
+                          value={formik.values.email}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
+                        {formik.touched.email && formik.errors.email ? (
+                          <p
+                            className={`${styles.required} ${styles["error-message"]}`}
+                          >
+                            {formik.errors.email}
+                          </p>
+                        ) : null}
                       </div>
                       <PFButton
                         type="submit"
@@ -98,8 +144,9 @@ export default function SingleOrder() {
                         name="orderButton"
                         buttonText={"Order Now"}
                         className={"w-full mt-3"}
+                        onClick={formik.handleSubmit}
+                        disabled={!formik.isValid}
                       />
-
                       <div className="mt-3 px-1 text-sm">
                         {selectedAmount && (
                           <>
@@ -199,5 +246,5 @@ export default function SingleOrder() {
       </section>
       <CookieModal />
     </>
-  );
+  )
 }
