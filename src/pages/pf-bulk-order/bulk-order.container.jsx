@@ -6,8 +6,12 @@ import PFSelect from "../../component/select/index";
 import styles from "./bulk-order.module.css";
 import { emailValidation, requiredValidation } from "../../utils/validation";
 import PFButton from "../../component/pf-button";
+import { useNavigate } from "react-router-dom";
+import { URLs } from "../../routes/urls";
 
 const PFBulkOrder = () => {
+  const nav = useNavigate();
+
   const countries = [
     {
       value: "USA",
@@ -111,6 +115,10 @@ const PFBulkOrder = () => {
       console.log(values);
     },
   });
+
+  const handleAddToInvoice = () => {
+    nav(URLs.ORDER_INVOICE);
+  };
 
   return (
     <>
@@ -331,6 +339,7 @@ const PFBulkOrder = () => {
                       type="submit"
                       buttonText="Add to Invoice"
                       className="w-full"
+                      onClick={handleAddToInvoice}
                     />
                   </div>
                 </div>
@@ -416,6 +425,7 @@ const PFBulkOrder = () => {
                       className={"w-full"}
                       type="submit"
                       buttonText={"Add to Invoice"}
+                      onClick={handleAddToInvoice}
                     ></PFButton>
                   </div>
                 </div>
