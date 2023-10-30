@@ -10,6 +10,11 @@ import { Radio } from "../../component/pf-radio/radio.container";
 import { useNavigate } from "react-router-dom";
 import { URLs } from "../../routes/urls";
 
+const paymentMethods = {
+  btc: "BTC",
+  wireTransfer: "wireTransfer",
+};
+
 const PFBulkOrder = () => {
   const nav = useNavigate();
 
@@ -58,16 +63,20 @@ const PFBulkOrder = () => {
     },
   ];
   const [total, setTotal] = useState(60);
-  const [isChecked, setIsChecked] = useState(false);
+  const [isAllowInternationalPurchases, setIsAllowedInternationalPurchases] =
+    useState(false);
   const [selectedCountry, setSelectedCountry] = useState("USA");
   const [selectedState, setSelectedState] = useState("NY");
   const [selectedCardType, setSelectedCardType] = useState("master/visa");
-  const [selectedPayment, setSelectedPayment] = useState("WireTransfer");
-  const handleRadioChange = (e) => {
-    setSelectedPayment(e.target.value);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(
+    paymentMethods?.wireTransfer
+  );
+
+  const handleSelectedPaymentMethodChange = (e) => {
+    setSelectedPaymentMethod(e.target.value);
   };
-  const handleCheckboxChange = (event) => {
-    setIsChecked(event.target.checked);
+  const handleInternationalPurchasePermChange = (event) => {
+    setIsAllowedInternationalPurchases(event.target.checked);
   };
 
   const validate = (values) => {
@@ -210,8 +219,8 @@ const PFBulkOrder = () => {
 
                     <PFCheckbox
                       label="Allow International Purchases?"
-                      checked={isChecked}
-                      onChange={handleCheckboxChange}
+                      checked={isAllowInternationalPurchases}
+                      onChange={handleInternationalPurchasePermChange}
                     />
                   </div>
 
@@ -221,21 +230,20 @@ const PFBulkOrder = () => {
                     </h3>
                     <Radio
                       label="Wire Transfer"
-                      value={"WireTransfer"}
-                      checked={selectedPayment === "WireTransfer"}
-                      onChange={handleRadioChange}
+                      value={paymentMethods?.wireTransfer}
+                      checked={
+                        selectedPaymentMethod === paymentMethods?.wireTransfer
+                      }
+                      onChange={handleSelectedPaymentMethodChange}
+                      labelClass={"mr-4"}
                     />
-                    <span className={styles.gap}></span>
 
                     <Radio
                       label="BTC"
-                      value={"BTC"}
-                      checked={selectedPayment === "BTC"}
-                      onChange={handleRadioChange}
+                      value={paymentMethods?.btc}
+                      checked={selectedPaymentMethod === paymentMethods?.btc}
+                      onChange={handleSelectedPaymentMethodChange}
                       disabled={formik.values.loadAmount > 500}
-                      // className={
-                      //   formik.values.loadAmount > 500 ? styles.notAllowed : styles.pointer
-                      // }
                     />
                   </div>
 
@@ -408,7 +416,7 @@ const PFBulkOrder = () => {
 
                       <p className="text-slate-400 font-semibold">$ 20</p>
                     </div>
-                    {selectedPayment === "WireTransfer" && (
+                    {selectedPaymentMethod === paymentMethods?.wireTransfer && (
                       <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                         <div>
                           <h5 className="font-semibold">Wire Transfer Fee:</h5>
@@ -417,7 +425,7 @@ const PFBulkOrder = () => {
                         <p className="text-slate-400 font-semibold">$ 20</p>
                       </div>
                     )}
-                    {selectedPayment === "BTC" && (
+                    {selectedPaymentMethod === paymentMethods?.btc && (
                       <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                         <div>
                           <h5 className="font-semibold">BTC Exchange Fee:</h5>
@@ -426,7 +434,7 @@ const PFBulkOrder = () => {
                         <p className="text-slate-400 font-semibold">$ 20</p>
                       </div>
                     )}
-                    {selectedPayment === "WireTransfer" && (
+                    {selectedPaymentMethod === paymentMethods?.wireTransfer && (
                       <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                         <div>
                           <h5 className="font-semibold">
@@ -451,7 +459,11 @@ const PFBulkOrder = () => {
                         </p> */}
                       </div>
 
-                      {isChecked===true?<p className="text-slate-400 font-semibold">$ 20</p>: <p className="text-slate-400 font-semibold">$0</p> }
+                      {isAllowInternationalPurchases === true ? (
+                        <p className="text-slate-400 font-semibold">$ 20</p>
+                      ) : (
+                        <p className="text-slate-400 font-semibold">$0</p>
+                      )}
                     </div>
                     <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                       <div>
@@ -460,7 +472,7 @@ const PFBulkOrder = () => {
 
                       <p className="font-semibold">$ {total}</p>
                     </div>
-                    {selectedPayment === "BTC" && (
+                    {selectedPaymentMethod === paymentMethods?.btc && (
                       <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                         <div>
                           <h5 className="font-semibold">Total (BTC)</h5>

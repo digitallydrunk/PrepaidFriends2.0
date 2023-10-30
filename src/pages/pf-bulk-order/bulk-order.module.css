@@ -1,27 +1,17 @@
-.maxWidth{
-    max-width: 1200px;
+.maxWidth {
+  max-width: 1200px;
 }
-.background{
-    background-color: aqua;
+.background {
+  background-color: aqua;
 }
-.required{
-    font-size: small;
-    color: red;
+.required {
+  font-size: small;
+  color: red;
 }
-.margintop{
-    margin-top: 8px;
+.margintop {
+  margin-top: 8px;
 }
-.cartdescp{
-    font-weight: 600;
-    max-width: 70%;
-}
-.gap{
-    padding-inline: 24px;
-}
-
-.pointer{
-    cursor: pointer;
-}
-.notAllowed{
-    cursor: not-allowed;
+.cartdescp {
+  font-weight: 600;
+  max-width: 70%;
 }
