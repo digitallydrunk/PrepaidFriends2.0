@@ -10,6 +10,7 @@ import Contact from "../pages/pf-contact";
 import SingleOrder from "../pages/pf-single-order/singleorder.container";
 import BulkOrder from "../pages/pf-bulk-order";
 import OrderInvoice from "../pages/pf-order-invoice";
+import Payment from "../pages/pf-payment";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: URLs.SINGLE_ORDER,
         element: <SingleOrder />,
+      },
+      {
+        path: URLs.PAYMENT,
+        element: <Payment />,
       },
       {
         path: URLs.BULK_ORDER,
