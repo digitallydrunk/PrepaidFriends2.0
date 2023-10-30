@@ -16,9 +16,6 @@
 .tags:hover {
   border-color: #7b74ec !important;
 }
-.tags::selection {
-  border-color: #7b74ec !important;
-}
 .add-on-after-input {
   padding-top: 2rem;
   font-size: 0.8rem;
