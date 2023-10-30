@@ -1,50 +1,49 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Logo_icon_64 from '../../assets/images/logo-icon-64.png';
-import { useFormik } from 'formik';
-import {PFInput} from '../../component/input/input.container';
-import style from './signup.container.module.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import Logo_icon_64 from "../../assets/images/logo-icon-64.png";
+import { useFormik } from "formik";
+import { PFInput } from "../../component/input/input.container";
+import style from "./signup.module.css";
+import { requiredValidation, validateEmail } from "../../utils/validation";
+import { URLs } from "../../routes/urls";
+import PFButton from "../../component/pf-button";
 
-const Signuppage = () => {
+const SignUp = () => {
   const formik = useFormik({
     initialValues: {
-      RegisterFirstName: '',
-      RegisterLastName: '',
-      LoginEmail: '',
-      BusinessName: '',
-      AcceptTandC: false,
+      firstName: "",
+      lastName: "",
+      email: "",
+      businessName: "",
+      termsAndConditionsCheck: false,
     },
+
     validate: (values) => {
       const errors = {};
 
-      if (!values.RegisterFirstName.trim()) {
-        errors.RegisterFirstName = 'Required*';
+      if (!values.firstName) {
+        errors.firstName = requiredValidation?.error;
       }
-      if (!values.RegisterLastName.trim()) {
-        errors.RegisterLastName = 'Required*';
+      if (!values.lastName) {
+        errors.lastName = requiredValidation?.error;
       }
-      if (!values.LoginEmail.trim()) {
-        errors.LoginEmail = 'Required*';
-      } else if (!isValidEmail(values.LoginEmail)) {
-        errors.LoginEmail = 'Invalid email format';
+      errors.email = validateEmail(values?.email);
+
+      if (!values.businessName) {
+        errors.businessName = requiredValidation?.error;
       }
-      if (!values.BusinessName.trim()) {
-        errors.BusinessName = 'Required*';
-      }
-      if (!values.AcceptTandC) {
-        errors.AcceptTandC = 'You must accept the Terms and Conditions';
+      if (!values.termsAndConditionsCheck) {
+        errors.termsAndConditionsCheck =
+          "You must accept the Terms and Conditions";
       }
 
       return errors;
     },
     onSubmit: (values) => {
+      // Handle Form Submission
       console.log(values);
     },
   });
-
-  const isValidEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
 
   return (
     <>
@@ -53,96 +52,113 @@ const Signuppage = () => {
         <div className="container relative">
           <div className="flex justify-center">
             <div className="max-w-[400px] w-full m-auto p-6 bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-800 rounded-md">
-              <Link to="/index">
+              <Link to={URLs?.BASE}>
                 <img src={Logo_icon_64} className="mx-auto" alt="" />
               </Link>
-              <h5 className="my-6 text-xl font-semibold">Signup</h5>
+              <h5 className="my-6 text-xl font-semibold">Sign Up</h5>
               <form onSubmit={formik.handleSubmit} className="text-start">
                 <div className="grid grid-cols-1 gap-4">
                   <div>
                     <PFInput
                       label="Enter First Name"
-                      id="RegisterFirstName"
-                      name="RegisterFirstName"
+                      id="firstName"
+                      name="firstName"
                       type="text"
                       placeholder="Enter your first name"
-                      value={formik.values.RegisterFirstName}
+                      value={formik.values.firstName}
                       onChange={formik.handleChange}
                     />
-                    {formik.touched.RegisterFirstName && formik.errors.RegisterFirstName && (
-                      <p className={style.red}>{formik.errors.RegisterFirstName}</p>
+                    {formik.touched.firstName && formik.errors.firstName && (
+                      <p className={style.red}>{formik.errors.firstName}</p>
                     )}
                   </div>
                   <div>
                     <PFInput
                       label="Enter Last Name"
-                      id="RegisterLastName"
-                      name="RegisterLastName"
+                      id="lastName"
+                      name="lastName"
                       type="text"
                       placeholder="Enter your last name"
-                      value={formik.values.RegisterLastName}
+                      value={formik.values.lastName}
                       onChange={formik.handleChange}
                     />
-                    {formik.touched.RegisterLastName && formik.errors.RegisterLastName && (
-                      <p className={style.red}>{formik.errors.RegisterLastName}</p>
+                    {formik.touched.lastName && formik.errors.lastName && (
+                      <p className={style.red}>{formik.errors.lastName}</p>
                     )}
                   </div>
                   <div>
                     <PFInput
                       label="Email Address"
-                      id="LoginEmail"
-                      name="LoginEmail"
+                      id="email"
+                      name="email"
                       type="text"
                       placeholder="name@example.com"
-                      value={formik.values.LoginEmail}
+                      value={formik.values.email}
                       onChange={formik.handleChange}
                     />
-                    {formik.touched.LoginEmail && formik.errors.LoginEmail && (
-                      <p className={style.red}>{formik.errors.LoginEmail}</p>
+                    {formik.touched.email && formik.errors.email && (
+                      <p className={style.red}>{formik.errors.email}</p>
                     )}
                   </div>
                   <div>
                     <PFInput
                       label="Business Name"
-                      id="BusinessName"
-                      name="BusinessName"
+                      id="businessName"
+                      name="businessName"
                       type="text"
                       placeholder="Enter your business name"
-                      value={formik.values.BusinessName}
+                      value={formik.values.businessName}
                       onChange={formik.handleChange}
                     />
-                    {formik.touched.BusinessName && formik.errors.BusinessName && (
-                      <p className={style.red}>{formik.errors.BusinessName}</p>
-                    )}
+                    {formik.touched.businessName &&
+                      formik.errors.businessName && (
+                        <p className={style.red}>
+                          {formik.errors.businessName}
+                        </p>
+                      )}
                   </div>
                   <div>
                     <div className="flex items-center mb-0">
                       <input
                         className="form-checkbox rounded border-gray-200 dark:border-gray-800 text-indigo-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 me-2"
                         type="checkbox"
-                        id="AcceptTandC"
-                        name="AcceptTandC"
-                        checked={formik.values.AcceptTandC}
+                        id="termsAndConditionsCheck"
+                        name="termsAndConditionsCheck"
+                        checked={formik.values.termsAndConditionsCheck}
                         onChange={formik.handleChange}
                       />
-                      <label className="form-check-label text-slate-400" htmlFor="AcceptTandC">
-                        I Accept <Link className="text-indigo-600">Terms And Condition</Link>
+                      <label
+                        className="form-check-label text-slate-400"
+                        htmlFor="termsAndConditionsCheck"
+                      >
+                        I Accept{" "}
+                        <Link className="text-indigo-600">
+                          Terms And Condition
+                        </Link>
                       </label>
                     </div>
-                    {formik.touched.AcceptTandC && formik.errors.AcceptTandC && (
-                      <p className={style.red}>{formik.errors.AcceptTandC}</p>
-                    )}
+                    {formik.touched.termsAndConditionsCheck &&
+                      formik.errors.termsAndConditionsCheck && (
+                        <p className={style.red}>
+                          {formik.errors.termsAndConditionsCheck}
+                        </p>
+                      )}
                   </div>
                   <div>
-                    <input
+                    <PFButton
                       type="submit"
-                      className="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full"
-                      value="Register"
+                      className={"w-full"}
+                      buttonText="Register"
                     />
                   </div>
                   <div className="text-center">
-                    <span className="text-slate-400 me-2">Already have an account ? </span>
-                    <Link to="/auth-login" className="text-black dark:text-white font-bold inline-block">
+                    <span className="text-slate-400 me-2">
+                      Already have an account ?{" "}
+                    </span>
+                    <Link
+                      to={URLs?.LOGIN}
+                      className="text-black dark:text-white font-bold inline-block"
+                    >
                       Sign in
                     </Link>
                   </div>
@@ -156,4 +172,4 @@ const Signuppage = () => {
   );
 };
 
-export { Signuppage };
+export { SignUp };

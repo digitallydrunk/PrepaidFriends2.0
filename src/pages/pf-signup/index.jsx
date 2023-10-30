@@ -1,3 +1,3 @@
-import { Signuppage } from "./signup.container";
+import { SignUp } from "./signup.container";
 
-export default Signuppage;
+export default SignUp;
