@@ -6,8 +6,14 @@ import PFSelect from "../../component/select/index";
 import styles from "./bulk-order.module.css";
 import { emailValidation, requiredValidation } from "../../utils/validation";
 import PFButton from "../../component/pf-button";
+import { Radio } from "../../component/pf-radio/radio.container";
 import { useNavigate } from "react-router-dom";
 import { URLs } from "../../routes/urls";
+
+const paymentMethods = {
+  btc: "BTC",
+  wireTransfer: "wireTransfer",
+};
 
 const PFBulkOrder = () => {
   const nav = useNavigate();
@@ -56,9 +62,22 @@ const PFBulkOrder = () => {
       label: "Visa Card Only",
     },
   ];
+  const [total, setTotal] = useState(60);
+  const [isAllowInternationalPurchases, setIsAllowedInternationalPurchases] =
+    useState(false);
   const [selectedCountry, setSelectedCountry] = useState("USA");
   const [selectedState, setSelectedState] = useState("NY");
   const [selectedCardType, setSelectedCardType] = useState("master/visa");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(
+    paymentMethods?.wireTransfer
+  );
+
+  const handleSelectedPaymentMethodChange = (e) => {
+    setSelectedPaymentMethod(e.target.value);
+  };
+  const handleInternationalPurchasePermChange = (event) => {
+    setIsAllowedInternationalPurchases(event.target.checked);
+  };
 
   const validate = (values) => {
     const errors = {};
@@ -198,14 +217,41 @@ const PFBulkOrder = () => {
                     <PFInput placeholder="Broker ID" />
                     <PFSelect placeholder="BIN" />
 
-                    <PFCheckbox label="Allow International Purchases?" />
+                    <PFCheckbox
+                      label="Allow International Purchases?"
+                      checked={isAllowInternationalPurchases}
+                      onChange={handleInternationalPurchasePermChange}
+                    />
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl leading-normal font-semibold mt-6 mb-2">
+                      Select Payment Method
+                    </h3>
+                    <Radio
+                      label="Wire Transfer"
+                      value={paymentMethods?.wireTransfer}
+                      checked={
+                        selectedPaymentMethod === paymentMethods?.wireTransfer
+                      }
+                      onChange={handleSelectedPaymentMethodChange}
+                      labelClass={"mr-4"}
+                    />
+
+                    <Radio
+                      label="BTC"
+                      value={paymentMethods?.btc}
+                      checked={selectedPaymentMethod === paymentMethods?.btc}
+                      onChange={handleSelectedPaymentMethodChange}
+                      disabled={formik.values.loadAmount > 500}
+                    />
                   </div>
 
                   <h3 className="text-xl leading-normal font-semibold mt-6">
                     Business Information
                   </h3>
 
-                  <div className="grid lg:grid-cols-12 grid-cols-1 mt-6 gap-5">
+                  <div className="grid lg:grid-cols-12 grid-cols-1 mt-3 gap-5">
                     <div className="lg:col-span-6">
                       <PFInput
                         id="firstName"
@@ -365,30 +411,43 @@ const PFBulkOrder = () => {
                     </div>
                     <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                       <div>
-                        <h5 className="font-semibold">Wire Transfer Fee:</h5>
+                        <h5 className="font-semibold">Value Per Card:</h5>
                       </div>
 
                       <p className="text-slate-400 font-semibold">$ 20</p>
                     </div>
-                    <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
-                      <div>
-                        <h5 className="font-semibold">Wire Identifier Fee:</h5>
-                      </div>
+                    {selectedPaymentMethod === paymentMethods?.wireTransfer && (
+                      <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
+                        <div>
+                          <h5 className="font-semibold">Wire Transfer Fee:</h5>
+                        </div>
 
-                      <p className="text-slate-400 font-semibold">$ 20</p>
-                    </div>
-                    <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
-                      <div>
-                        <h5 className="font-semibold">
-                          Invoice Identifier Fee:
-                        </h5>
-                        {/* <p className="text-sm text-slate-400">
+                        <p className="text-slate-400 font-semibold">$ 20</p>
+                      </div>
+                    )}
+                    {selectedPaymentMethod === paymentMethods?.btc && (
+                      <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
+                        <div>
+                          <h5 className="font-semibold">BTC Exchange Fee:</h5>
+                        </div>
+
+                        <p className="text-slate-400 font-semibold">$ 20</p>
+                      </div>
+                    )}
+                    {selectedPaymentMethod === paymentMethods?.wireTransfer && (
+                      <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
+                        <div>
+                          <h5 className="font-semibold">
+                            Invoice Identifier Fee:
+                          </h5>
+                          {/* <p className="text-sm text-slate-400">
                           Brief description
                         </p> */}
-                      </div>
+                        </div>
 
-                      <p className="text-slate-400 font-semibold">$ 20</p>
-                    </div>
+                        <p className="text-slate-400 font-semibold">$ 20</p>
+                      </div>
+                    )}
 
                     <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                       <div>
@@ -400,22 +459,28 @@ const PFBulkOrder = () => {
                         </p> */}
                       </div>
 
-                      <p className="text-slate-400 font-semibold">$ 20</p>
+                      {isAllowInternationalPurchases === true ? (
+                        <p className="text-slate-400 font-semibold">$ 20</p>
+                      ) : (
+                        <p className="text-slate-400 font-semibold">$0</p>
+                      )}
                     </div>
                     <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                       <div>
                         <h5 className="font-semibold">Total (USD)</h5>
                       </div>
 
-                      <p className="font-semibold">$ 30</p>
+                      <p className="font-semibold">$ {total}</p>
                     </div>
-                    <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
-                      <div>
-                        <h5 className="font-semibold">Total (BTC)</h5>
-                      </div>
+                    {selectedPaymentMethod === paymentMethods?.btc && (
+                      <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
+                        <div>
+                          <h5 className="font-semibold">Total (BTC)</h5>
+                        </div>
 
-                      <p className="font-semibold">0.122323</p>
-                    </div>
+                        <p className="font-semibold">0.122323</p>
+                      </div>
+                    )}
                     <div className="p-3">
                       <PFCheckbox label="Agree terms & Conditions" />
                     </div>
