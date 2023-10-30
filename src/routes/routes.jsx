@@ -11,6 +11,7 @@ import SingleOrder from "../pages/pf-single-order/singleorder.container";
 import BulkOrder from "../pages/pf-bulk-order";
 import OrderInvoice from "../pages/pf-order-invoice";
 import Payment from "../pages/pf-payment";
+import SignUp from "../pages/pf-signup";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: URLs.LOGIN,
         element: <LoginPage />,
+      },
+      {
+        path: URLs.SIGN_UP,
+        element: <SignUp />,
       },
       {
         path: URLs.CONTACT,
