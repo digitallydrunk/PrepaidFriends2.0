@@ -20,6 +20,11 @@
   font-size: 0.8rem;
   font-weight: 500;
 }
+.add-on-before-input{
+  padding-top: 2rem;
+  font-size: 0.89rem;
+  font-weight: 500;
+}
 
 .additional-transaction-label {
   flex: 1;

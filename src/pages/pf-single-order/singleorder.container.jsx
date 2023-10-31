@@ -80,11 +80,14 @@ export default function SingleOrder() {
                       <div>
                         <PFInput
                           label="Enter Prepaid Card Amount"
-                          placeholder="$0.00"
+                          placeholder="0.00"
                           type="number"
                           min="0"
                           addOnAfter={
                             <p className={styles["add-on-after-input"]}>USD</p>
+                          }
+                          addOnBefore={
+                            <p className={styles["add-on-before-input"]}>$</p>
                           }
                           value={selectedAmount}
                           onChange={handleManualAmountInput}

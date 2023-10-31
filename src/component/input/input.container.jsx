@@ -7,6 +7,7 @@ const PFInput = ({
   id,
   label,
   addOnAfter,
+  addOnBefore,
   htmlFor,
   type = "input",
   placeholder,
@@ -55,6 +56,9 @@ const PFInput = ({
           />
           {addOnAfter && (
             <div className={styles.insidePosition}>{addOnAfter}</div>
+          )}
+            {addOnBefore && (
+            <div className={styles.leftsidePosition}>{addOnBefore}</div>
           )}
         </div>
       )}
