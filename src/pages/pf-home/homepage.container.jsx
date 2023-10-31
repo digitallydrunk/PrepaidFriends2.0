@@ -3,6 +3,9 @@ import PFAccordion from "../../component/pf-accordion";
 import { featuresData } from "../../data/features";
 import * as Icon from "react-feather";
 import { Link } from "react-router-dom";
+import PFButton from "../../component/pf-button";
+import { AiFillCreditCard } from "react-icons/ai";
+import { PiCardholder } from "react-icons/pi";
 
 const Homepage = () => {
   return (
@@ -52,6 +55,39 @@ const Homepage = () => {
           </div>
         </div>
       </section>
+
+      <div className="container relative md:mt-24 mt-16">
+        <div className="grid grid-cols-1 text-center">
+          <h3 className="mb-4 md:text-3xl md:leading-normal text-2xl leading-normal font-semibold">
+            Grab your Deal Now!
+          </h3>
+
+          <p className="text-slate-400 max-w-xl mx-auto">
+            Shop Now and Save Big
+          </p>
+
+          <div className="mt-6 flex justify-center">
+            <PFButton
+              buttonText={
+                <div className="flex justify-between items-center">
+                  <AiFillCreditCard className="mr-2 text-2xl" />{" "}
+                  <p>Buy Single Card</p>
+                </div>
+              }
+              className={"mr-4"}
+            />
+            <PFButton
+              buttonText={
+                <div className="flex justify-between items-center">
+                  <PiCardholder className="mr-2 text-2xl" />{" "}
+                  <p>Order In Bulk</p>
+                </div>
+              }
+              className={"mr-4"}
+            />
+          </div>
+        </div>
+      </div>
 
       <div className="container relative mt-16">
         <div className="grid grid-cols-1 pb-8 text-center">
