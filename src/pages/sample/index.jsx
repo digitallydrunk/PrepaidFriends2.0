@@ -8,6 +8,7 @@ import LoginPage from "../pf-login";
 import Radio from "../../component/pf-radio";
 import PFTag from "../../component/pf-tag";
 import PFButton from "../../component/pf-button";
+import Navbar from "../../component/navbar1";
 const faqData = [
   {
     key: "1",
@@ -45,6 +46,7 @@ const Sample = () => {
   };
   return (
     <>
+    <Navbar/>
       <PFButton buttonText={"Button Test"} />
       <PFTag />
       <PFTag variant="primary" />
