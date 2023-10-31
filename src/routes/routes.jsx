@@ -8,6 +8,10 @@ import { URLs } from "./urls";
 import LoginPage from "../pages/pf-login";
 import Contact from "../pages/pf-contact";
 import SingleOrder from "../pages/pf-single-order/singleorder.container";
+import BulkOrder from "../pages/pf-bulk-order";
+import OrderInvoice from "../pages/pf-order-invoice";
+import Payment from "../pages/pf-payment";
+import SignUp from "../pages/pf-signup";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +27,10 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
+        path: URLs.SIGN_UP,
+        element: <SignUp />,
+      },
+      {
         path: URLs.CONTACT,
         element: <Contact />,
       },
@@ -33,6 +41,18 @@ const router = createBrowserRouter([
       {
         path: URLs.SINGLE_ORDER,
         element: <SingleOrder />,
+      },
+      {
+        path: URLs.PAYMENT,
+        element: <Payment />,
+      },
+      {
+        path: URLs.BULK_ORDER,
+        element: <BulkOrder />,
+      },
+      {
+        path: URLs.ORDER_INVOICE,
+        element: <OrderInvoice />,
       },
     ],
   },

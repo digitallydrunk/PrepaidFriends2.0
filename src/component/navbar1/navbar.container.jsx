@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo_dark from "../../assets/images/logo-dark.png";
 import logo_light from "../../assets/images/logo-light.png";
 
@@ -12,95 +12,22 @@ import { URLs } from "../../routes/urls";
 
 const Navbar = () => {
   const nav = useNavigate();
-  const [isMenu, setisMenu] = useState(false);
+  const location = useLocation();
+  const [isMenu, setIsMenu] = useState(false);
   const [navbarSticky, setNavbarSticky] = useState(false);
   const [isAccount, setIsAccount] = useState(false);
-  // Should be managed through real authentication
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   window.addEventListener("scroll", windowScroll);
+
   function windowScroll() {
     setNavbarSticky(
       document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50
     );
   }
-  function getClosest(elem, selector) {
-    if (!Element.prototype.matches) {
-      Element.prototype.matches =
-        Element.prototype.matchesSelector ||
-        Element.prototype.mozMatchesSelector ||
-        Element.prototype.msMatchesSelector ||
-        Element.prototype.oMatchesSelector ||
-        Element.prototype.webkitMatchesSelector ||
-        function (s) {
-          var matches = (this.document || this.ownerDocument).querySelectorAll(
-              s
-            ),
-            i = matches.length;
-          while (--i >= 0 && matches.item(i) !== this) {}
-          return i > -1;
-        };
-    }
 
-    // Get the closest matching element
-    for (; elem && elem !== document; elem = elem.parentNode) {
-      if (elem.matches(selector)) return elem;
-    }
-    return null;
-  }
-
-  function activateMenu() {
-    var menuItems = document.getElementsByClassName("sub-menu-item");
-    if (menuItems) {
-      var matchingMenuItem = null;
-      for (var idx = 0; idx < menuItems.length; idx++) {
-        if (menuItems[idx].href === window.location.href) {
-          matchingMenuItem = menuItems[idx];
-        }
-      }
-
-      if (matchingMenuItem) {
-        matchingMenuItem.classList.add("active");
-
-        var immediateParent = getClosest(matchingMenuItem, "li");
-
-        if (immediateParent) {
-          immediateParent.classList.add("active");
-        }
-
-        var parent = getClosest(immediateParent, ".child-menu-item");
-        if (parent) {
-          parent.classList.add("active");
-        }
-
-        var parent = getClosest(parent || immediateParent, ".parent-menu-item");
-
-        if (parent) {
-          parent.classList.add("active");
-
-          var parentMenuitem = parent.querySelector(".menu-item");
-          if (parentMenuitem) {
-            parentMenuitem.classList.add("active");
-          }
-
-          var parentOfParent = getClosest(parent, ".parent-parent-menu-item");
-          if (parentOfParent) {
-            parentOfParent.classList.add("active");
-          }
-        } else {
-          var parentOfParent = getClosest(
-            matchingMenuItem,
-            ".parent-parent-menu-item"
-          );
-          if (parentOfParent) {
-            parentOfParent.classList.add("active");
-          }
-        }
-      }
-    }
-  }
   const toggleMenu = () => {
-    setisMenu(!isMenu);
+    setIsMenu(!isMenu);
     if (document.getElementById("navigation")) {
       const anchorArray = Array.from(
         document.getElementById("navigation").getElementsByTagName("a")
@@ -129,10 +56,18 @@ const Navbar = () => {
     activateMenu();
   }, []);
 
+  const activateMenu = () => {
+    
+  };
+
+  const isLinkActive = (path) => {
+    return location.pathname === path ? "active" : "";
+  };
+
   return (
     <nav
       id="topnav"
-      className={`${navbarSticky ? "nav-sticky" : " defaultscroll"}`}
+      className={`${navbarSticky ? "nav-sticky" : "defaultscroll"}`}
     >
       <div className="container relative">
         <Link className="logo" to="/index">
@@ -169,15 +104,12 @@ const Navbar = () => {
               <i className="mdi mdi-account"></i>
             </button>
             {isAccount ? (
-              <div className="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-44 rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 ">
-                <ul
-                  className="py-2 text-start"
-                  aria-labelledby="dropdownDefault"
-                >
+              <div className="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-44 rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800">
+                <ul className="py-2 text-start" aria-labelledby="dropdownDefault">
                   <li>
                     <Link
                       to="/shop-account"
-                      className="flex items-center py-1.5 px-4 hover:text-indigo-600"
+                      className={`flex items-center py-1.5 px-4 ${isLinkActive("/shop-account")}`}
                     >
                       <AiOutlineUser className="me-2" /> Account
                     </Link>
@@ -185,20 +117,18 @@ const Navbar = () => {
                   <li>
                     <Link
                       to="/shop-cart"
-                      className="flex items-center py-1.5 px-4 hover:text-indigo-600"
+                      className={`flex items-center py-1.5 px-4 ${isLinkActive("/shop-cart")}`}
                     >
-                      <PiNoteDuotone className="align-middle me-1" /> Order
-                      History
+                      <PiNoteDuotone className="align-middle me-1" /> Order History
                     </Link>
                   </li>
                   <li className="border-t border-gray-100 dark:border-gray-800 my-2"></li>
                   <li>
                     <Link
                       to="/auth-login"
-                      className="flex items-center py-1.5 px-4 hover:text-indigo-600"
+                      className={`flex items-center py-1.5 px-4 ${isLinkActive("/auth-login")}`}
                     >
-                      <LiaSignOutAltSolid className="align-middle me-2 w-5 h-5" />{" "}
-                      Logout
+                      <LiaSignOutAltSolid className="align-middle me-2 w-5 h-5" /> Logout
                     </Link>
                   </li>
                 </ul>
@@ -211,28 +141,32 @@ const Navbar = () => {
 
         <div id="navigation" style={{ display: isMenu ? "block" : "none" }}>
           <ul className="navigation-menu">
-            <li>
-              <Link to={URLs.BASE} className="sub-menu-item">
+            <li className="has-submenu parent-menu-item">
+              <Link to={URLs.BASE} className={`sub-menu-item ${isLinkActive(URLs.BASE)}`}>
                 Home
               </Link>
             </li>
 
-            <li>
-              <Link to={URLs.SINGLE_ORDER} className="sub-menu-item">
+            <li className="has-submenu parent-menu-item">
+              <Link to={URLs.SINGLE_ORDER} className={`sub-menu-item ${isLinkActive(URLs.SINGLE_ORDER)}`}>
                 Single Order
+              </Link>
+            </li>
+              
+            <li className="has-submenu parent-menu-item">
+              <Link to={URLs.BULK_ORDER} className={`sub-menu-item ${isLinkActive(URLs.BULK_ORDER)}`}>
+                Bulk Order
               </Link>
             </li>
 
             <li className="has-submenu parent-menu-item">
-              <Link to={URLs.BULK_ORDER}>Bulk Order</Link>
+              <Link to={URLs.HOW_IT_WORKS} className={`sub-menu-item ${isLinkActive(URLs.HOW_IT_WORKS)}`}>
+                How It Works
+              </Link>
             </li>
 
             <li className="has-submenu parent-menu-item">
-              <Link to={URLs.HOW_IT_WORKS}>How It Works</Link>
-            </li>
-
-            <li>
-              <Link to={URLs.CONTACT} className="sub-menu-item">
+              <Link to={URLs.CONTACT} className={`sub-menu-item ${isLinkActive(URLs.CONTACT)}`}>
                 Contact
               </Link>
             </li>

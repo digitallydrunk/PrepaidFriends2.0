@@ -7,20 +7,19 @@ import PFInput from "../../component/input";
 import PFCheckbox from "../../component/checkbox";
 import styles from "./login.container.module.css";
 import { URLs } from "../../routes/urls";
+import { emailValidation, requiredValidation } from "../../utils/validation";
 
 const LoginPage = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const validate = (values) => {
     const errors = {};
     if (!values.email) {
-      errors.email = "Required";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
-      errors.email = "Invalid email address";
+      errors.email = requiredValidation?.error;
+    } else if (emailValidation.regEx.test(values.email)) {
+      errors.email = emailValidation?.error;
     }
     if (!values.password) {
-      errors.password = "Required";
+      errors.password = requiredValidation?.error;
     }
 
     return errors;
