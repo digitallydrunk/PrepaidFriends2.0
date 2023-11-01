@@ -9,6 +9,10 @@ import Radio from "../../component/pf-radio";
 import PFTag from "../../component/pf-tag";
 import PFButton from "../../component/pf-button";
 import Navbar from "../../component/navbar1";
+import Carousel from "../../component/pf-carousel";
+import imageP from '../../assets/images/client/01.jpg';
+import image1 from '../../assets/images/client/02.jpg';
+import image2 from '../../assets/images/client/03.jpg';
 const faqData = [
   {
     key: "1",
@@ -39,6 +43,71 @@ const faqData = [
   },
 ];
 
+const carouselSettings = {
+  container: '.tiny-three-item',
+  controls: false,
+  mouseDrag: true,
+  loop: true,
+  rewind: true,
+  autoplay: true,
+  autoplayButtonOutput: false,
+  autoplayTimeout: 3000,
+  navPosition: "bottom",
+  speed: 400,
+  gutter: 12,
+  responsive: {
+      992: {
+          items: 3
+      },
+
+      767: {
+          items: 2
+      },
+
+      320: {
+          items: 1
+      },
+  },
+}
+const carouselItems = [
+  {
+      description: '" It seems that only fragments of the original text remain in the Lorem Ipsum texts used today. "',
+      image: imageP,
+      name: 'Calvin Carlo',
+      role: 'Manager'
+  },
+  {
+      description: `" The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century. "`,
+      image: image1,
+      name: 'Christa Smith',
+      role: 'Manager'
+  },
+  {
+      description: '" One disadvantage of Lorum Ipsum is that in Latin certain letters appear more frequently than others. "',
+      image: image2,
+      name: 'Jemina CLone',
+      role: 'Manager'
+  },
+  {
+    description: '" It seems that only fragments of the original text remain in the Lorem Ipsum texts used today. "',
+    image: imageP,
+    name: 'Calvin Carlo',
+    role: 'Manager'
+  },
+  {
+  description: `" The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century. "`,
+  image: image1,
+  name: 'Christa Smith',
+  role: 'Manager'
+  },
+  {
+  description: '" One disadvantage of Lorum Ipsum is that in Latin certain letters appear more frequently than others. "',
+  image: image2,
+  name: 'Jemina CLone',
+  role: 'Manager'
+  },
+]
+
 const Sample = () => {
   const [selectedOption, setSelectedOption] = useState("option-1");
   const handleRadioChange = (e) => {
@@ -46,7 +115,8 @@ const Sample = () => {
   };
   return (
     <>
-    <Navbar/>
+      <Navbar />
+      <Carousel items={carouselItems} settings={carouselSettings} />
       <PFButton buttonText={"Button Test"} />
       <PFTag />
       <PFTag variant="primary" />
