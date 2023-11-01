@@ -10,9 +10,7 @@ import PFTag from "../../component/pf-tag";
 import PFButton from "../../component/pf-button";
 import Navbar from "../../component/navbar1";
 import Carousel from "../../component/pf-carousel";
-import imageP from "../../assets/images/client/01.jpg";
-import image1 from "../../assets/images/client/02.jpg";
-import image2 from "../../assets/images/client/03.jpg";
+import { testimonialsData } from "../../data/testimonials";
 const faqData = [
   {
     key: "1",
@@ -60,48 +58,6 @@ const carouselSettings = {
     },
   },
 };
-const carouselItems = [
-  {
-    description:
-      '" It seems that only fragments of the original text remain in the Lorem Ipsum texts used today. "',
-    image: imageP,
-    name: "Calvin Carlo",
-    role: "Manager",
-  },
-  {
-    description: `" The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century. "`,
-    image: image1,
-    name: "Christa Smith",
-    role: "Manager",
-  },
-  {
-    description:
-      '" One disadvantage of Lorum Ipsum is that in Latin certain letters appear more frequently than others. "',
-    image: image2,
-    name: "Jemina CLone",
-    role: "Manager",
-  },
-  {
-    description:
-      '" It seems that only fragments of the original text remain in the Lorem Ipsum texts used today. "',
-    image: imageP,
-    name: "Calvin Carlo",
-    role: "Manager",
-  },
-  {
-    description: `" The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century. "`,
-    image: image1,
-    name: "Christa Smith",
-    role: "Manager",
-  },
-  {
-    description:
-      '" One disadvantage of Lorum Ipsum is that in Latin certain letters appear more frequently than others. "',
-    image: image2,
-    name: "Jemina CLone",
-    role: "Manager",
-  },
-];
 
 const Sample = () => {
   const [selectedOption, setSelectedOption] = useState("option-1");
@@ -112,7 +68,7 @@ const Sample = () => {
     <>
       <Navbar />
       <Carousel settings={carouselSettings}>
-        {carouselItems?.map((item, index) => (
+        {testimonialsData?.map((item, index) => (
           <div className="custom-carousel-item" key={index}>
             <div className="custom-carousel-content relative shadow dark:shadow-gray-800 m-2 p-6 bg-white dark:bg-slate-900 before:content-[''] before:absolute before:start-1/2 before:-bottom-[4px] before:box-border before:border-8 before:rotate-[45deg] before:border-t-transparent before:border-e-white dark:before:border-e-slate-900 before:border-b-white dark:before:border-b-slate-900 before:border-s-transparent before:shadow-testi dark:before:shadow-gray-700 before:origin-top-left">
               <i className="mdi mdi-format-quote-open mdi-48px text-indigo-600"></i>
