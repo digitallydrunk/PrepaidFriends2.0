@@ -8,6 +8,7 @@ import LoginPage from "../pf-login";
 import Radio from "../../component/pf-radio";
 import PFTag from "../../component/pf-tag";
 import PFButton from "../../component/pf-button";
+import Payment from "../pf-payment";
 const faqData = [
   {
     key: "1",
@@ -45,7 +46,8 @@ const Sample = () => {
   };
   return (
     <>
-      <PFButton buttonText={"Button Test"} />
+    <Payment/>
+      {/* <PFButton buttonText={"Button Test"} />
       <PFTag />
       <PFTag variant="primary" />
       <PFTag variant="error" />
@@ -93,7 +95,7 @@ const Sample = () => {
         value={"option-3"}
         checked={selectedOption === "option-3"}
         onChange={handleRadioChange}
-      />
+      /> */}
     </>
   );
 };

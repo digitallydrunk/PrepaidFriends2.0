@@ -22,8 +22,8 @@ function Payment() {
               <h6 className="font-bold">Invoice ID</h6>
               <p className="text-sm">231200</p>
             </div>
-            <div className="flex items-center justify-between border-b border-solid border-slate-50 mb-2">
-              <div className="flex items-center">
+            <div className="md:flex items-center justify-between border-b border-solid border-slate-50 mb-2 ">
+              <div className="md:flex items-center">
                 <img
                   width={110}
                   src="https://prepaidfriends.com/static/media/Visacartpage.09617a67e50bb7c4004c.png"
