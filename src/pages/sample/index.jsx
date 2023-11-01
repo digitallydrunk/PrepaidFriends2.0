@@ -10,9 +10,9 @@ import PFTag from "../../component/pf-tag";
 import PFButton from "../../component/pf-button";
 import Navbar from "../../component/navbar1";
 import Carousel from "../../component/pf-carousel";
-import imageP from '../../assets/images/client/01.jpg';
-import image1 from '../../assets/images/client/02.jpg';
-import image2 from '../../assets/images/client/03.jpg';
+import imageP from "../../assets/images/client/01.jpg";
+import image1 from "../../assets/images/client/02.jpg";
+import image2 from "../../assets/images/client/03.jpg";
 const faqData = [
   {
     key: "1",
@@ -44,69 +44,64 @@ const faqData = [
 ];
 
 const carouselSettings = {
-  container: '.tiny-three-item',
+  container: ".tiny-three-item",
   controls: false,
-  mouseDrag: true,
-  loop: true,
-  rewind: true,
-  autoplay: true,
-  autoplayButtonOutput: false,
-  autoplayTimeout: 3000,
-  navPosition: "bottom",
-  speed: 400,
-  gutter: 12,
   responsive: {
-      992: {
-          items: 3
-      },
+    992: {
+      items: 3,
+    },
 
-      767: {
-          items: 2
-      },
+    767: {
+      items: 2,
+    },
 
-      320: {
-          items: 1
-      },
+    320: {
+      items: 1,
+    },
   },
-}
+};
 const carouselItems = [
   {
-      description: '" It seems that only fragments of the original text remain in the Lorem Ipsum texts used today. "',
-      image: imageP,
-      name: 'Calvin Carlo',
-      role: 'Manager'
-  },
-  {
-      description: `" The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century. "`,
-      image: image1,
-      name: 'Christa Smith',
-      role: 'Manager'
-  },
-  {
-      description: '" One disadvantage of Lorum Ipsum is that in Latin certain letters appear more frequently than others. "',
-      image: image2,
-      name: 'Jemina CLone',
-      role: 'Manager'
-  },
-  {
-    description: '" It seems that only fragments of the original text remain in the Lorem Ipsum texts used today. "',
+    description:
+      '" It seems that only fragments of the original text remain in the Lorem Ipsum texts used today. "',
     image: imageP,
-    name: 'Calvin Carlo',
-    role: 'Manager'
+    name: "Calvin Carlo",
+    role: "Manager",
   },
   {
-  description: `" The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century. "`,
-  image: image1,
-  name: 'Christa Smith',
-  role: 'Manager'
+    description: `" The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century. "`,
+    image: image1,
+    name: "Christa Smith",
+    role: "Manager",
   },
   {
-  description: '" One disadvantage of Lorum Ipsum is that in Latin certain letters appear more frequently than others. "',
-  image: image2,
-  name: 'Jemina CLone',
-  role: 'Manager'
+    description:
+      '" One disadvantage of Lorum Ipsum is that in Latin certain letters appear more frequently than others. "',
+    image: image2,
+    name: "Jemina CLone",
+    role: "Manager",
   },
-]
+  {
+    description:
+      '" It seems that only fragments of the original text remain in the Lorem Ipsum texts used today. "',
+    image: imageP,
+    name: "Calvin Carlo",
+    role: "Manager",
+  },
+  {
+    description: `" The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century. "`,
+    image: image1,
+    name: "Christa Smith",
+    role: "Manager",
+  },
+  {
+    description:
+      '" One disadvantage of Lorum Ipsum is that in Latin certain letters appear more frequently than others. "',
+    image: image2,
+    name: "Jemina CLone",
+    role: "Manager",
+  },
+];
 
 const Sample = () => {
   const [selectedOption, setSelectedOption] = useState("option-1");
@@ -116,7 +111,43 @@ const Sample = () => {
   return (
     <>
       <Navbar />
-      <Carousel items={carouselItems} settings={carouselSettings} />
+      <Carousel settings={carouselSettings}>
+        {carouselItems?.map((item, index) => (
+          <div className="custom-carousel-item" key={index}>
+            <div className="custom-carousel-content relative shadow dark:shadow-gray-800 m-2 p-6 bg-white dark:bg-slate-900 before:content-[''] before:absolute before:start-1/2 before:-bottom-[4px] before:box-border before:border-8 before:rotate-[45deg] before:border-t-transparent before:border-e-white dark:before:border-e-slate-900 before:border-b-white dark:before:border-b-slate-900 before:border-s-transparent before:shadow-testi dark:before:shadow-gray-700 before:origin-top-left">
+              <i className="mdi mdi-format-quote-open mdi-48px text-indigo-600"></i>
+              <p className="text-slate-400">{item.description}</p>
+              <ul className="list-none mb-0 text-amber-400 mt-3 space-x-1">
+                <li className="inline">
+                  <i className="mdi mdi-star"></i>
+                </li>
+                <li className="inline">
+                  <i className="mdi mdi-star"></i>
+                </li>
+                <li className="inline">
+                  <i className="mdi mdi-star"></i>
+                </li>
+                <li className="inline">
+                  <i className="mdi mdi-star"></i>
+                </li>
+                <li className="inline">
+                  <i className="mdi mdi-star"></i>
+                </li>
+              </ul>
+            </div>
+
+            <div className="text-center mt-5">
+              <img
+                src={item.image}
+                className="h-14 w-14 rounded-full shadow-md mx-auto"
+                alt=""
+              />
+              <h6 className="mt-2 font-semibold">{item.name}</h6>
+              <span className="text-slate-400 text-sm">{item.role}</span>
+            </div>
+          </div>
+        ))}
+      </Carousel>
       <PFButton buttonText={"Button Test"} />
       <PFTag />
       <PFTag variant="primary" />
