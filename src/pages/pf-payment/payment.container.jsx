@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 function Payment() {
   return (
@@ -22,19 +22,19 @@ function Payment() {
               <h6 className="font-bold">Invoice ID</h6>
               <p className="text-sm">231200</p>
             </div>
-            <div className="md:flex items-center flex items-center justify-between border-b border-solid border-slate-50 mb-2 ">
-              <div className="md:flex items-center flex items-center">
+            <div className="md:flex flex items-center border-b border-solid border-slate-50 mb-2 ">
+              <div>
                 <img
                   width={110}
                   src="https://prepaidfriends.com/static/media/Visacartpage.09617a67e50bb7c4004c.png"
                 />
-                <div className="flex flex-col">
-                  <p>Prepaid Card</p>
-                  <p>$1.56</p>
-                </div>
               </div>
-              <div>
-                <p>0.655690 BTC</p>
+              <div className="flex flex-col w-full">
+                <p>Prepaid Card</p>
+                <div className="flex justify-between w-full">
+                  <p>$1.56</p>
+                  <p>0.655690 BTC</p>
+                </div>
               </div>
             </div>
             <div className="py-2">
@@ -76,6 +76,6 @@ function Payment() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-export { Payment }
+export { Payment };

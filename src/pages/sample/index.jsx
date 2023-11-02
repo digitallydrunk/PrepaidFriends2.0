@@ -68,7 +68,7 @@ const Sample = () => {
   return (
     <>
      <Payment/>
-     <Navbar />
+    <Navbar />
       <Carousel settings={carouselSettings}>
         {testimonialsData?.map((item, index) => (
           <div className="custom-carousel-item" key={index}>
