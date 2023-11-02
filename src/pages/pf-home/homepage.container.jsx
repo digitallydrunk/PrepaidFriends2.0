@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import PFButton from "../../component/pf-button";
 import { AiFillCreditCard } from "react-icons/ai";
 import { PiCardholder } from "react-icons/pi";
+import Testimonials from "../../component/pf-testimonials";
 
 const Homepage = () => {
   return (
@@ -55,6 +56,8 @@ const Homepage = () => {
           </div>
         </div>
       </section>
+
+      <Testimonials className={"mt-8"} />
 
       <div className="container relative md:mt-24 mt-16">
         <div className="grid grid-cols-1 text-center">
