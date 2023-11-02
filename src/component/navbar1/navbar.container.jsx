@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo_dark from "../../assets/images/logo-dark.png";
 import logo_light from "../../assets/images/logo-light.png";
-
-import {
-  AiOutlineUser,
-  LiaSignOutAltSolid,
-  PiNoteDuotone,
-} from "../../assets/icons/icons";
+import { AiOutlineUser, AiOutlineSetting, LiaSignOutAltSolid, PiNoteDuotone } from "../../assets/icons/icons";
 import { URLs } from "../../routes/urls";
 
 const Navbar = () => {
@@ -16,20 +11,19 @@ const Navbar = () => {
   const [isMenu, setIsMenu] = useState(false);
   const [navbarSticky, setNavbarSticky] = useState(false);
   const [isAccount, setIsAccount] = useState(false);
-  const [isSignupMenu, setIsSignupMenu] = useState(false);
+  const [isLoginMenu, setIsLoginMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  window.addEventListener("scroll", windowScroll);
+  const dropdownRef = useRef(null);
 
-  function windowScroll() {
+  window.addEventListener("scroll", () => {
     setNavbarSticky(
       document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50
     );
-  }
+  });
 
-  const toggleMenu = () => {
+  function toggleMenu() {
     setIsMenu(!isMenu);
-    setIsSignupMenu(false); // Close the signup dropdown when the main menu is opened
     if (document.getElementById("navigation")) {
       const anchorArray = Array.from(
         document.getElementById("navigation").getElementsByTagName("a")
@@ -46,11 +40,7 @@ const Navbar = () => {
         });
       });
     }
-  };
-
-  const toggleSignupMenu = () => {
-    setIsSignupMenu(!isSignupMenu);
-  };
+  }
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -59,15 +49,30 @@ const Navbar = () => {
 
     const htmlTag = document.getElementsByTagName("html")[0];
     htmlTag.classList.remove("dark");
-    activateMenu();
-  }, []);
 
-  const activateMenu = () => {
-    
-  };
+    // Add an event listener to close the dropdown when clicking outside
+    window.addEventListener("click", (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsLoginMenu(false);
+      }
+    });
+
+    return () => {
+      // Remove the event listener when the component unmounts
+      window.removeEventListener("click", (e) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+          setIsLoginMenu(false);
+        }
+      });
+    };
+  }, []);
 
   const isLinkActive = (path) => {
     return location.pathname === path ? "active" : "";
+  };
+
+  const handleLoginCustomerClick = () => {
+    nav(URLs.LOGIN);
   };
 
   return (
@@ -98,44 +103,33 @@ const Navbar = () => {
         </div>
 
         <ul className="buy-button list-none mb-0">
-          <li className="dropdown inline-block relative ms-1">
+          <li className="dropdown inline-block relative ms-1" ref={dropdownRef}>
             <button
-              onClick={() =>
-                isLoggedIn ? setIsAccount(!isAccount) : toggleSignupMenu()
-              }
+              onClick={() => (isLoggedIn ? setIsAccount(!isAccount) : setIsLoginMenu(!isLoginMenu))}
               data-dropdown-toggle="dropdown"
               className="dropdown-toggle h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-indigo-600 hover:bg-indigo-700 border border-indigo-600 hover:border-indigo-700 text-white"
               type="button"
             >
-              <i className="mdi mdi-account"></i>
+              <AiOutlineUser />
             </button>
-            {isAccount ? (
-              <div className="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-44 rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800">
-                <ul className="py-2 text-start" aria-labelledby="dropdownDefault">
+            {isLoginMenu ? (
+              <div className="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-44 rounded-md bg-white dark:bg-slate-900 shadow">
+                <ul className="py-2 text-start" aria-labelledby="dropdownLogin">
                   <li>
-                    <Link
-                      to="/shop-account"
-                      className={`flex items-center py-1.5 px-4 ${isLinkActive("/shop-account")}`}
+                    <button
+                      onClick={handleLoginCustomerClick}
+                      className={`flex items-center py-1.5 px-4`}
                     >
-                      <AiOutlineUser className="me-2" /> Account
-                    </Link>
+                      <AiOutlineUser className="me-2" /> Login as a Customer
+                    </button>
                   </li>
                   <li>
-                    <Link
-                      to="/shop-cart"
-                      className={`flex items-center py-1.5 px-4 ${isLinkActive("/shop-cart")}`}
+                    <button
+                      onClick={() => setIsLoginMenu(false)}
+                      className={`flex items-center py-1.5 px-4`}
                     >
-                      <PiNoteDuotone className="align-middle me-1" /> Order History
-                    </Link>
-                  </li>
-                  <li className="border-t border-gray-100 dark:border-gray-800 my-2"></li>
-                  <li>
-                    <Link
-                      to="/auth-login"
-                      className={`flex items-center py-1.5 px-4 ${isLinkActive("/auth-login")}`}
-                    >
-                      <LiaSignOutAltSolid className="align-middle me-2 w-5 h-5" /> Logout
-                    </Link>
+                      <PiNoteDuotone className="align-middle me-1" /> Login as a Broker
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -183,4 +177,4 @@ const Navbar = () => {
   );
 };
 
-export {Navbar};
+export { Navbar };
