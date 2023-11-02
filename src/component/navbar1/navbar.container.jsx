@@ -16,6 +16,7 @@ const Navbar = () => {
   const [isMenu, setIsMenu] = useState(false);
   const [navbarSticky, setNavbarSticky] = useState(false);
   const [isAccount, setIsAccount] = useState(false);
+  const [isSignupMenu, setIsSignupMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   window.addEventListener("scroll", windowScroll);
@@ -28,6 +29,7 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     setIsMenu(!isMenu);
+    setIsSignupMenu(false); // Close the signup dropdown when the main menu is opened
     if (document.getElementById("navigation")) {
       const anchorArray = Array.from(
         document.getElementById("navigation").getElementsByTagName("a")
@@ -44,6 +46,10 @@ const Navbar = () => {
         });
       });
     }
+  };
+
+  const toggleSignupMenu = () => {
+    setIsSignupMenu(!isSignupMenu);
   };
 
   useEffect(() => {
@@ -95,7 +101,7 @@ const Navbar = () => {
           <li className="dropdown inline-block relative ms-1">
             <button
               onClick={() =>
-                isLoggedIn ? setIsAccount(!isAccount) : nav(URLs.LOGIN)
+                isLoggedIn ? setIsAccount(!isAccount) : toggleSignupMenu()
               }
               data-dropdown-toggle="dropdown"
               className="dropdown-toggle h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-indigo-600 hover:bg-indigo-700 border border-indigo-600 hover:border-indigo-700 text-white"
@@ -177,4 +183,4 @@ const Navbar = () => {
   );
 };
 
-export { Navbar };
+export {Navbar};
