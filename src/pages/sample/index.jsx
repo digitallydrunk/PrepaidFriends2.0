@@ -70,7 +70,7 @@ const Sample = () => {
       <Carousel settings={carouselSettings}>
         {testimonialsData?.map((item, index) => (
           <div className="custom-carousel-item" key={index}>
-            <div className="custom-carousel-content relative shadow dark:shadow-gray-800 m-2 p-6 bg-white dark:bg-slate-900 before:content-[''] before:absolute before:start-1/2 before:-bottom-[4px] before:box-border before:border-8 before:rotate-[45deg] before:border-t-transparent before:border-e-white dark:before:border-e-slate-900 before:border-b-white dark:before:border-b-slate-900 before:border-s-transparent before:shadow-testi dark:before:shadow-gray-700 before:origin-top-left">
+            <div className="custom-carousel-content relative shadow dark:shadow-gray-800 m-2 p-6 bg-white dark:bg-slate-900 before:content-[''] before:absolute before:start-1/2 before:-bottom-[4px] before:box-border before:border-8 before:rotate-[45deg] before:border-t-transparent before:border-e-white dark:before:border-e-slate-900 before:border-b-white dark:before:border-b-slate-900 before:border-s-transparent before:shadow-test dark:before:shadow-gray-700 before:origin-top-left">
               <i className="mdi mdi-format-quote-open mdi-48px text-indigo-600"></i>
               <p className="text-slate-400">{item.description}</p>
               <ul className="list-none mb-0 text-amber-400 mt-3 space-x-1">

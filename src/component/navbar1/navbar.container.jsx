@@ -56,9 +56,7 @@ const Navbar = () => {
     activateMenu();
   }, []);
 
-  const activateMenu = () => {
-    
-  };
+  const activateMenu = () => {};
 
   const isLinkActive = (path) => {
     return location.pathname === path ? "active" : "";
@@ -105,11 +103,16 @@ const Navbar = () => {
             </button>
             {isAccount ? (
               <div className="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-44 rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800">
-                <ul className="py-2 text-start" aria-labelledby="dropdownDefault">
+                <ul
+                  className="py-2 text-start"
+                  aria-labelledby="dropdownDefault"
+                >
                   <li>
                     <Link
                       to="/shop-account"
-                      className={`flex items-center py-1.5 px-4 ${isLinkActive("/shop-account")}`}
+                      className={`flex items-center py-1.5 px-4 ${isLinkActive(
+                        "/shop-account"
+                      )}`}
                     >
                       <AiOutlineUser className="me-2" /> Account
                     </Link>
@@ -117,18 +120,24 @@ const Navbar = () => {
                   <li>
                     <Link
                       to="/shop-cart"
-                      className={`flex items-center py-1.5 px-4 ${isLinkActive("/shop-cart")}`}
+                      className={`flex items-center py-1.5 px-4 ${isLinkActive(
+                        "/shop-cart"
+                      )}`}
                     >
-                      <PiNoteDuotone className="align-middle me-1" /> Order History
+                      <PiNoteDuotone className="align-middle me-1" /> Order
+                      History
                     </Link>
                   </li>
                   <li className="border-t border-gray-100 dark:border-gray-800 my-2"></li>
                   <li>
                     <Link
                       to="/auth-login"
-                      className={`flex items-center py-1.5 px-4 ${isLinkActive("/auth-login")}`}
+                      className={`flex items-center py-1.5 px-4 ${isLinkActive(
+                        "/auth-login"
+                      )}`}
                     >
-                      <LiaSignOutAltSolid className="align-middle me-2 w-5 h-5" /> Logout
+                      <LiaSignOutAltSolid className="align-middle me-2 w-5 h-5" />{" "}
+                      Logout
                     </Link>
                   </li>
                 </ul>
@@ -142,31 +151,55 @@ const Navbar = () => {
         <div id="navigation" style={{ display: isMenu ? "block" : "none" }}>
           <ul className="navigation-menu">
             <li className="has-submenu parent-menu-item">
-              <Link to={URLs.BASE} className={`sub-menu-item ${isLinkActive(URLs.BASE)}`}>
+              <Link
+                to={URLs.BASE}
+                className={`sub-menu-item ${isLinkActive(URLs.BASE)}`}
+              >
                 Home
               </Link>
             </li>
 
             <li className="has-submenu parent-menu-item">
-              <Link to={URLs.SINGLE_ORDER} className={`sub-menu-item ${isLinkActive(URLs.SINGLE_ORDER)}`}>
+              <Link
+                to={URLs.SINGLE_ORDER}
+                className={`sub-menu-item ${isLinkActive(URLs.SINGLE_ORDER)}`}
+              >
                 Single Order
               </Link>
             </li>
-              
+
             <li className="has-submenu parent-menu-item">
-              <Link to={URLs.BULK_ORDER} className={`sub-menu-item ${isLinkActive(URLs.BULK_ORDER)}`}>
+              <Link
+                to={URLs.BULK_ORDER}
+                className={`sub-menu-item ${isLinkActive(URLs.BULK_ORDER)}`}
+              >
                 Bulk Order
               </Link>
             </li>
 
             <li className="has-submenu parent-menu-item">
-              <Link to={URLs.HOW_IT_WORKS} className={`sub-menu-item ${isLinkActive(URLs.HOW_IT_WORKS)}`}>
+              <Link
+                to={URLs.HOW_IT_WORKS}
+                className={`sub-menu-item ${isLinkActive(URLs.HOW_IT_WORKS)}`}
+              >
                 How It Works
               </Link>
             </li>
 
             <li className="has-submenu parent-menu-item">
-              <Link to={URLs.CONTACT} className={`sub-menu-item ${isLinkActive(URLs.CONTACT)}`}>
+              <Link
+                to={URLs.PRICING}
+                className={`sub-menu-item ${isLinkActive(URLs.PRICING)}`}
+              >
+                Pricing
+              </Link>
+            </li>
+
+            <li className="has-submenu parent-menu-item">
+              <Link
+                to={URLs.CONTACT}
+                className={`sub-menu-item ${isLinkActive(URLs.CONTACT)}`}
+              >
                 Contact
               </Link>
             </li>
