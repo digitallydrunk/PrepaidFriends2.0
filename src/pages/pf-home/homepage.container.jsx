@@ -8,8 +8,7 @@ import { AiFillCreditCard } from "react-icons/ai";
 import { PiCardholder } from "react-icons/pi";
 import Testimonials from "../../component/pf-testimonials";
 import Carousel from "../../component/pf-carousel";
-import {bannerData} from '../../data/homebanner.js'
-
+import { bannerData } from "../../data/home-banner.js";
 
 const bannerCarouselSettings = {
   container: ".tiny-three-item",
@@ -33,27 +32,31 @@ const Homepage = () => {
   return (
     <>
       <div>
-          <Carousel settings={bannerCarouselSettings}>
-            {bannerData?.map((item, index) => (
-              <div className="custom-carousel-item" key={index}>
-                <div
-                   style={{
-                    backgroundImage: `url(${item.image})`,
-                    height:'80vh',
-                  }}
-                  className={`bg-cover flex justify-center items-center bg-center w-full `}
-                >
-                  <div className="px-4 w-3/4 md:w-1/2 ">
-                    <h2 className={`font-bold text-white lg:leading-normal leading-3 text-4xl lg:text-5xl `}>{item.heading}</h2>
-                    <p className="text-white/70 text-xl max-w-xl mb-2">
-                     {item.info}
-                    </p>
-                    <PFButton buttonText={"Know More"} />
-                  </div>
+        <Carousel settings={bannerCarouselSettings}>
+          {bannerData?.map((item, index) => (
+            <div className="custom-carousel-item" key={index}>
+              <div
+                style={{
+                  backgroundImage: `url(${item.image})`,
+                  height: "70vh",
+                }}
+                className={`bg-cover flex justify-center items-center bg-center w-full `}
+              >
+                <div className="px-4 w-3/4 md:w-1/2 ">
+                  <h2
+                    className={`font-bold text-white lg:leading-normal leading-3 text-4xl lg:text-5xl `}
+                  >
+                    {item.heading}
+                  </h2>
+                  <p className="text-white/70 text-xl max-w-xl mb-2">
+                    {item.info}
+                  </p>
+                  <PFButton buttonText={"Know More"} />
                 </div>
               </div>
-            ))}
-          </Carousel>
+            </div>
+          ))}
+        </Carousel>
       </div>
       <section className="relative md:py-24 py-16 bg-gray-50 dark:bg-slate-800">
         <div className="container relative">
