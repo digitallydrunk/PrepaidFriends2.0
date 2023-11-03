@@ -1,26 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useFormik } from 'formik';
-import logo_icon_64 from '../../assets/images/logo-icon-64.png';
-import style from "./resetpassword.module.css"
+import React from "react";
+import { Link } from "react-router-dom";
+import { useFormik } from "formik";
+import logo_icon_64 from "../../assets/images/logo-icon-64.png";
+import style from "./forgot-password.module.css";
+import { validateEmail } from "../../utils/validation";
+import { URLs } from "../../routes/urls";
 
-const ResetPassword = () => {
+const ForgotPassword = () => {
   const formik = useFormik({
     initialValues: {
-      email: '',
+      email: "",
     },
     validate: (values) => {
       const errors = {};
-
-      if (!values.email) {
-        errors.email = 'Email is required*';
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address*';
-      }
-
+      errors.email = validateEmail(values?.email);
       return errors;
-    }
-   
+    },
   });
 
   return (
@@ -33,19 +28,22 @@ const ResetPassword = () => {
               <Link to="/index">
                 <img src={logo_icon_64} className="mx-auto" alt="" />
               </Link>
-              <h5 className="my-6 text-xl font-semibold">Reset Your Password</h5>
+              <h5 className="mt-6 mb-2 text-xl font-semibold">
+                Forgot Your Password?
+              </h5>
               <div className="grid grid-cols-1">
                 <p className="text-slate-400 mb-6">
-                  Please enter your email address. You will receive a link to create a new password via email.
+                  Please enter your email address. You will receive a link to
+                  create a new password via email.
                 </p>
                 <form onSubmit={formik.handleSubmit} className="text-start">
                   <div className="grid grid-cols-1">
                     <div className="mb-4">
-                      <label className="font-semibold" htmlFor="LoginEmail">
+                      <label className="font-semibold" htmlFor="email">
                         Email Address:
                       </label>
                       <input
-                        id="LoginEmail"
+                        id="email"
                         type="text"
                         name="email"
                         value={formik.values.email}
@@ -68,8 +66,13 @@ const ResetPassword = () => {
                     </div>
 
                     <div className="text-center">
-                      <span className="text-slate-400 me-2">Remember your password ? </span>
-                      <Link to="/auth-login" className="text-black dark:text-white font-bold inline-block">
+                      <span className="text-slate-400 me-2">
+                        Remember your password ?{" "}
+                      </span>
+                      <Link
+                        to={URLs?.LOGIN}
+                        className="text-black dark:text-white font-bold inline-block"
+                      >
                         Sign in
                       </Link>
                     </div>
@@ -84,4 +87,4 @@ const ResetPassword = () => {
   );
 };
 
-export { ResetPassword };
+export { ForgotPassword };
