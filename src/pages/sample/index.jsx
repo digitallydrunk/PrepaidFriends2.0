@@ -12,7 +12,6 @@ import Navbar from "../../component/navbar1";
 import Carousel from "../../component/pf-carousel";
 import { testimonialsData } from "../../data/testimonials";
 import Payment from "../pf-payment";
-import OrderConfirmation from "../pf-order-confirmation";
 const faqData = [
   {
     key: "1",
@@ -68,7 +67,6 @@ const Sample = () => {
   };
   return (
     <>
-      <OrderConfirmation />
       <Payment />
       <Navbar />
       <Carousel settings={carouselSettings}>

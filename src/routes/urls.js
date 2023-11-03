@@ -13,5 +13,6 @@ export const URLs = {
   TERMS_AND_CONDITIONS: "/terms-and-conditions",
   DASHBOARD: "/dashboard",
   PRICING: "/pricing",
+  ORDER_CONFIRMATION: "/order-confirmation",
   SAMPLE: "/sample",
 };

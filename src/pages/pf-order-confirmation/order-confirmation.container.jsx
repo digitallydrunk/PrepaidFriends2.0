@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FiThumbsUp } from "../../assets/icons/icons";
 import styles from "./order-confirmation.module.css";
+
 function OrderConfirmation() {
   return (
     <>
@@ -15,21 +16,39 @@ function OrderConfirmation() {
                 <FiThumbsUp className="w-11 h-11" />
               </div>
               <h1 className="mt-6 mb-8 md:text-5xl text-3xl font-bold">
-                Payment Submitted
+                Order Successful 🎉
               </h1>
-              <hr />
-              <br />
-              <div className="flex flex-col items-start font-bold">
-                <p>Order number :</p>
-                <p>Email Address :</p>
-                <p>Payment Method :Bitcoin(BTC)</p>
+              <div className="flex flex-col font-bold border-y py-6">
+                <div className="w-2/4 mx-auto text-start">
+                  <h6 className="font-bold">
+                    Order Number:{" "}
+                    <span className="text-slate-400 font-semibold">
+                      #37843784800
+                    </span>
+                  </h6>
+                  <h6 className="font-bold">
+                    Email Address:{" "}
+                    <span className="text-slate-400 font-semibold">
+                      johndoe@email.com
+                    </span>
+                  </h6>
+                  <h6 className="font-bold">
+                    Order Total:{" "}
+                    <span className="text-slate-400 font-semibold">
+                      $100 USD
+                    </span>
+                  </h6>
+                  <h6 className="font-bold">
+                    Payment Method:{" "}
+                    <span className="text-sm font-bold text-green-600">
+                      BTC
+                    </span>
+                  </h6>
+                </div>
               </div>
-              <br />
-              <hr />
-              <br />
-              <p className="text-slate-400 max-w-xl mx-auto">
-                Launch your campaign and benefit from our expertise on designing
-                and managing conversion centered Tailwind x3 html page.
+              <p className="text-slate-400 max-w-xl mx-auto mt-4">
+                You will receive a confirmation of your order on your provided
+                email address.
               </p>
 
               <div className="mt-6">
