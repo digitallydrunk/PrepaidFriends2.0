@@ -116,7 +116,7 @@ const Navbar = () => {
                   <li>
                     <button
                       onClick={handleLoginCustomerClick}
-                      className={`flex items-center py-2 px-4 hover:bg-gray-100`}
+                      className={`flex items-center py-2 px-4`}
                     >
                       <AiOutlineUser className="me-2" /> Login as a Customer
                     </button>
@@ -124,7 +124,7 @@ const Navbar = () => {
                   <li>
                     <button
                       onClick={() => setIsLoginMenu(false)}
-                      className={`flex items-center py-2 px-4 hover:bg-gray-100`}
+                      className={`flex items-center py-2 px-4`}
                     >
                       <PiNoteDuotone className="align-middle me-1" /> Login as a Broker
                     </button>

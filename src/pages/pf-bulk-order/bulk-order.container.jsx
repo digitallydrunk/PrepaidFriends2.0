@@ -141,7 +141,7 @@ const PFBulkOrder = () => {
 
   return (
     <>
-      <section className="relative my-2 flex justify-center">
+      <section className="relative pt-8 mb-2 flex justify-center">
         <div className={`${styles.maxWidth}`}>
           <form onSubmit={formik.handleSubmit}>
             <div className="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 align-bottom gap-[30px]">

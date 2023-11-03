@@ -37,7 +37,7 @@ export default function SingleOrder() {
   return (
     <>
       <span className="fixed blur-[200px] w-[600px] h-[600px] rounded-full top-1/2 -translate-y-1/2 start-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 bg-indigo-600/20"></span>
-      <section className="relative overflow-hidden md:pt-6 md:pb-24 pb-16">
+      <section className="relative overflow-hidden pt-12 md:pt-6 md:pb-24 pb-16">
         <div className="container relative">
           <div className="grid md:grid-cols-2 grid-cols-1 items-center mt-8 gap-[30px] relative">
             <div className="md:me-6">
