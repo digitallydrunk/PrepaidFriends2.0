@@ -13,6 +13,7 @@ import OrderInvoice from "../pages/pf-order-invoice";
 import Payment from "../pages/pf-payment";
 import SignUp from "../pages/pf-signup";
 import CustomerDashboard from "../pages/pf-customer-dashboard";
+import HowItWorksPage from "../pages/pf-how-it-works";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: URLs.DASHBOARD,
         element: <CustomerDashboard />,
+      },
+      {
+        path: URLs.HOW_IT_WORKS,
+        element: <HowItWorksPage/>,
       },
     ],
   },
