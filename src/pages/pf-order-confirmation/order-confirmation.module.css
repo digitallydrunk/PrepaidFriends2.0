@@ -1,0 +1,11 @@
+.background {
+  width: 70%;
+  background-color: lightblue;
+  margin: 0 auto;
+  height: 90vh;
+}
+@media (min-width: 768px) {
+  .background {
+    width: 60%;
+  }
+}
