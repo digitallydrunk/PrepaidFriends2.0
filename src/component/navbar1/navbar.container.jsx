@@ -4,6 +4,7 @@ import logo_dark from "../../assets/images/logo-dark.png";
 import logo_light from "../../assets/images/logo-light.png";
 import { AiOutlineUser, PiNoteDuotone } from "../../assets/icons/icons";
 import { URLs } from "../../routes/urls";
+import style from "./navbar.module.css"
 
 const Navbar = () => {
   const nav = useNavigate();
@@ -111,7 +112,7 @@ const Navbar = () => {
               <AiOutlineUser />
             </button>
             {isLoginMenu ? (
-              <div className="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-64 rounded-md bg-white dark:bg-slate-900 shadow">
+              <div className={`dropdown-menu absolute end-0 m-0 mt-4 z-10 rounded-md bg-white dark:bg-slate-900 shadow ${`${style.dropdownwidth}`}`}>
                 <ul className="py-2 text-start" aria-labelledby="dropdownLogin">
                   <li>
                     <button
