@@ -112,12 +112,12 @@ const Navbar = () => {
               <AiOutlineUser />
             </button>
             {isLoginMenu ? (
-              <div className={`dropdown-menu absolute end-0 m-0 mt-4 z-10 rounded-md bg-white dark:bg-slate-900 shadow ${`${style.dropdownwidth}`}`}>
+              <div className={`dropdown-menu absolute end-0 m-0 mt-4 z-10 w-52 rounded-md bg-white dark:bg-slate-900 shadow `}>
                 <ul className="py-2 text-start" aria-labelledby="dropdownLogin">
                   <li>
                     <button
                       onClick={handleLoginCustomerClick}
-                      className={`flex items-center py-2 px-4 hover:bg-gray-100`}
+                      className={`flex items-center py-2 px-4 hover:bg-gray-100 w-52`}
                     >
                       <AiOutlineUser className="me-2" /> Login as a Customer
                     </button>
@@ -125,9 +125,9 @@ const Navbar = () => {
                   <li>
                     <button
                       onClick={() => setIsLoginMenu(false)}
-                      className={`flex items-center py-2 px-4 hover:bg-gray-100`}
+                      className={`flex items-center py-2 px-4 hover:bg-gray-100 w-52`}
                     >
-                      <PiNoteDuotone className="align-middle me-1" /> Login as a Broker
+                      <PiNoteDuotone className="me-1" /> Login as a Broker
                     </button>
                   </li>
                 </ul>
