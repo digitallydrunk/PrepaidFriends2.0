@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo_dark from "../../assets/images/logo-dark.png";
 import logo_light from "../../assets/images/logo-light.png";
-import { AiOutlineUser, AiOutlineSetting, LiaSignOutAltSolid, PiNoteDuotone } from "../../assets/icons/icons";
+import { AiOutlineUser, PiNoteDuotone } from "../../assets/icons/icons";
 import { URLs } from "../../routes/urls";
 
 const Navbar = () => {
@@ -50,7 +50,6 @@ const Navbar = () => {
     const htmlTag = document.getElementsByTagName("html")[0];
     htmlTag.classList.remove("dark");
 
-    // Add an event listener to close the dropdown when clicking outside
     window.addEventListener("click", (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setIsLoginMenu(false);
@@ -58,7 +57,6 @@ const Navbar = () => {
     });
 
     return () => {
-      // Remove the event listener when the component unmounts
       window.removeEventListener("click", (e) => {
         if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
           setIsLoginMenu(false);
@@ -113,12 +111,12 @@ const Navbar = () => {
               <AiOutlineUser />
             </button>
             {isLoginMenu ? (
-              <div className="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-44 rounded-md bg-white dark:bg-slate-900 shadow">
+              <div className="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-64 rounded-md bg-white dark:bg-slate-900 shadow">
                 <ul className="py-2 text-start" aria-labelledby="dropdownLogin">
                   <li>
                     <button
                       onClick={handleLoginCustomerClick}
-                      className={`flex items-center py-1.5 px-4`}
+                      className={`flex items-center py-2 px-4 hover:bg-gray-100`}
                     >
                       <AiOutlineUser className="me-2" /> Login as a Customer
                     </button>
@@ -126,7 +124,7 @@ const Navbar = () => {
                   <li>
                     <button
                       onClick={() => setIsLoginMenu(false)}
-                      className={`flex items-center py-1.5 px-4`}
+                      className={`flex items-center py-2 px-4 hover:bg-gray-100`}
                     >
                       <PiNoteDuotone className="align-middle me-1" /> Login as a Broker
                     </button>
@@ -134,7 +132,7 @@ const Navbar = () => {
                 </ul>
               </div>
             ) : (
-              ""
+              null
             )}
           </li>
         </ul>
