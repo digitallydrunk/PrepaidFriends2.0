@@ -67,8 +67,8 @@ const Sample = () => {
   };
   return (
     <>
-     <Payment/>
-    <Navbar />
+      <Payment />
+      <Navbar />
       <Carousel settings={carouselSettings}>
         {testimonialsData?.map((item, index) => (
           <div className="custom-carousel-item" key={index}>
@@ -106,7 +106,7 @@ const Sample = () => {
           </div>
         ))}
       </Carousel>
-       <PFButton buttonText={"Button Test"} />
+      <PFButton buttonText={"Button Test"} />
       <PFTag />
       <PFTag variant="primary" />
       <PFTag variant="error" />
@@ -154,7 +154,7 @@ const Sample = () => {
         value={"option-3"}
         checked={selectedOption === "option-3"}
         onChange={handleRadioChange}
-      />  
+      />
     </>
   );
 };
