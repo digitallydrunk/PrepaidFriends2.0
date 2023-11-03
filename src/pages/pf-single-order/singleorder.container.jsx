@@ -75,8 +75,7 @@ export default function SingleOrder() {
               <div className="relative container mx-auto px-6 text-gray-500 md:px-12 xl:px-40">
                 <div className="mx-auto md:w-8/12 lg:w-6/12 xl:w-6/12">
                   <div className="rounded-xl bg-white shadow-xl">
-                    <div className="p-4 sm:p-16">
-                      <br />
+                    <div className="p-4 py-8 sm:p-16">
                       <div>
                         <PFInput
                           label="Enter Prepaid Card Amount"
