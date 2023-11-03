@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import * as Icon from "react-feather";
 import {
-  MdAirplay,
-  MdApi,
-  FaRegComments,
-  HiOutlineCog6Tooth,
+  AiFillCreditCard,
+  FaWpforms,
+  BiLogoBitcoin,
+  BsCashCoin,
 } from "../../assets/icons/icons";
 
-const HowItWorksPage = () => {
+const HowItWorks = () => {
   return (
     <>
-      <div className="py-4" >
+      <div className="py-4">
         <div className="container">
           <div className="grid grid-cols-1 pb-8 text-center">
             <h3 className="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">
@@ -19,8 +19,9 @@ const HowItWorksPage = () => {
             </h3>
 
             <p className="text-slate-400 max-w-xl mx-auto">
-              Start working with Tailwind CSS that can provide everything you
-              need to generate awareness, drive traffic, connect.
+              Using prepaid cards for making payments is indeed a convenient and
+              straightforward process. Here are four common steps to purchase
+              and make payments using prepaid cards.
             </p>
           </div>
 
@@ -29,13 +30,13 @@ const HowItWorksPage = () => {
               <div className="relative overflow-hidden text-transparent -m-3">
                 <Icon.Hexagon className="h-28 w-28 fill-indigo-600/5 dark:fill-white/5 mx-auto rotate-[30deg]"></Icon.Hexagon>
                 <div className="absolute top-2/4 -translate-y-2/4 start-0 end-0 mx-auto text-indigo-600 dark:text-white rounded-xl transition duration-500 ease-in-out text-3xl flex align-middle justify-center items-center">
-                  <MdAirplay className="w-7 h-7" />
+                  <AiFillCreditCard className="w-7 h-7" />
                 </div>
               </div>
 
               <div className="mt-6">
                 <Link className="text-xl font-medium hover:text-indigo-600 duration-500 ease-in-out">
-                  UX / UI Design
+                  Select a Gift Card
                 </Link>
                 <p className="text-slate-400 transition duration-500 ease-in-out mt-3">
                   If the distribution of letters and 'words' is random, the
@@ -48,13 +49,13 @@ const HowItWorksPage = () => {
               <div className="relative overflow-hidden text-transparent -m-3">
                 <Icon.Hexagon className="h-28 w-28 fill-indigo-600/5 dark:fill-white/5 mx-auto rotate-[30deg]"></Icon.Hexagon>
                 <div className="absolute top-2/4 -translate-y-2/4 start-0 end-0 mx-auto text-indigo-600 dark:text-white rounded-xl transition duration-500 ease-in-out text-3xl flex align-middle justify-center items-center">
-                  <MdApi className="w-7 h-7" />
+                  <FaWpforms className="w-7 h-7" />
                 </div>
               </div>
 
               <div className="mt-6">
                 <Link className="text-xl font-medium hover:text-indigo-600 duration-500 ease-in-out">
-                  IOS App Designer
+                  Enter Basic Details
                 </Link>
                 <p className="text-slate-400 transition duration-500 ease-in-out mt-3">
                   If the distribution of letters and 'words' is random, the
@@ -70,13 +71,13 @@ const HowItWorksPage = () => {
                   className="absolute top-2/4 -translate-y-2/4 start-0 end-0 mx-auto text-indigo-600 dark:text-white rounded-xl transition duration-500 ease-in-out text-3xl flex align-middle 
                                 justify-center items-center"
                 >
-                  <HiOutlineCog6Tooth className="w-7 h-7" />
+                  <BiLogoBitcoin className="w-7 h-7" />
                 </div>
               </div>
 
               <div className="mt-6">
                 <Link className="text-xl font-medium hover:text-indigo-600 duration-500 ease-in-out">
-                  Web Security
+                  Checkout with Bitcoins
                 </Link>
                 <p className="text-slate-400 transition duration-500 ease-in-out mt-3">
                   If the distribution of letters and 'words' is random, the
@@ -89,13 +90,13 @@ const HowItWorksPage = () => {
               <div className="relative overflow-hidden text-transparent -m-3">
                 <Icon.Hexagon className="h-28 w-28 fill-indigo-600/5 dark:fill-white/5 mx-auto rotate-[30deg]"></Icon.Hexagon>
                 <div className="absolute top-2/4 -translate-y-2/4 start-0 end-0 mx-auto text-indigo-600 dark:text-white rounded-xl transition duration-500 ease-in-out text-3xl flex align-middle justify-center items-center">
-                  <FaRegComments className="w-7 h-7" />
+                  <BsCashCoin className="w-7 h-7" />
                 </div>
               </div>
 
               <div className="mt-6">
                 <Link className="text-xl font-medium hover:text-indigo-600 duration-500 ease-in-out">
-                  24/7 Support
+                  Send Payments
                 </Link>
                 <p className="text-slate-400 transition duration-500 ease-in-out mt-3">
                   If the distribution of letters and 'words' is random, the
@@ -110,4 +111,4 @@ const HowItWorksPage = () => {
   );
 };
 
-export { HowItWorksPage };
+export { HowItWorks };

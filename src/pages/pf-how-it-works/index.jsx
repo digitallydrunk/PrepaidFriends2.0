@@ -1,3 +1,2 @@
-import { HowItWorksPage } from "./howitworks.container";
-export default HowItWorksPage;
-
+import { HowItWorks } from "./how-it-works.container";
+export default HowItWorks;
