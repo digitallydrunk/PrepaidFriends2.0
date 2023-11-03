@@ -8,6 +8,7 @@ export const URLs = {
   LOGIN: "/login",
   SIGN_UP: "/signup",
   FORGOT_PASSWORD: "/forgot-password",
+  RESET_PASSWORD: "/reset-password",
   ORDER_INVOICE: "/order-invoice",
   TERMS_AND_CONDITIONS: "/terms-and-conditions",
   DASHBOARD: "/dashboard",
