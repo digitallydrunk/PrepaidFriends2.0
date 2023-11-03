@@ -13,6 +13,7 @@ import OrderInvoice from "../pages/pf-order-invoice";
 import Payment from "../pages/pf-payment";
 import SignUp from "../pages/pf-signup";
 import CustomerDashboard from "../pages/pf-customer-dashboard";
+import HowItWorks from "../pages/pf-how-it-works";
 import ForgotPassword from "../pages/pf-forgot-password";
 import OrderConfirmation from "../pages/pf-order-confirmation";
 
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: URLs.DASHBOARD,
         element: <CustomerDashboard />,
+      },
+      {
+        path: URLs.HOW_IT_WORKS,
+        element: <HowItWorks />,
       },
     ],
   },
