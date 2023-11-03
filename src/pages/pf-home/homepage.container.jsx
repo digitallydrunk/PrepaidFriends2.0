@@ -9,6 +9,7 @@ import { PiCardholder } from "react-icons/pi";
 import Testimonials from "../../component/pf-testimonials";
 import Carousel from "../../component/pf-carousel";
 import { bannerData } from "../../data/home-banner.js";
+import CountUp from "react-countup";
 
 const bannerCarouselSettings = {
   container: ".tiny-three-item",
@@ -103,7 +104,47 @@ const Homepage = () => {
           </div>
         </div>
       </section>
+      <div className="container relative pt-16 pb-24">
+        <div className="absolute inset-0 opacity-25 dark:opacity-50 bg-[url('../../assets/images/map.png')] bg-no-repeat bg-center bg-cover"></div>
+        <div className="relative grid grid-cols-1 pb-8 text-center z-1">
+          <h3 className="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold text-black dark:text-white">
+            Trusted by more than 10K customers
+          </h3>
 
+          <p className="text-slate-400 max-w-xl mx-auto">
+            Start working with Tailwind CSS that can provide everything you need
+            to generate awareness, drive traffic, connect.
+          </p>
+        </div>
+
+        <div className="relative grid md:grid-cols-3 grid-cols-1 items-center mt-8 gap-[30px] z-1">
+          <div className="counter-box text-center">
+            <h1 className="lg:text-5xl text-4xl font-semibold mb-2 text-slate-400 dark:text-white">
+              <CountUp className="counter-value" start={1} end={10} />
+              K+
+            </h1>
+            <h5 className="counter-head text-lg font-medium">Cards Sold</h5>
+          </div>
+
+          <div className="counter-box text-center">
+            <h1 className="lg:text-5xl text-4xl font-semibold mb-2 text-slate-400 dark:text-white">
+              <CountUp className="counter-value" start={1} end={5} />
+              K+
+            </h1>
+            <h5 className="counter-head text-lg font-medium">
+              Happy Customers
+            </h5>
+          </div>
+
+          <div className="counter-box text-center">
+            <h1 className="lg:text-5xl text-4xl font-semibold mb-2 text-slate-400 dark:text-white">
+              <CountUp className="counter-value" start={1} end={1.0} />
+              M+
+            </h1>
+            <h5 className="counter-head text-lg font-medium">In Card Value</h5>
+          </div>
+        </div>
+      </div>
       <Testimonials className={"mt-8"} />
 
       <div className="container relative md:mt-24 mt-16">
