@@ -15,7 +15,6 @@ import SignUp from "../pages/pf-signup";
 import CustomerDashboard from "../pages/pf-customer-dashboard";
 import ForgotPassword from "../pages/pf-forgot-password";
 import OrderConfirmation from "../pages/pf-order-confirmation";
-import ForgotPassword from "../pages/pf-forgot-password";
 
 const router = createBrowserRouter([
   {
