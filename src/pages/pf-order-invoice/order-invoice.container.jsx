@@ -5,6 +5,7 @@ import logo_light from "../../assets/images/logo-light.png";
 
 import * as Icon from "react-feather";
 import { URLs } from "../../routes/urls";
+import styles from './order-invoice.module.css'
 
 const OrderInvoice = () => {
   return (
@@ -111,7 +112,7 @@ const OrderInvoice = () => {
                   <div className="mt-3 md:w-56">
                     <ul className="list-none">
                       <li className="flex mt-3">
-                        <span className=" md:w-24">Date :</span>
+                        <span className={`${styles.width}`}>Date :</span>
                         <span className="text-slate-400">15th Oct, 2021</span>
                       </li>
                     </ul>
