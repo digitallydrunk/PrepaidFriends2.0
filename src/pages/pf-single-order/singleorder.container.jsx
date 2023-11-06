@@ -1,20 +1,22 @@
-import React, { useState } from "react";
-import styles from "./singleorder.container.module.css";
-import { PFInput } from "../../component/input/input.container.jsx";
-import PFButton from "../../component/pf-button";
-import PFTag from "../../component/pf-tag";
-import { useFormik } from "formik";
-import { requiredValidation, validateEmail } from "../../utils/validation";
+import React, { useState } from "react"
+import { useNavigate } from "react-router-dom";
+import styles from "./singleorder.container.module.css"
+import { PFInput } from "../../component/input/input.container.jsx"
+import PFButton from "../../component/pf-button"
+import PFTag from "../../component/pf-tag"
+import { useFormik } from "formik"
+import { URLs } from "../../routes/urls";
+import { requiredValidation, validateEmail } from "../../utils/validation"
 
 export default function SingleOrder() {
-  const [selectedAmount, setSelectedAmount] = useState("");
-
+  const [selectedAmount, setSelectedAmount] = useState("")
+  const nav = useNavigate();
   const handleManualAmountInput = (e) => {
-    const inputValue = parseFloat(e.target.value);
+    const inputValue = parseFloat(e.target.value)
     if (!isNaN(inputValue) && inputValue >= 0) {
-      setSelectedAmount(inputValue.toString());
+      setSelectedAmount(inputValue.toString())
     }
-  };
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -22,17 +24,21 @@ export default function SingleOrder() {
       selectedAmount: "",
     },
     validate: (values) => {
-      const errors = {};
-      errors.email = validateEmail(values?.email);
+      const errors = {}
+      errors.email = validateEmail(values?.email)
       if (!values.selectedAmount) {
-        errors.selectedAmount = requiredValidation?.error;
+        errors.selectedAmount = requiredValidation?.error
       }
-      return errors;
+      return errors
     },
     onSubmit: (values) => {
-      console.log("Form submitted with values:", values);
+      if (!formik.errors.email && !formik.errors.selectedAmount) {
+        nav(URLs.PAYMENT);
+      } else {
+        console.log("Form submitted with errors:", formik.errors)
+      }
     },
-  });
+  })
 
   return (
     <>
@@ -107,7 +113,7 @@ export default function SingleOrder() {
                             }
                             className={styles.tags}
                             onClick={() => {
-                              setSelectedAmount(amount);
+                              setSelectedAmount(amount)
                             }}
                           />
                         ))}
@@ -233,5 +239,5 @@ export default function SingleOrder() {
         </div>
       </section>
     </>
-  );
+  )
 }
