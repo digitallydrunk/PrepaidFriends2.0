@@ -5,9 +5,23 @@ import logo_light from "../../assets/images/logo-light.png";
 import PFButton from "../../component/pf-button";
 import * as Icon from "react-feather";
 import { URLs } from "../../routes/urls";
+import {useNavigate} from "react-router-dom"; 
 import { LinkOffRounded } from "@mui/icons-material";
 
 const OrderInvoice = () => {
+
+
+ const navigate = useNavigate();
+
+ const handleCheck = () => {
+  navigate(URLs.ORDER_CONFIRMATION);
+};
+
+
+const handleChange = () => {
+  navigate(URLs.BULK_ORDER);
+};
+
   return (
     <>
       <section className="relative my-2">
@@ -39,14 +53,15 @@ const OrderInvoice = () => {
                       </div>
                     </div>
                     <div>
-                      <Link to="/bulk-order">
-                        <PFButton buttonText="Edit" />
-                      </Link>
+                  
+                        <PFButton buttonText="Edit" onClick={handleChange} />
+                    
+                
                     </div>
                     <div>
-                      <Link to="/order-confirmation">
-                        <PFButton buttonText="Finalise Invoice" />
-                      </Link>
+                    
+                        <PFButton buttonText="Finalise Invoice"  onClick={handleCheck}/>
+                      
                     </div>
 
                     <div className="mt-6 md:mt-0 md:w-56">
