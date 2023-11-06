@@ -111,7 +111,7 @@ const OrderInvoice = () => {
                   <div className="mt-3 md:w-56">
                     <ul className="list-none">
                       <li className="flex mt-3">
-                        <span className="w-24">Date :</span>
+                        <span className=" md:w-24">Date :</span>
                         <span className="text-slate-400">15th Oct, 2021</span>
                       </li>
                     </ul>
