@@ -12,6 +12,7 @@ import Navbar from "../../component/navbar1";
 import Carousel from "../../component/pf-carousel";
 import { testimonialsData } from "../../data/testimonials";
 import Payment from "../pf-payment";
+import { OrderInvoice } from "../pf-order-invoice/order-invoice.container";
 const faqData = [
   {
     key: "1",
@@ -67,6 +68,7 @@ const Sample = () => {
   };
   return (
     <>
+      <OrderInvoice />
       <Payment />
       <Navbar />
       <Carousel settings={carouselSettings}>

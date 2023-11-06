@@ -2,9 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo_dark from "../../assets/images/logo-dark.png";
 import logo_light from "../../assets/images/logo-light.png";
-
+import PFButton from "../../component/pf-button";
 import * as Icon from "react-feather";
 import { URLs } from "../../routes/urls";
+import { LinkOffRounded } from "@mui/icons-material";
 
 const OrderInvoice = () => {
   return (
@@ -36,6 +37,16 @@ const OrderInvoice = () => {
                           https://www.prepaidfriends.com
                         </Link>
                       </div>
+                    </div>
+                    <div>
+                      <Link to="/bulk-order">
+                        <PFButton buttonText="Edit" />
+                      </Link>
+                    </div>
+                    <div>
+                      <Link to="/order-confirmation">
+                        <PFButton buttonText="Finalise Invoice" />
+                      </Link>
                     </div>
 
                     <div className="mt-6 md:mt-0 md:w-56">

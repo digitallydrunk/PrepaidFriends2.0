@@ -1,4 +1,11 @@
-const PFButton = ({ type = "button", id, name, buttonText, onClick, className }) => {
+const PFButton = ({
+  type = "button",
+  id,
+  name,
+  buttonText,
+  onClick,
+  className,
+}) => {
   return (
     <button
       type={type}
