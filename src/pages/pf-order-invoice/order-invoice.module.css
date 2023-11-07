@@ -1,9 +1,0 @@
-.width{
-    width: 6rem;
-}
-
-@media (min-width:768px){
-    .width{
-        width: 3rem;
-    }
-}
