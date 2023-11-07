@@ -41,7 +41,7 @@ const LoginPage = () => {
   return (
     <>
       <section className="md:h-screen py-36 flex items-center bg-[url('../../assets/images/cta.jpg')] bg-no-repeat bg-center bg-cover">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
+       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
         <div className="container relative">
           <div className="flex justify-center">
             <div className="max-w-[400px] w-full m-auto p-6 bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-800 rounded-md">

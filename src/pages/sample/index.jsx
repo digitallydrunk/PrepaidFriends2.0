@@ -134,7 +134,7 @@ const Sample = () => {
         placeholder={"Enter email address..."}
         htmlFor={"email"}
       />
-      <LoginPage />
+      {/** <LoginPage /> */}
       <PFCheckbox />
       <PFCheckbox />
       <Radio

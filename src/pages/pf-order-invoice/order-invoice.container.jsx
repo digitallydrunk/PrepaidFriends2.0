@@ -6,7 +6,7 @@ import PFButton from "../../component/pf-button";
 import * as Icon from "react-feather";
 import { URLs } from "../../routes/urls";
 import {useNavigate} from "react-router-dom"; 
-import { LinkOffRounded } from "@mui/icons-material";
+import EditIcon from '@mui/icons-material/Edit';
 
 const OrderInvoice = () => {
 
@@ -15,11 +15,14 @@ const OrderInvoice = () => {
 
  const handleCheck = () => {
   navigate(URLs.ORDER_CONFIRMATION);
+  
 };
 
 
 const handleChange = () => {
-  navigate(URLs.BULK_ORDER);
+ navigate(URLs.BULK_ORDER);
+  
+
 };
 
   return (
@@ -52,55 +55,56 @@ const handleChange = () => {
                         </Link>
                       </div>
                     </div>
-                    <div>
+                    <div className="">
                   
-                        <PFButton buttonText="Edit" onClick={handleChange} />
+                        <PFButton buttonText="Edit" icon={<EditIcon/>} onClick={handleChange} />
+                       <span className="mx-3"></span> 
+                        <PFButton buttonText="Finalise Invoice"  onClick={handleCheck}/>
                     
                 
                     </div>
-                    <div>
-                    
-                        <PFButton buttonText="Finalise Invoice"  onClick={handleCheck}/>
-                      
-                    </div>
+                  
 
-                    <div className="mt-6 md:mt-0 md:w-56">
-                      <h5 className="text-lg font-semibold">Address:</h5>
-
-                      <ul className="list-none">
-                        <li className="flex mt-3">
-                          <Icon.MapPin className="h-4 w-4 me-3 mt-1"></Icon.MapPin>
-                          <Link
-                            to="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d39206.002432144705!2d-95.4973981212445!3d29.709510002925988!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c16de81f3ca5%3A0xf43e0b60ae539ac9!2sGerald+D.+Hines+Waterwall+Park!5e0!3m2!1sen!2sin!4v1566305861440!5m2!1sen!2sin"
-                            data-type="iframe"
-                            className="lightbox text-slate-400"
-                          >
-                            1419 Riverwood Drive, <br /> Redding, CA 96001
-                          </Link>
-                        </li>
-
-                        <li className="flex mt-3">
-                          <Icon.Mail className="h-4 w-4 me-3 mt-1"></Icon.Mail>
-                          <Link
-                            to="/mailto:contact@example.com"
-                            className="text-slate-400"
-                          >
-                            info@techwind.com
-                          </Link>
-                        </li>
-
-                        <li className="flex mt-3">
-                          <Icon.Phone className="h-4 w-4 me-3 mt-1"></Icon.Phone>
-                          <Link
-                            to="/tel:+152534-468-854"
-                            className="text-slate-400"
-                          >
-                            (+12) 1546-456-856
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
+                   
                   </div>
+                <div className="flex justify-end">
+                <div className="mt-6 md:mt-0 md:w-56 ">
+                <h5 className="text-lg font-semibold">Address:</h5>
+
+                <ul className="list-none">
+                  <li className="flex mt-3">
+                    <Icon.MapPin className="h-4 w-4 me-3 mt-1"></Icon.MapPin>
+                    <Link
+                      to="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d39206.002432144705!2d-95.4973981212445!3d29.709510002925988!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c16de81f3ca5%3A0xf43e0b60ae539ac9!2sGerald+D.+Hines+Waterwall+Park!5e0!3m2!1sen!2sin!4v1566305861440!5m2!1sen!2sin"
+                      data-type="iframe"
+                      className="lightbox text-slate-400"
+                    >
+                      1419 Riverwood Drive, <br /> Redding, CA 96001
+                    </Link>
+                  </li>
+
+                  <li className="flex mt-3">
+                    <Icon.Mail className="h-4 w-4 me-3 mt-1"></Icon.Mail>
+                    <Link
+                      to="/mailto:contact@example.com"
+                      className="text-slate-400"
+                    >
+                      info@techwind.com
+                    </Link>
+                  </li>
+
+                  <li className="flex mt-3">
+                    <Icon.Phone className="h-4 w-4 me-3 mt-1"></Icon.Phone>
+                    <Link
+                      to="/tel:+152534-468-854"
+                      className="text-slate-400"
+                    >
+                      (+12) 1546-456-856
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+              </div>
                 </div>
 
                 <div className="md:flex justify-between">
