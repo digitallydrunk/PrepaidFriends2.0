@@ -233,7 +233,7 @@ const OrderInvoice = () => {
                     </div>
 
                     <div className="mt-4 md:mt-0">
-                      <div className="text-slate-400 text-center md:text-end">
+                      <div className="text-slate-400 text-center md:text-end my-3">
                         <h6 className="mb-0">
                           <Link
                             to={URLs.TERMS_AND_CONDITIONS}
@@ -244,7 +244,7 @@ const OrderInvoice = () => {
                           </Link>
                         </h6>
                       </div>
-                      <div className="">
+                      <div>
 
                         <PFButton buttonText="Edit" icon={<EditIcon style={{ fontSize: "medium" }} />} onClick={handleChange} />
                         <span className="mx-3"></span>
