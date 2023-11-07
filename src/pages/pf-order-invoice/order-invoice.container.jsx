@@ -246,9 +246,9 @@ const OrderInvoice = () => {
                       </div>
                       <div>
 
-                        <PFButton buttonText="Edit" icon={<EditIcon style={{ fontSize: "medium" }} />} onClick={handleChange} />
+                        <PFButton buttonText="Edit " icon={<EditIcon style={{ fontSize: "medium" }} />} onClick={handleChange} />
                         <span className="mx-3"></span>
-                        <PFButton buttonText="Finalise Invoice" onClick={handleCheck} />
+                        <PFButton buttonText="Finalize Invoice" onClick={handleCheck} />
 
 
                       </div>
