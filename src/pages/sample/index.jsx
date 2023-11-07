@@ -66,10 +66,10 @@ const Sample = () => {
   const handleRadioChange = (e) => {
     setSelectedOption(e.target.value);
   };
-  return (
+  return(
     <>
-      <OrderInvoice />
-      <Payment />
+    <OrderInvoice/>
+    <Payment />
       <Navbar />
       <Carousel settings={carouselSettings}>
         {testimonialsData?.map((item, index) => (
@@ -134,7 +134,7 @@ const Sample = () => {
         placeholder={"Enter email address..."}
         htmlFor={"email"}
       />
-      {/** <LoginPage /> */}
+       <LoginPage /> 
       <PFCheckbox />
       <PFCheckbox />
       <Radio
@@ -158,7 +158,7 @@ const Sample = () => {
         onChange={handleRadioChange}
       />
     </>
-  );
+  )
 };
 
 export default Sample;
