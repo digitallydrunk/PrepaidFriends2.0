@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import logo_dark from "../../assets/images/logo-dark.png";
+// import logo_dark from "../../assets/images/logo-dark.png";
 import logo_light from "../../assets/images/logo-light.png";
 import { AiOutlineUser, PiNoteDuotone } from "../../assets/icons/icons";
 import { URLs } from "../../routes/urls";
@@ -81,7 +81,7 @@ const Navbar = () => {
     >
       <div className="container relative">
         <Link className="logo" to="/index">
-          <img src={logo_dark} className="inline-block dark:hidden" alt="" />
+          {/* <img src={logo_dark} className="inline-block dark:hidden" alt="" /> */}
           <img src={logo_light} className="hidden dark:inline-block" alt="" />
         </Link>
 

@@ -1,20 +1,22 @@
-import React, { useState } from "react";
-import styles from "./singleorder.container.module.css";
-import { PFInput } from "../../component/input/input.container.jsx";
-import PFButton from "../../component/pf-button";
-import PFTag from "../../component/pf-tag";
-import { useFormik } from "formik";
-import { requiredValidation, validateEmail } from "../../utils/validation";
+import React, { useState } from "react"
+import styles from "./singleorder.container.module.css"
+import { PFInput } from "../../component/input/input.container.jsx"
+import PFButton from "../../component/pf-button"
+import PFTag from "../../component/pf-tag"
+import { useFormik } from "formik"
+import { requiredValidation, validateEmail } from "../../utils/validation"
+import { Link } from "react-router-dom"
+import { MdKeyboardArrowRight } from "../../assets/icons/icons"
 
 export default function SingleOrder() {
-  const [selectedAmount, setSelectedAmount] = useState("");
+  const [selectedAmount, setSelectedAmount] = useState("")
 
   const handleManualAmountInput = (e) => {
-    const inputValue = parseFloat(e.target.value);
+    const inputValue = parseFloat(e.target.value)
     if (!isNaN(inputValue) && inputValue >= 0) {
-      setSelectedAmount(inputValue.toString());
+      setSelectedAmount(inputValue.toString())
     }
-  };
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -22,20 +24,47 @@ export default function SingleOrder() {
       selectedAmount: "",
     },
     validate: (values) => {
-      const errors = {};
-      errors.email = validateEmail(values?.email);
+      const errors = {}
+      errors.email = validateEmail(values?.email)
       if (!values.selectedAmount) {
-        errors.selectedAmount = requiredValidation?.error;
+        errors.selectedAmount = requiredValidation?.error
       }
-      return errors;
+      return errors
     },
     onSubmit: (values) => {
-      console.log("Form submitted with values:", values);
+      console.log("Form submitted with values:", values)
     },
-  });
+  })
 
   return (
     <>
+      <section className="relative table w-full py-36 bg-[url('../../assets/images/company/aboutus.jpg')] bg-center bg-no-repeat bg-cover">
+        <div className="absolute inset-0 bg-black opacity-75"></div>
+        <div className="container relative">
+          <div className="grid grid-cols-1 pb-8 text-center mt-10">
+            <h3 className="md:text-4xl text-3xl md:leading-normal tracking-wide leading-normal font-medium text-white">
+              Individual Order
+            </h3>
+          </div>
+        </div>
+
+        <div className="absolute text-center z-10 bottom-5 start-0 end-0 mx-3">
+          <ul className="tracking-[0.5px] mb-0 inline-flex space-x-1">
+            <li className="inline-block uppercase text-[13px] font-bold duration-500 ease-in-out text-white/50 hover:text-white">
+              <Link to="/">Prepaid Friends</Link>
+            </li>
+            <li className="inline-block text-base text-white/50 mx-0.5 ltr:rotate-0 rtl:rotate-180">
+              <MdKeyboardArrowRight className="text-xl" />
+            </li>
+            <li
+              className="inline-block uppercase text-[13px] font-bold duration-500 ease-in-out text-white"
+              aria-current="page"
+            >
+              SingleOrder
+            </li>
+          </ul>
+        </div>
+      </section>
       <span className="fixed blur-[200px] w-[600px] h-[600px] rounded-full top-1/2 -translate-y-1/2 start-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 bg-indigo-600/20"></span>
       <section className="relative overflow-hidden pt-12 md:pt-6 md:pb-24 pb-16">
         <div className="container relative">
@@ -107,7 +136,7 @@ export default function SingleOrder() {
                             }
                             className={styles.tags}
                             onClick={() => {
-                              setSelectedAmount(amount);
+                              setSelectedAmount(amount)
                             }}
                           />
                         ))}
@@ -233,5 +262,5 @@ export default function SingleOrder() {
         </div>
       </section>
     </>
-  );
+  )
 }

@@ -39,7 +39,7 @@ const Homepage = () => {
               <div
                 style={{
                   backgroundImage: `url(${item.image})`,
-                  height: "70vh",
+                  height: "90vh",
                 }}
                 className={`bg-cover flex justify-center items-center bg-center w-full `}
               >

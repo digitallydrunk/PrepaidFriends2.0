@@ -1,12 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Logo from "../../assets/images/logo-light.png";
-import Payment1 from "../../assets/images/payments/american-ex.png";
-import Payment2 from "../../assets/images/payments/discover.png";
-import Payment3 from "../../assets/images/payments/master-card.png";
-import Payment4 from "../../assets/images/payments/paypal.png";
-import Payment5 from "../../assets/images/payments/visa.png";
-import * as Icon from "react-feather";
+import React from "react"
+import { Link } from "react-router-dom"
+import Logo from "../../assets/images/logo-light.png"
+import Payment1 from "../../assets/images/payments/american-ex.png"
+import Payment2 from "../../assets/images/payments/discover.png"
+import Payment3 from "../../assets/images/payments/master-card.png"
+import Payment4 from "../../assets/images/payments/paypal.png"
+import Payment5 from "../../assets/images/payments/visa.png"
+import * as Icon from "react-feather"
 
 import {
   MdKeyboardArrowRight,
@@ -21,7 +21,7 @@ import {
   BiCreditCardAlt,
   TfiTruck,
   BsArchive,
-} from "../../assets/icons/icons";
+} from "../../assets/icons/icons"
 
 const Footer = () => {
   return (
@@ -36,37 +36,10 @@ const Footer = () => {
                     <img src={Logo} alt="" />
                   </Link>
                   <p className="mt-6 text-gray-300">
-                    Start working with Tailwind CSS that can provide everything
-                    you need to generate awareness, drive traffic, connect.
+                    PrepaidFriends.com is your trusted platform for buying
+                    prepaid cards securely and conveniently using Bitcoin.
                   </p>
                   <ul className="list-none mt-5 space-x-1 space-y-1">
-                    <li className="inline">
-                      <Link
-                        to="https://1.envato.market/techwind-react"
-                        target="_blank"
-                        className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 rounded-md hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600"
-                      >
-                        <PiShoppingCart className="text-sm" />
-                      </Link>
-                    </li>
-                    <li className="inline">
-                      <Link
-                        to="https://dribbble.com/shreethemes"
-                        target="_blank"
-                        className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 rounded-md hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600"
-                      >
-                        <FaDribbble className="text-sm" />
-                      </Link>
-                    </li>
-                    <li className="inline">
-                      <Link
-                        to="https://www.behance.net/shreethemes"
-                        target="_blank"
-                        className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 rounded-md hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600"
-                      >
-                        <FaBehance className="text-sm" />
-                      </Link>
-                    </li>
                     <li className="inline">
                       <Link
                         to="http://linkedin.com/company/shreethemes"
@@ -107,130 +80,8 @@ const Footer = () => {
                 </div>
 
                 <div className="lg:col-span-6 md:col-span-12">
-                  <h5 className="tracking-[1px] text-gray-100 font-semibold">
-                    Shopping & Clothes
-                  </h5>
-
                   <div className="grid md:grid-cols-12 grid-cols-1">
-                    <div className="md:col-span-4">
-                      <ul className="list-none footer-list mt-6">
-                        <li>
-                          <Link
-                            to=""
-                            className="text-gray-300 hover:text-gray-400 duration-500 ease-in-out inline-flex items-center"
-                          >
-                            <MdKeyboardArrowRight className="text-xl me-1" />{" "}
-                            Men
-                          </Link>
-                        </li>
-                        <li className="mt-[10px]">
-                          <Link
-                            to=""
-                            className="text-gray-300 hover:text-gray-400 duration-500 ease-in-out inline-flex items-center"
-                          >
-                            <MdKeyboardArrowRight className="text-xl me-1" />{" "}
-                            Jackets & Coats{" "}
-                          </Link>
-                        </li>
-                        <li className="mt-[10px]">
-                          <Link
-                            to=""
-                            className="text-gray-300 hover:text-gray-400 duration-500 ease-in-out inline-flex items-center"
-                          >
-                            <MdKeyboardArrowRight className="text-xl me-1" />{" "}
-                            Jeans{" "}
-                          </Link>
-                        </li>
-                        <li className="mt-[10px]">
-                          <Link
-                            to=""
-                            className="text-gray-300 hover:text-gray-400 duration-500 ease-in-out inline-flex items-center"
-                          >
-                            <MdKeyboardArrowRight className="text-xl me-1" />{" "}
-                            Loungewear{" "}
-                          </Link>
-                        </li>
-                        <li className="mt-[10px]">
-                          <Link
-                            to=""
-                            className="text-gray-300 hover:text-gray-400 duration-500 ease-in-out inline-flex items-center"
-                          >
-                            <MdKeyboardArrowRight className="text-xl me-1" />{" "}
-                            Polo shirts{" "}
-                          </Link>
-                        </li>
-                        <li className="mt-[10px]">
-                          <Link
-                            to=""
-                            className="text-gray-300 hover:text-gray-400 duration-500 ease-in-out inline-flex items-center"
-                          >
-                            <MdKeyboardArrowRight className="text-xl me-1" />{" "}
-                            Shirts
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div className="md:col-span-4">
-                      <ul className="list-none footer-list mt-6">
-                        <li>
-                          <Link
-                            to=""
-                            className="text-gray-300 hover:text-gray-400 duration-500 ease-in-out inline-flex items-center"
-                          >
-                            <MdKeyboardArrowRight className="text-xl me-1" />{" "}
-                            Shorts{" "}
-                          </Link>
-                        </li>
-                        <li className="mt-[10px]">
-                          <Link
-                            to=""
-                            className="text-gray-300 hover:text-gray-400 duration-500 ease-in-out inline-flex items-center"
-                          >
-                            <MdKeyboardArrowRight className="text-xl me-1" />{" "}
-                            Suits Swimwear{" "}
-                          </Link>
-                        </li>
-                        <li className="mt-[10px]">
-                          <Link
-                            to=""
-                            className="text-gray-300 hover:text-gray-400 duration-500 ease-in-out inline-flex items-center"
-                          >
-                            <MdKeyboardArrowRight className="text-xl me-1" />{" "}
-                            T-shirts{" "}
-                          </Link>
-                        </li>
-                        <li className="mt-[10px]">
-                          <Link
-                            to=""
-                            className="text-gray-300 hover:text-gray-400 duration-500 ease-in-out inline-flex items-center"
-                          >
-                            <MdKeyboardArrowRight className="text-xl me-1" />{" "}
-                            Tracksuits{" "}
-                          </Link>
-                        </li>
-                        <li className="mt-[10px]">
-                          <Link
-                            to=""
-                            className="text-gray-300 hover:text-gray-400 duration-500 ease-in-out inline-flex items-center"
-                          >
-                            <MdKeyboardArrowRight className="text-xl me-1" />{" "}
-                            Trousers
-                          </Link>
-                        </li>
-                        <li className="mt-[10px]">
-                          <Link
-                            to=""
-                            className="text-gray-300 hover:text-gray-400 duration-500 ease-in-out inline-flex items-center"
-                          >
-                            <MdKeyboardArrowRight className="text-xl me-1" />{" "}
-                            Shirts
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div className="md:col-span-4">
+                    <div className="md:col-span-4 flex">
                       <ul className="list-none footer-list mt-6">
                         <li>
                           <Link
@@ -250,15 +101,7 @@ const Footer = () => {
                             Order History{" "}
                           </Link>
                         </li>
-                        <li className="mt-[10px]">
-                          <Link
-                            to=""
-                            className="text-gray-300 hover:text-gray-400 duration-500 ease-in-out inline-flex items-center"
-                          >
-                            <MdKeyboardArrowRight className="text-xl me-1" />{" "}
-                            Wish List{" "}
-                          </Link>
-                        </li>
+
                         <li className="mt-[10px]">
                           <Link
                             to=""
@@ -426,7 +269,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export { Footer };
+export { Footer }
