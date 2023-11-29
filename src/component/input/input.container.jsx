@@ -37,6 +37,7 @@ const PFInput = ({
           <button
             onClick={() => setHidden(!hidden)}
             className={styles.insidePosition}
+            type="button"
           >
             {hidden ? <FiEye /> : <FiEyeOff />}
           </button>

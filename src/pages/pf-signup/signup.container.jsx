@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo_icon_64 from "../../assets/images/logo-icon-64.png";
 import { useFormik } from "formik";
 import { PFInput } from "../../component/input/input.container";
@@ -7,8 +7,12 @@ import style from "./signup.module.css";
 import { requiredValidation, validateEmail } from "../../utils/validation";
 import { URLs } from "../../routes/urls";
 import PFButton from "../../component/pf-button";
+import axios from "axios";
+import { message, notification } from "antd";
 
 const SignUp = () => {
+  const [api, contextHolder] = notification.useNotification();
+  const nav = useNavigate();
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -27,7 +31,10 @@ const SignUp = () => {
       if (!values.lastName) {
         errors.lastName = requiredValidation?.error;
       }
-      errors.email = validateEmail(values?.email);
+      const check_email = validateEmail(values?.email);
+      if (check_email && check_email != undefined) {
+        errors.email = check_email;
+      }
 
       if (!values.businessName) {
         errors.businessName = requiredValidation?.error;
@@ -40,8 +47,32 @@ const SignUp = () => {
       return errors;
     },
     onSubmit: (values) => {
-      // Handle Form Submission
-      console.log(values);
+      axios
+        .post("/api/register-user-api", {
+          first_name: values.firstName,
+          last_name: values.lastName,
+          email: values.email,
+          business_name: values.businessName,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data.status === "success") {
+            notification.success({
+              message: "Success",
+              description:
+                "Success!! Your Password has been sent to your Email Address",
+            });
+            nav("/login");
+          } else {
+            notification.error({
+              message: "Something went wrong!",
+              description: "Incorrect Credentials or Email Already in Use",
+            });
+          }
+        })
+        .catch((error) => {
+          message.error(error.response.data.error);
+        });
     },
   });
 
