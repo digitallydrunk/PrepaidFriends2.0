@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 // import logo_dark from "../../assets/images/logo-dark.png";
 import logo_light from "../../assets/images/logo-light.png";
 import { AiOutlineUser, PiNoteDuotone } from "../../assets/icons/icons";
 import { URLs } from "../../routes/urls";
-import style from "./navbar.module.css"
+import style from "./navbar.module.css";
+import { AppContext } from "../../App";
 
 const Navbar = () => {
+  const appContext = useContext(AppContext);
   const nav = useNavigate();
   const location = useLocation();
   const [isMenu, setIsMenu] = useState(false);
@@ -14,6 +16,14 @@ const Navbar = () => {
   const [isAccount, setIsAccount] = useState(false);
   const [isLoginMenu, setIsLoginMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [fullName, setFullName] = useState("");
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      const user_data = JSON.parse(user);
+      setFullName(user_data?.customerName);
+    }
+  }, [appContext.reload]);
 
   const dropdownRef = useRef(null);
 
@@ -104,15 +114,25 @@ const Navbar = () => {
         <ul className="buy-button list-none mb-0">
           <li className="dropdown inline-block relative ms-1" ref={dropdownRef}>
             <button
-              onClick={() => (isLoggedIn ? setIsAccount(!isAccount) : setIsLoginMenu(!isLoginMenu))}
+              onClick={() =>
+                isLoggedIn
+                  ? setIsAccount(!isAccount)
+                  : setIsLoginMenu(!isLoginMenu)
+              }
               data-dropdown-toggle="dropdown"
               className="dropdown-toggle h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-indigo-600 hover:bg-indigo-700 border border-indigo-600 hover:border-indigo-700 text-white"
               type="button"
             >
-              <AiOutlineUser />
+              {fullName && fullName.length > 0 ? (
+                fullName[0]
+              ) : (
+                <AiOutlineUser />
+              )}
             </button>
             {isLoginMenu ? (
-              <div className={`dropdown-menu absolute end-0 m-0 mt-4 z-10 w-52 rounded-md bg-white dark:bg-slate-900 shadow `}>
+              <div
+                className={`dropdown-menu absolute end-0 m-0 mt-4 z-10 w-52 rounded-md bg-white dark:bg-slate-900 shadow `}
+              >
                 <ul className="py-2 text-start" aria-labelledby="dropdownLogin">
                   <li>
                     <button
@@ -132,40 +152,53 @@ const Navbar = () => {
                   </li>
                 </ul>
               </div>
-            ) : (
-              null
-            )}
+            ) : null}
           </li>
         </ul>
 
         <div id="navigation" style={{ display: isMenu ? "block" : "none" }}>
           <ul className="navigation-menu">
             <li className="has-submenu parent-menu-item">
-              <Link to={URLs.BASE} className={`sub-menu-item ${isLinkActive(URLs.BASE)}`}>
+              <Link
+                to={URLs.BASE}
+                className={`sub-menu-item ${isLinkActive(URLs.BASE)}`}
+              >
                 Home
               </Link>
             </li>
 
             <li className="has-submenu parent-menu-item">
-              <Link to={URLs.SINGLE_ORDER} className={`sub-menu-item ${isLinkActive(URLs.SINGLE_ORDER)}`}>
+              <Link
+                to={URLs.SINGLE_ORDER}
+                className={`sub-menu-item ${isLinkActive(URLs.SINGLE_ORDER)}`}
+              >
                 Single Order
               </Link>
             </li>
-              
+
             <li className="has-submenu parent-menu-item">
-              <Link to={URLs.BULK_ORDER} className={`sub-menu-item ${isLinkActive(URLs.BULK_ORDER)}`}>
+              <Link
+                to={URLs.BULK_ORDER}
+                className={`sub-menu-item ${isLinkActive(URLs.BULK_ORDER)}`}
+              >
                 Bulk Order
               </Link>
             </li>
 
             <li className="has-submenu parent-menu-item">
-              <Link to={URLs.HOW_IT_WORKS} className={`sub-menu-item ${isLinkActive(URLs.HOW_IT_WORKS)}`}>
+              <Link
+                to={URLs.HOW_IT_WORKS}
+                className={`sub-menu-item ${isLinkActive(URLs.HOW_IT_WORKS)}`}
+              >
                 How It Works
               </Link>
             </li>
 
             <li className="has-submenu parent-menu-item">
-              <Link to={URLs.CONTACT} className={`sub-menu-item ${isLinkActive(URLs.CONTACT)}`}>
+              <Link
+                to={URLs.CONTACT}
+                className={`sub-menu-item ${isLinkActive(URLs.CONTACT)}`}
+              >
                 Contact
               </Link>
             </li>

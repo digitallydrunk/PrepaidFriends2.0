@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo_icon_64 from "../../assets/images/logo-icon-64.png";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -14,7 +14,9 @@ import { notification, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useAuth } from "../../hooks/useAuth";
+import { AppContext } from "../../App";
 const LoginPage = () => {
+  const appContext = useContext(AppContext);
   const nav = useNavigate();
   const [_, setCookie] = useCookies(["pfAuthToken"]);
   const { login } = useAuth();
@@ -60,11 +62,16 @@ const LoginPage = () => {
                   customerName: `${response?.data?.user?.first_name} ${response?.data?.user?.last_name}`,
                   email: response?.data?.user?.email,
                 });
+                notification.success({
+                  message: "Success",
+                  description: "Success!! Your are login Successfully",
+                });
+                appContext.setReload(!appContext.reload);
+                nav("/dashboard");
               })
               .catch((err) => {
                 console.log(err);
               });
-            nav("/dashboard");
           } else {
             if (res?.data?.message === "Invalid email format") {
               message.error(

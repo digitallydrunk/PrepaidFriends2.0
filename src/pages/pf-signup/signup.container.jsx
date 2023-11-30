@@ -36,9 +36,6 @@ const SignUp = () => {
         errors.email = check_email;
       }
 
-      if (!values.businessName) {
-        errors.businessName = requiredValidation?.error;
-      }
       if (!values.termsAndConditionsCheck) {
         errors.termsAndConditionsCheck =
           "You must accept the Terms and Conditions";
@@ -55,7 +52,6 @@ const SignUp = () => {
           business_name: values.businessName,
         })
         .then((res) => {
-          console.log(res);
           if (res.data.status === "success") {
             notification.success({
               message: "Success",
