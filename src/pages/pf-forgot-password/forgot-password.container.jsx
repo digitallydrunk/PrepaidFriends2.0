@@ -5,16 +5,49 @@ import logo_icon_64 from "../../assets/images/logo-icon-64.png";
 import style from "./forgot-password.module.css";
 import { validateEmail } from "../../utils/validation";
 import { URLs } from "../../routes/urls";
+import PFButton from "../../component/pf-button";
+import axios from "axios";
+import { notification, message } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
+  const nav = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       email: "",
     },
     validate: (values) => {
       const errors = {};
-      errors.email = validateEmail(values?.email);
+      const check_email = validateEmail(values?.email);
+      if (check_email && check_email != undefined) {
+        errors.email = check_email;
+      }
       return errors;
+    },
+    onSubmit: (values) => {
+      axios
+        .post("/api/forgot-password-api", {
+          ...values,
+        })
+        .then((res) => {
+          if (res.data.status === "success") {
+            notification.success({
+              message: "Success",
+              description: "Password reset link sent to your email",
+            });
+            nav("/login");
+          } else {
+            const errorMessage = res.data.message || "Something went wrong!";
+            notification.error({
+              message: "Error",
+              description: errorMessage,
+            });
+          }
+        })
+        .catch((error) => {
+          message.error(error.response.data.error);
+        });
     },
   });
 
@@ -58,10 +91,10 @@ const ForgotPassword = () => {
                     </div>
 
                     <div className="mb-4">
-                      <input
+                      <PFButton
                         type="submit"
-                        className="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full"
-                        value="Send"
+                        className={"w-full"}
+                        buttonText="Send"
                       />
                     </div>
 

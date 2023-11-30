@@ -8,13 +8,24 @@ import PFCheckbox from "../../component/checkbox";
 import styles from "./login.container.module.css";
 import { URLs } from "../../routes/urls";
 import { requiredValidation, validateEmail } from "../../utils/validation";
-
+import PFButton from "../../component/pf-button";
+import axios from "axios";
+import { notification, message } from "antd";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { useAuth } from "../../hooks/useAuth";
 const LoginPage = () => {
+  const nav = useNavigate();
+  const [_, setCookie] = useCookies(["pfAuthToken"]);
+  const { login } = useAuth();
   const [rememberMe, setRememberMe] = useState(false);
   const validate = (values) => {
     const errors = {};
 
-    errors.email = validateEmail(values?.email);
+    const check_email = validateEmail(values?.email);
+    if (check_email && check_email != undefined) {
+      errors.email = check_email;
+    }
 
     if (!values.password) {
       errors.password = requiredValidation?.error;
@@ -30,7 +41,59 @@ const LoginPage = () => {
     },
     validate,
     onSubmit: (values) => {
-      console.log(values);
+      axios
+        .post("/api/login-user-api", {
+          ...values,
+        })
+        .then((res) => {
+          if (res?.data?.token) {
+            setCookie("pfAuthToken", res?.data?.token, { path: "/" });
+            axios({
+              url: "/api/user-detail-api",
+              method: "get",
+              headers: {
+                Authorization: `Bearer ${res?.data?.token}`,
+              },
+            })
+              .then((response) => {
+                login({
+                  customerName: `${response?.data?.user?.first_name} ${response?.data?.user?.last_name}`,
+                  email: response?.data?.user?.email,
+                });
+                notification.success({
+                  message: "Success",
+                  description: "Success!! Your are login Successfully",
+                });
+                nav("/dashboard");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            if (res?.data?.message === "Invalid email format") {
+              message.error(
+                "Invalid Email. Please enter a valid email address."
+              );
+            } else if (res?.data?.message === "Email not found") {
+              message.error(
+                "Email Not Found. The provided email address was not found."
+              );
+            } else if (res?.data?.message === "Invalid password format") {
+              message.error("Invalid Password. Please enter a valid password.");
+            } else if (res?.data?.message === "Incorrect password") {
+              message.error(
+                "Incorrect Password. The provided password is incorrect."
+              );
+            } else {
+              message.error(
+                "Login Failed. Incorrect credentials. Please try again."
+              );
+            }
+          }
+        })
+        .catch((error) => {
+          message.error(error.response.data);
+        });
     },
   });
 
@@ -103,10 +166,10 @@ const LoginPage = () => {
                   </div>
 
                   <div className="mb-4">
-                    <input
+                    <PFButton
                       type="submit"
-                      className="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full"
-                      value="Login / Sign in"
+                      className={"w-full"}
+                      buttonText="Login / Sign in"
                     />
                   </div>
 
