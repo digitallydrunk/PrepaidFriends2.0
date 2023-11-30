@@ -1,5 +1,5 @@
 // TODO: This component needs to be re-factored @Vedansh
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import image from "../../assets/images/client/05.jpg";
 import * as Icon from "react-feather";
@@ -16,20 +16,11 @@ import {
   IoIosBasket,
 } from "../../assets/icons/icons";
 import styles from "./customer-dashboard.module.css";
-import { AppContext } from "../../App";
+import { AuthContext } from "../../context/auth-context";
 
 const CustomerDashboard = () => {
-  const appContext = useContext(AppContext);
   const [isOpenTab, setisOpen] = useState(0);
-  const [fullName, setFullName] = useState("");
-
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      const user_data = JSON.parse(user);
-      setFullName(user_data?.customerName);
-    }
-  }, [appContext.reload]);
+  const { user } = useContext(AuthContext);
 
   const handleTabClick = (index) => {
     setisOpen(index);
@@ -55,7 +46,11 @@ const CustomerDashboard = () => {
                 />
                 <div className="ms-2">
                   <p className="font-semibold text-slate-400">Hello,</p>
-                  <h5 className="text-lg font-semibold">{fullName}</h5>
+                  {user && (
+                    <h5 className="text-lg font-semibold">
+                      {user?.customerName}
+                    </h5>
+                  )}
                 </div>
               </div>
             </div>

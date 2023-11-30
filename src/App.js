@@ -1,19 +1,26 @@
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/routes";
 import dotenv from "dotenv";
-import { createContext, useState } from "react";
+import { useState, useEffect } from "react";
+import { AuthContext } from "./context/auth-context";
+import { useCookies } from "react-cookie";
 
 dotenv?.config();
 
-const AppContext = createContext();
-export default function App() {
-  const [reload, setReload] = useState(false);
-  const appValue = { reload, setReload };
+function App() {
+  const [user, setUser] = useState(null);
+  const [cookies] = useCookies(["pfAuthToken"]);
+
+  useEffect(() => {
+    if (cookies?.pfAuthToken) {
+      setUser(JSON?.parse(localStorage?.getItem("user")));
+    }
+  }, []);
   return (
-    <AppContext.Provider value={appValue}>
-      <RouterProvider router={router} />;
-    </AppContext.Provider>
+    <AuthContext.Provider value={{ user, setUser }}>
+      <RouterProvider router={router} />
+    </AuthContext.Provider>
   );
 }
 
-export { AppContext };
+export default App;

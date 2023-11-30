@@ -5,10 +5,8 @@ import logo_light from "../../assets/images/logo-light.png";
 import { AiOutlineUser, PiNoteDuotone } from "../../assets/icons/icons";
 import { URLs } from "../../routes/urls";
 import style from "./navbar.module.css";
-import { AppContext } from "../../App";
-
+import { AuthContext } from "../../context/auth-context";
 const Navbar = () => {
-  const appContext = useContext(AppContext);
   const nav = useNavigate();
   const location = useLocation();
   const [isMenu, setIsMenu] = useState(false);
@@ -16,15 +14,7 @@ const Navbar = () => {
   const [isAccount, setIsAccount] = useState(false);
   const [isLoginMenu, setIsLoginMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [fullName, setFullName] = useState("");
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      const user_data = JSON.parse(user);
-      setFullName(user_data?.customerName);
-    }
-  }, [appContext.reload]);
-
+  const { user } = useContext(AuthContext);
   const dropdownRef = useRef(null);
 
   window.addEventListener("scroll", () => {
@@ -123,8 +113,8 @@ const Navbar = () => {
               className="dropdown-toggle h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-indigo-600 hover:bg-indigo-700 border border-indigo-600 hover:border-indigo-700 text-white"
               type="button"
             >
-              {fullName && fullName.length > 0 ? (
-                fullName[0]
+              {user && user?.customerName && user?.customerName?.length > 0 ? (
+                user?.customerName[0]
               ) : (
                 <AiOutlineUser />
               )}
