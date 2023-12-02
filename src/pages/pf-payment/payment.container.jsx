@@ -1,6 +1,38 @@
-import React from "react";
-
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../context/auth-context";
+import { useLocation, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
+import visa from "../../assets/images/payments/visa.png";
+import mastercard from "../../assets/images/payments/master-card.png";
+import { usdToBTC } from "../../utils/helper";
+import axios from "axios";
 function Payment() {
+  const { user } = useContext(AuthContext);
+  const location = useLocation();
+  const { email, orderType, data } = location?.state || {};
+  const isBulkOrder = orderType === "bulk-order";
+  const [btcRate, setBtcRate] = useState(1);
+
+  useEffect(() => {
+    getBtcRate();
+  }, []);
+  const getBtcRate = async () => {
+    try {
+      const response = await axios.post("/api/rate-api");
+      const btcPrice = response.data.value;
+      setBtcRate(btcPrice);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const totalCartItemsCount = data?.objectDataReturn?.items?.reduce(
+    (accumulator, object) => {
+      return accumulator + Number(object.quantity);
+    },
+    0
+  );
+
   return (
     <section className="container">
       <div className="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 gap-[30px]">
@@ -15,14 +47,175 @@ function Payment() {
             </div>
             <div className="border-b border-solid border-slate-50 pb-2">
               <h6 className="font-bold">Email Address</h6>
-              <p className="text-sm">riturajsingh5454@gmail.com</p>
+              <p className="text-sm">{user?.email || email}</p>
               <h6 className="font-bold">Payment Method</h6>
-              <p className="text-sm">Bitcoin</p>
+              <p className="text-sm">
+                {data?.payment_method === "wire" ? "Wire Transfer" : "Bitcoin"}
+              </p>
 
               <h6 className="font-bold">Invoice ID</h6>
-              <p className="text-sm">231200</p>
+              <p className="text-sm">{data?.order_number || uuidv4()}</p>
             </div>
-            <div className="md:flex flex items-center border-b border-solid border-slate-50 mb-2 ">
+            {/*  */}
+            {!isBulkOrder ? (
+              <>
+                {data?.objectDataReturn?.items?.map((item) => {
+                  const { quantity, amount, subtotal, cardType } = item;
+
+                  return (
+                    <div className="custom-upper-para-pay">
+                      <div className="value2">
+                        <img
+                          className="visacardtype-img1"
+                          src={cardType === "visa" ? visa : mastercard}
+                          alt="Visa"
+                        />
+                        <div className="nayasa">
+                          <p className="order-detail-para">Prepaid Card</p>
+                          <p>
+                            {quantity || 0} x ${amount || 0}
+                          </p>
+                        </div>
+                        {data?.payment_method !== "wire" && (
+                          <div className="item-actions">
+                            <p className="BTC">
+                              {usdToBTC(subtotal, btcRate) ?? 0} BTC
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+                <div className="custom-bottom-para pay-para">
+                  <p className="subtotal">Subtotal</p>
+                  <p className="BTC-total">
+                    ${data?.objectDataReturn?.order_subtotal}
+                  </p>
+                </div>
+                <div>
+                  <p>
+                    Number of additional transactions per card:{" "}
+                    {data?.objectDataReturn?.items[0]
+                      ?.additional_transactions_no ?? 0}
+                  </p>
+                  <p>
+                    International allowance fee:{" "}
+                    {data?.objectDataReturn?.items[0]?.international_cost ?? 0}
+                  </p>
+                  <p>
+                    Prepaid card purchase price:{" "}
+                    {data?.objectDataReturn?.items[0]?.quantity}x $
+                    {data?.objectDataReturn?.items[0]?.cost}
+                  </p>
+                  {data?.payment_method === "wire" ? (
+                    <>
+                      <p>
+                        Wire Transfer Fee: $
+                        {data?.objectDataReturn?.transaction_fee ?? 0}
+                      </p>
+                      <p>
+                        Invoice Identifier Fee: $
+                        {data?.objectDataReturn?.invoice_identifier_fee ?? 0}
+                      </p>
+                    </>
+                  ) : (
+                    <p>
+                      BTC exchange fee: $
+                      {data?.objectDataReturn?.transaction_fee ?? 0}
+                    </p>
+                  )}
+                </div>
+
+                <p className="subtotal">Total</p>
+                <div className="d-flex justify-content-between align-items-center mt-3">
+                  <p className="mb-0">${data?.objectDataReturn?.order_total}</p>
+                  {data?.payment_method !== "wire" && (
+                    <p className="BTC-total">
+                      {data?.btc_amount}
+                      BTC
+                    </p>
+                  )}
+                </div>
+              </>
+            ) : (
+              <>
+                {data?.objectDataReturn &&
+                  data?.objectDataReturn?.items?.map((item) => (
+                    <div className="custom-upper-para-pay">
+                      <div className="value2">
+                        {item?.type === "visa" ? (
+                          <>
+                            <div className="md:flex flex items-center mb-2 gap-20 ">
+                              <img
+                                src={visa}
+                                alt="Visa"
+                                className="visacardtype-img1"
+                              />
+
+                              <div className="nayasa">
+                                <p className="order-detail-para">
+                                  Prepaid Card
+                                </p>
+                                <p>{`${item?.quantity || 1} x $${
+                                  item?.price
+                                }`}</p>
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <div className="md:flex flex justify-between p-1 border-b border-solid border-slate-50 ">
+                            <div className="md:flex flex items-center mb-2 ">
+                              <img
+                                src={mastercard}
+                                alt="MasterCard"
+                                className="cardtype-img1"
+                              />
+
+                              <div className="mx-3">
+                                <p>Prepaid Card</p>
+                                <p>{`${item?.quantity || 1} x $${
+                                  item?.price
+                                }`}</p>
+                              </div>
+                            </div>
+                            <div className="final-payment">
+                              <p className="BTC-simplecard">
+                                {usdToBTC(item?.price, btcRate) ?? 0} BTC
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                <div className=" border-b border-solid border-slate-50 py-3 flex flex-col gap-30 ">
+                  <p>
+                    Prepaid Card Purchase Price: {totalCartItemsCount} x $
+                    {data?.objectDataReturn?.items[0]
+                      ? data?.objectDataReturn?.items[0]?.cost
+                      : "0"}
+                  </p>
+                  <p>
+                    BTC Exchange Fee: ${data?.objectDataReturn?.transaction_fee}
+                  </p>
+                </div>
+
+                <p>Total (USD)</p>
+                <div className="md:flex flex items-center mb-2 justify-between">
+                  <p className="subtotal-value">
+                    ${data?.objectDataReturn?.order_total}
+                  </p>
+
+                  <p className="BTC-total">
+                    {data?.btc_amount}
+                    BTC
+                  </p>
+                </div>
+              </>
+            )}
+            {/* ///// */}
+            {/* <div className="md:flex flex items-center border-b border-solid border-slate-50 mb-2 ">
               <div>
                 <img
                   width={110}
@@ -36,8 +229,8 @@ function Payment() {
                   <p>0.655690 BTC</p>
                 </div>
               </div>
-            </div>
-            <div className="py-2">
+            </div> */}
+            {/* <div className="py-2">
               <div className="flex justify-between items-center">
                 <h6 className="font-bold">Prepaid Card Exchange Fee</h6>
                 <p className="text-slate-400 font-semibold">1 x $1.98</p>
@@ -51,7 +244,7 @@ function Payment() {
                 <p className="font-bold">$5.52</p>
                 <p className="font-bold">0.00153965 BTC</p>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="lg:col-span-7">

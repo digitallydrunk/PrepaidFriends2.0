@@ -17,54 +17,19 @@ import {
 } from "../../assets/icons/icons";
 import styles from "./customer-dashboard.module.css";
 import { AuthContext } from "../../context/auth-context";
-import axios from "axios";
-import { useCookies } from "react-cookie";
+
 const CustomerDashboard = () => {
   const [isOpenTab, setisOpen] = useState(0);
   const { user } = useContext(AuthContext);
-  const [cookies] = useCookies(["pfAuthToken"]);
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleTabClick = (index) => {
-    if (index == 1) {
-      setIsLoading(true);
-      getIndividualData();
-    } else if (index == 2) {
-      setIsLoading(true);
-      getBulkOrders();
-    }
     setisOpen(index);
   };
 
   const [isOpenAccordion, setIsOpenAccordion] = useState(false);
-  let [individualOrders, setIndividualOrders] = useState([]);
-  const [bulkOrders, setBulkOrders] = useState([]);
 
   const toggleAccordion = () => {
     setIsOpenAccordion(!isOpenAccordion);
-  };
-  const getIndividualData = () => {
-    axios
-      ?.get("/api/my-order-individual-api", {
-        headers: {
-          Authorization: `Bearer ${cookies?.pfAuthToken}`,
-        },
-      })
-      ?.then((res) => setIndividualOrders(res?.data?.rows))
-      ?.catch((err) => console?.error(err))
-      ?.finally(() => setIsLoading(false));
-  };
-
-  const getBulkOrders = () => {
-    axios
-      ?.get("/api/get-order-bulk-api", {
-        headers: {
-          Authorization: `Bearer ${cookies?.pfAuthToken}`,
-        },
-      })
-      ?.then((res) => setBulkOrders(res?.data?.rows))
-      ?.catch((err) => console?.error(err))
-      ?.finally(() => setIsLoading(false));
   };
 
   return (
@@ -168,44 +133,24 @@ const CustomerDashboard = () => {
                   </li>
 
                   <li role="presentation">
-                    {user && user?.customerName ? (
-                      <button
-                        className={`${
-                          isOpenTab === 4
-                            ? "text-white bg-indigo-600 hover:text-white"
-                            : ""
-                        } px-4 py-2 text-start font-semibold rounded-md w-full mt-3 hover:text-indigo-600 transition-all duration-500 ease-in-out flex items-center`}
-                        id="dashboard-tab"
-                        data-tabs-target="#dashboard"
-                        type="button"
-                        role="tab"
-                        aria-controls="dashboard"
-                        aria-selected="false"
-                      >
-                        <AiOutlineUser className="text-[20px] me-2 align-middle" />
-                        Change Password
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => handleTabClick(4)}
-                        className={`${
-                          isOpenTab === 4
-                            ? "text-white bg-indigo-600 hover:text-white"
-                            : ""
-                        } px-4 py-2 text-start font-semibold rounded-md w-full mt-3 hover:text-indigo-600 transition-all duration-500 ease-in-out flex items-center`}
-                        id="dashboard-tab"
-                        data-tabs-target="#dashboard"
-                        type="button"
-                        role="tab"
-                        aria-controls="dashboard"
-                        aria-selected="false"
-                      >
-                        <AiOutlineUser className="text-[20px] me-2 align-middle" />
-                        My Account
-                      </button>
-                    )}
+                    <button
+                      onClick={() => handleTabClick(4)}
+                      className={`${
+                        isOpenTab === 4
+                          ? "text-white bg-indigo-600 hover:text-white"
+                          : ""
+                      } px-4 py-2 text-start font-semibold rounded-md w-full mt-3 hover:text-indigo-600 transition-all duration-500 ease-in-out flex items-center`}
+                      id="dashboard-tab"
+                      data-tabs-target="#dashboard"
+                      type="button"
+                      role="tab"
+                      aria-controls="dashboard"
+                      aria-selected="false"
+                    >
+                      <AiOutlineUser className="text-[20px] me-2 align-middle" />
+                      My Account
+                    </button>
                   </li>
-
                   <li role="presentation">
                     <Link
                       to="/auth-login"
@@ -245,83 +190,89 @@ const CustomerDashboard = () => {
                         <thead className="text-sm uppercase bg-slate-50 dark:bg-slate-800">
                           <tr className="text-start">
                             <th scope="col" className="px-2 py-3 text-start">
-                              Order Id
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Order Number
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Payment Method
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Sub Total
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Transaction Fee
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Order Total
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Order Status
+                              Order no.
                             </th>
                             <th scope="col" className="px-2 py-3 text-start">
                               Date
                             </th>
                             <th scope="col" className="px-2 py-3 text-start">
-                              Actions
+                              Status
+                            </th>
+                            <th scope="col" className="px-2 py-3 text-start">
+                              Total
+                            </th>
+                            <th scope="col" className="px-2 py-3 text-start">
+                              Action
                             </th>
                           </tr>
                         </thead>
-                        {isLoading ? (
-                          <h1>Loading...</h1>
-                        ) : (
-                          <tbody>
-                            {individualOrders?.map((item, idx) => {
-                              return (
-                                <tr
-                                  className="bg-white dark:bg-slate-900 text-start"
-                                  key={idx}
-                                >
-                                  <th
-                                    className="px-2 py-3 text-start"
-                                    scope="row"
-                                  >
-                                    {item?.id}
-                                  </th>
-                                  <td className="px-2 py-3 text-start">
-                                    {item?.order_number}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.payment_method}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_subtotal}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.transaction_fee}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_total}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_status}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_date}
-                                  </td>
+                        <tbody>
+                          <tr className="bg-white dark:bg-slate-900 text-start">
+                            <th className="px-2 py-3 text-start" scope="row">
+                              7107
+                            </th>
+                            <td className="px-2 py-3 text-start">
+                              1st November 2021
+                            </td>
+                            <td className="px-2 py-3 text-start text-green-600">
+                              Delivered
+                            </td>
+                            <td className="px-2 py-3 text-start">
+                              $ 320{" "}
+                              <span className="text-slate-400">for 2items</span>
+                            </td>
+                            <td className="px-2 py-3 text-start">
+                              <Link className="text-indigo-600 flex items-center">
+                                View{" "}
+                                <FaArrowRight className="ms-2 text-[10px]" />
+                              </Link>
+                            </td>
+                          </tr>
 
-                                  <td className="px-2 py-3 text-start">
-                                    <Link className="text-indigo-600 flex items-center">
-                                      View{" "}
-                                      <FaArrowRight className="ms-2 text-[10px]" />
-                                    </Link>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        )}
+                          <tr className="bg-white dark:bg-slate-900 text-start border-t border-gray-100 dark:border-gray-700">
+                            <th className="px-2 py-3 text-start" scope="row">
+                              8007
+                            </th>
+                            <td className="px-2 py-3 text-start">
+                              4th November 2021
+                            </td>
+                            <td className="px-2 py-3 text-start text-slate-400">
+                              Processing
+                            </td>
+                            <td className="px-2 py-3 text-start">
+                              $ 800{" "}
+                              <span className="text-slate-400">for 1item</span>
+                            </td>
+                            <td className="px-2 py-3 text-start">
+                              <Link className="text-indigo-600 flex items-center">
+                                View{" "}
+                                <FaArrowRight className="ms-2 text-[10px]" />
+                              </Link>
+                            </td>
+                          </tr>
+
+                          <tr className="bg-white dark:bg-slate-900 text-start border-t border-gray-100 dark:border-gray-700">
+                            <th className="px-2 py-3 text-start" scope="row">
+                              8008
+                            </th>
+                            <td className="px-2 py-3 text-start">
+                              4th November 2021
+                            </td>
+                            <td className="px-2 py-3 text-start text-red-600">
+                              Canceled
+                            </td>
+                            <td className="px-2 py-3 text-start">
+                              $ 800{" "}
+                              <span className="text-slate-400">for 1item</span>
+                            </td>
+                            <td className="px-2 py-3 text-start">
+                              <Link className="text-indigo-600 flex items-center">
+                                View{" "}
+                                <FaArrowRight className="ms-2 text-[10px]" />
+                              </Link>
+                            </td>
+                          </tr>
+                        </tbody>
                       </table>
                     </div>
                   </div>
@@ -334,86 +285,92 @@ const CustomerDashboard = () => {
                     <div className="relative overflow-x-auto shadow dark:shadow-gray-800 rounded-md">
                       <h1 className={styles.bulkthead}>Bulk Order</h1>
                       <table className="w-full text-start text-slate-500 dark:text-slate-400">
-                        <thead className="text-sm uppercase bg-slate-50 dark:bg-slate-800">
+                        <thead className="text-xl bg-slate-50 dark:bg-slate-800">
                           <tr className="text-start">
                             <th scope="col" className="px-2 py-3 text-start">
-                              Order Id
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Order Number
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Payment Method
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Sub Total
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Transaction Fee
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Order Total
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Order Status
+                              Order no.
                             </th>
                             <th scope="col" className="px-2 py-3 text-start">
                               Date
                             </th>
                             <th scope="col" className="px-2 py-3 text-start">
-                              Actions
+                              Status
+                            </th>
+                            <th scope="col" className="px-2 py-3 text-start">
+                              Total
+                            </th>
+                            <th scope="col" className="px-2 py-3 text-start">
+                              Action
                             </th>
                           </tr>
                         </thead>
-                        {isLoading ? (
-                          <h1>Loading...</h1>
-                        ) : (
-                          <tbody>
-                            {bulkOrders?.map((item, idx) => {
-                              return (
-                                <tr
-                                  className="bg-white dark:bg-slate-900 text-start"
-                                  key={idx}
-                                >
-                                  <th
-                                    className="px-2 py-3 text-start"
-                                    scope="row"
-                                  >
-                                    {item?.id}
-                                  </th>
-                                  <td className="px-2 py-3 text-start">
-                                    {item?.order_number}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.payment_method}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_subtotal}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.transaction_fee}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_total}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_status}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_date}
-                                  </td>
+                        <tbody>
+                          <tr className="bg-white dark:bg-slate-900 text-start">
+                            <th className="px-2 py-3 text-start" scope="row">
+                              7107
+                            </th>
+                            <td className="px-2 py-3 text-start">
+                              1st November 2021
+                            </td>
+                            <td className="px-2 py-3 text-start text-green-600">
+                              Delivered
+                            </td>
+                            <td className="px-2 py-3 text-start">
+                              $ 320{" "}
+                              <span className="text-slate-400">for 2items</span>
+                            </td>
+                            <td className="px-2 py-3 text-start">
+                              <Link className="text-indigo-600 flex items-center">
+                                View{" "}
+                                <FaArrowRight className="ms-2 text-[10px]" />
+                              </Link>
+                            </td>
+                          </tr>
 
-                                  <td className="px-2 py-3 text-start">
-                                    <Link className="text-indigo-600 flex items-center">
-                                      View{" "}
-                                      <FaArrowRight className="ms-2 text-[10px]" />
-                                    </Link>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        )}
+                          <tr className="bg-white dark:bg-slate-900 text-start border-t border-gray-100 dark:border-gray-700">
+                            <th className="px-2 py-3 text-start" scope="row">
+                              8007
+                            </th>
+                            <td className="px-2 py-3 text-start">
+                              4th November 2021
+                            </td>
+                            <td className="px-2 py-3 text-start text-slate-400">
+                              Processing
+                            </td>
+                            <td className="px-2 py-3 text-start">
+                              $ 800{" "}
+                              <span className="text-slate-400">for 1item</span>
+                            </td>
+                            <td className="px-2 py-3 text-start">
+                              <Link className="text-indigo-600 flex items-center">
+                                View{" "}
+                                <FaArrowRight className="ms-2 text-[10px]" />
+                              </Link>
+                            </td>
+                          </tr>
+
+                          <tr className="bg-white dark:bg-slate-900 text-start border-t border-gray-100 dark:border-gray-700">
+                            <th className="px-2 py-3 text-start" scope="row">
+                              8008
+                            </th>
+                            <td className="px-2 py-3 text-start">
+                              4th November 2021
+                            </td>
+                            <td className="px-2 py-3 text-start text-red-600">
+                              Canceled
+                            </td>
+                            <td className="px-2 py-3 text-start">
+                              $ 800{" "}
+                              <span className="text-slate-400">for 1item</span>
+                            </td>
+                            <td className="px-2 py-3 text-start">
+                              <Link className="text-indigo-600 flex items-center">
+                                View{" "}
+                                <FaArrowRight className="ms-2 text-[10px]" />
+                              </Link>
+                            </td>
+                          </tr>
+                        </tbody>
                       </table>
                     </div>
                   </div>
