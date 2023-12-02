@@ -283,7 +283,7 @@ export default function SingleOrder() {
                         onClick={formik.handleSubmit}
                       />
                       <div className="mt-3 px-1 text-sm">
-                        {selectedAmount && (
+                        {selectedAmount ? (
                           <>
                             <div className="py-2">
                               <div
@@ -377,7 +377,7 @@ export default function SingleOrder() {
                               </div>
                             </div>
                           </>
-                        )}
+                        ) : null}
                       </div>
                     </div>
                   </div>
