@@ -57,7 +57,7 @@ function Payment() {
               <p className="text-sm">{data?.order_number || uuidv4()}</p>
             </div>
             {/*  */}
-            {!isBulkOrder ? (
+            {isBulkOrder ? (
               <>
                 {data?.objectDataReturn?.items?.map((item) => {
                   const { quantity, amount, subtotal, cardType } = item;
