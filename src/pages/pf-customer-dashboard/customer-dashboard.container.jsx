@@ -91,10 +91,7 @@ const CustomerDashboard = () => {
             </div>
 
             <div className="lg:col-span-9 md:col-span-7">
-              <p className="text-slate-400 max-w-xl">
-                Start working with Tailwind CSS that can provide everything you
-                need to generate awareness, drive traffic, connect.
-              </p>
+           
             </div>
 
             <div className="lg:col-span-3 md:col-span-5">
