@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import contact from "../../assets/images/contact.svg";
-
+import { useFormik } from "formik";
+import { requiredValidation, validateEmail } from "../../utils/validation";
 import {
   MdKeyboardArrowRight,
   FiPhone,
@@ -9,6 +10,9 @@ import {
   RiMapPinLine,
 } from "../../assets/icons/icons";
 import * as Icon from "react-feather";
+import axios from "axios";
+import { notification } from "antd";
+import styles from "./contact.module.css";
 
 const Contact = () => {
   const contactData = [
@@ -31,6 +35,63 @@ const Contact = () => {
       contact: "View on Google map",
     },
   ];
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      subject: "",
+      comment: "",
+    },
+
+    validate: (values) => {
+      const errors = {};
+
+      if (!values.name) {
+        errors.name = requiredValidation?.error;
+      }
+
+      const check_email = validateEmail(values?.email);
+      if (check_email && check_email != undefined) {
+        errors.email = check_email;
+      }
+
+      return errors;
+    },
+    onSubmit: (values) => {
+      setIsLoading(true);
+      axios
+        .post("/api/contact-us-api", {
+          ...values,
+        })
+        .then((res) => {
+          if (res.data.status === "success") {
+            notification.success({
+              message: "Success",
+              description: "Email sent successfully!",
+            });
+            formik.resetForm();
+          } else {
+            notification.error({
+              message: "Error",
+              description: "Email not sent",
+            });
+          }
+        })
+        .catch((error) => {
+          notification.error({
+            message: "Error",
+            description: "An error occurred. Please try again later.",
+          });
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    },
+  });
+
   return (
     <>
       <section className="relative table w-full py-36 bg-[url('../../assets/images/company/aboutus.jpg')] bg-center bg-no-repeat bg-cover">
@@ -121,7 +182,7 @@ const Contact = () => {
                     Get in touch !
                   </h3>
 
-                  <form>
+                  <form onSubmit={formik.handleSubmit}>
                     <div className="grid lg:grid-cols-12 lg:gap-6">
                       <div className="lg:col-span-6 mb-5">
                         <div className="text-start">
@@ -136,7 +197,14 @@ const Contact = () => {
                               type="text"
                               className="form-input ps-11 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
                               placeholder="Name :"
+                              value={formik.values.name}
+                              onChange={formik.handleChange}
                             />
+                            {formik.touched.name && formik.errors.name && (
+                              <p style={{ color: "red" }}>
+                                {formik.errors.name}
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -154,7 +222,14 @@ const Contact = () => {
                               type="email"
                               className="form-input ps-11 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
                               placeholder="Email :"
-                            />
+                              value={formik.values.email}
+                              onChange={formik.handleChange}
+                            />{" "}
+                            {formik.touched.email && formik.errors.email && (
+                              <p style={{ color: "red" }}>
+                                {formik.errors.email}
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -173,6 +248,8 @@ const Contact = () => {
                               id="subject"
                               className="form-input ps-11 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
                               placeholder="Subject :"
+                              value={formik.values.subject}
+                              onChange={formik.handleChange}
                             />
                           </div>
                         </div>
@@ -186,10 +263,12 @@ const Contact = () => {
                           <div className="form-icon relative mt-2">
                             <Icon.MessageCircle className="w-4 h-4 absolute top-3 start-4"></Icon.MessageCircle>
                             <textarea
-                              name="comments"
+                              name="comment"
                               id="comments"
                               className="form-input ps-11 w-full py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
                               placeholder="Message :"
+                              value={formik.values.comment}
+                              onChange={formik.handleChange}
                             ></textarea>
                           </div>
                         </div>
@@ -199,9 +278,17 @@ const Contact = () => {
                       type="submit"
                       id="submit"
                       name="send"
-                      className="py-2 px-5 font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md justify-center flex items-center"
+                      className="py-2 px-5 font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md justify-center flex items-center  w-44"
+                      disabled={isLoading}
                     >
-                      Send Message
+                      {isLoading ? (
+                        <div className={`flex ${styles.loader_container}`}>
+                          <div className={styles.loader}></div>
+                          <span>Sending</span>
+                        </div>
+                      ) : (
+                        "Send Message"
+                      )}
                     </button>
                   </form>
                 </div>
