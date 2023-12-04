@@ -4,6 +4,7 @@ const PFSelect = ({
   onChange,
   placeholder,
   value,
+  isSearchable,
   ...props
 }) => {
   const handleChange = (event) => {
@@ -20,7 +21,11 @@ const PFSelect = ({
           placeholder={placeholder}
           onChange={handleChange}
           {...props}
+          isSearchable={isSearchable}
         >
+          <option value="" disabled>
+            Country
+          </option>
           {options?.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}

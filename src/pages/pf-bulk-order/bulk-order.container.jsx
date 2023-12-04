@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import PFInput from "../../component/input/index";
 import PFCheckbox from "../../component/checkbox/index";
@@ -9,8 +9,10 @@ import PFButton from "../../component/pf-button";
 import { Radio } from "../../component/pf-radio/radio.container";
 import { useNavigate } from "react-router-dom";
 import { URLs } from "../../routes/urls";
-import { Link } from "react-router-dom"
-import { MdKeyboardArrowRight } from "../../assets/icons/icons"
+import { Link } from "react-router-dom";
+import { MdKeyboardArrowRight } from "../../assets/icons/icons";
+import { validateEmail } from "../../utils/validation";
+import { Country, State } from "country-state-city";
 
 const paymentMethods = {
   btc: "BTC",
@@ -19,36 +21,7 @@ const paymentMethods = {
 
 const PFBulkOrder = () => {
   const nav = useNavigate();
-
-  const countries = [
-    {
-      value: "USA",
-      label: "America",
-    },
-    {
-      value: "IND",
-      label: "India",
-    },
-    {
-      value: "ENG",
-      label: "England",
-    },
-  ];
-
-  const states = [
-    {
-      value: "NY",
-      label: "New York",
-    },
-    {
-      value: "DEL",
-      label: "Delhi",
-    },
-    {
-      value: "LON",
-      label: "London",
-    },
-  ];
+  const countries = Country?.getAllCountries();
 
   const cardTypes = [
     {
@@ -67,12 +40,20 @@ const PFBulkOrder = () => {
   const [total, setTotal] = useState(60);
   const [isAllowInternationalPurchases, setIsAllowedInternationalPurchases] =
     useState(false);
-  const [selectedCountry, setSelectedCountry] = useState("USA");
+  const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("NY");
   const [selectedCardType, setSelectedCardType] = useState("master/visa");
+  const [stateOfCountry, setStateOfCountry] = useState([]);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(
     paymentMethods?.wireTransfer
   );
+
+  useEffect(() => {
+    const stateOfCountry = State?.getStatesOfCountry(selectedCountry)?.map(
+      (state) => ({ value: state?.isoCode, label: state?.name })
+    );
+    setStateOfCountry(stateOfCountry);
+  }, [selectedCountry]);
 
   const handleSelectedPaymentMethodChange = (e) => {
     setSelectedPaymentMethod(e.target.value);
@@ -81,13 +62,50 @@ const PFBulkOrder = () => {
     setIsAllowedInternationalPurchases(event.target.checked);
   };
 
+  const handleCalculateCharges = () => {
+    const quantity = formik.values.cardQuantity;
+    const loadAmount = formik.values.loadAmount;
+    const additionalPurchaseQt =
+      form.getFieldValue("additional-purchase-quantity") || 0;
+    const isUsedForInternationalTransaction = form.getFieldValue(
+      "international-purchases"
+    );
+    const cardType = form.getFieldValue("card-type");
+
+    setReCalculatingCharges(true);
+    axios
+      .post("/api/order-calculation-api", {
+        order_type: "bulk",
+        payment_method: selectedPaymentMethod,
+        items: [
+          {
+            cardType,
+            quantity,
+            amount: loadAmount,
+            additional_transactions: additionalPurchaseQt > 0,
+            additional_transactions_no: additionalPurchaseQt,
+            international_transaction: isUsedForInternationalTransaction,
+          },
+        ],
+      })
+      ?.then((res) => setCalculatedCharges(res?.data))
+      ?.catch((err) => console.error(err))
+      ?.finally(() => setReCalculatingCharges(false));
+  };
+
+  useEffect(() => {
+    if (selectedPaymentMethod) {
+      handleCalculateCharges();
+    }
+  }, [selectedPaymentMethod]);
+
   const validate = (values) => {
     const errors = {};
-    if (!values.email) {
-      errors.email = requiredValidation?.error;
-    } else if (emailValidation?.regEx?.test(values.email)) {
-      errors.email = emailValidation?.error;
+    const check_email = validateEmail(values?.email);
+    if (check_email && check_email != undefined) {
+      errors.email = check_email;
     }
+
     if (!values.cardQuantity) {
       errors.cardQuantity = requiredValidation?.error;
     }
@@ -112,6 +130,11 @@ const PFBulkOrder = () => {
     if (!values.city) {
       errors.city = requiredValidation?.error;
     }
+    if (values.cardQuantity === 0) {
+      errors.cardQuantity = "Value must be greater than 0";
+    }
+
+    console.log(errors);
 
     return errors;
   };
@@ -138,12 +161,12 @@ const PFBulkOrder = () => {
   });
 
   const handleAddToInvoice = () => {
-    nav(URLs.ORDER_INVOICE);
+    // nav(URLs.ORDER_INVOICE);
   };
 
   return (
     <>
-          <section className="relative table w-full py-36 bg-[url('../../assets/images/company/aboutus.jpg')] bg-center bg-no-repeat bg-cover">
+      <section className="relative table w-full py-36 bg-[url('../../assets/images/company/aboutus.jpg')] bg-center bg-no-repeat bg-cover">
         <div className="absolute inset-0 bg-black opacity-75"></div>
         <div className="container relative">
           <div className="grid grid-cols-1 pb-8 text-center mt-10">
@@ -328,10 +351,19 @@ const PFBulkOrder = () => {
                     <div className="lg:col-span-6">
                       <PFSelect
                         placeholder="Country"
-                        options={countries}
+                        options={countries?.map((country) => ({
+                          value: country?.isoCode,
+                          label: country?.name,
+                        }))}
+                        isSearchable={true}
                         value={selectedCountry}
                         onChange={setSelectedCountry}
-                      />
+                      />{" "}
+                      {selectedCountry && selectedCountry !== "" ? null : (
+                        <div>
+                          <p className={styles.required}>required</p>
+                        </div>
+                      )}
                     </div>
 
                     <div className="lg:col-span-12">
@@ -364,7 +396,7 @@ const PFBulkOrder = () => {
                     <div className="lg:col-span-4">
                       <PFSelect
                         placeholder="State"
-                        options={states}
+                        options={stateOfCountry}
                         value={selectedState}
                         onChange={setSelectedState}
                       />
@@ -409,14 +441,14 @@ const PFBulkOrder = () => {
                     />
                   </div>
 
-                  <div className="mt-4">
+                  {/* <div className="mt-4">
                     <PFButton
                       type="submit"
                       buttonText="Add to Invoice"
                       className="w-full"
                       onClick={handleAddToInvoice}
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
 

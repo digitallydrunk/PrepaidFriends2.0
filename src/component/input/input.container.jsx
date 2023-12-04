@@ -12,6 +12,7 @@ const PFInput = ({
   placeholder,
   value,
   onChange,
+
   ...props
 }) => {
   const [hidden, setHidden] = useState(true);
