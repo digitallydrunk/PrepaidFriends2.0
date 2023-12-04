@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import Logo from "../../assets/images/logo-light.png"
+import Logo from "../../assets/images/logo-dark.png"
 import Payment1 from "../../assets/images/payments/american-ex.png"
 import Payment2 from "../../assets/images/payments/discover.png"
 import Payment3 from "../../assets/images/payments/master-card.png"

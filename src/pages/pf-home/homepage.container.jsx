@@ -67,8 +67,7 @@ const Homepage = () => {
             </h3>
 
             <p className="text-slate-400 max-w-xl mx-auto">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-              tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+            Elevate Your Digital Transaction Experience with Our Comprehensive Features.
             </p>
           </div>
 

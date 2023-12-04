@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo_dark from "../../assets/images/logo-dark.png";
-import logo_light from "../../assets/images/logo-light.png";
+// import logo_light from "../../assets/images/logo-light.png";
 
 import * as Icon from "react-feather";
 import { URLs } from "../../routes/urls";
@@ -24,7 +24,7 @@ const OrderInvoice = () => {
                         alt=""
                       />
                       <img
-                        src={logo_light}
+                        // src={logo_light}
                         className="hidden dark:block"
                         alt=""
                       />
