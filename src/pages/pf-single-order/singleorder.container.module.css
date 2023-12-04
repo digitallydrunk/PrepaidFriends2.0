@@ -35,6 +35,21 @@
   font-size: 0.85rem;
 }
 
+.email_wrapper {
+  position: relative;
+}
+
+.input_value {
+  text-indent: 30px;
+}
+
+.input_value:focus,
+.input_value:active,
+.input_value:-webkit-autofill {
+  outline: none;
+  box-shadow: none;
+}
+
 @media screen and (max-width: 480px) {
   .tags {
     padding: 0.5rem !important;

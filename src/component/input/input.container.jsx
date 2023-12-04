@@ -12,7 +12,9 @@ const PFInput = ({
   placeholder,
   value,
   onChange,
-
+  disabled,
+  className,
+  autocomplete,
   ...props
 }) => {
   const [hidden, setHidden] = useState(true);
@@ -29,11 +31,13 @@ const PFInput = ({
             name={name}
             id={id}
             type={hidden ? "password" : "text"}
-            className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+            className={`form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 ${className}`}
             placeholder={placeholder}
             value={value}
             onChange={onChange}
             {...props}
+            disabled={disabled}
+            autocomplete={autocomplete}
           />
           <button
             onClick={() => setHidden(!hidden)}
@@ -49,11 +53,13 @@ const PFInput = ({
             name={name}
             id={id}
             type={type}
-            className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+            className={`form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 ${className}`}
             placeholder={placeholder}
             value={value}
             onChange={onChange}
             {...props}
+            disabled={disabled}
+            autocomplete={autocomplete}
           />
           {addOnAfter && (
             <div className={styles.insidePosition}>{addOnAfter}</div>
