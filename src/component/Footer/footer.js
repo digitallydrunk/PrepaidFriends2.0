@@ -1,5 +1,5 @@
 import React from 'react'
-import logo_light from '../../assets/images/logo-light.png';
+// import logo_light from '../../assets/images/logo-light.png';
 import american_ex from '../../assets/images/payments/american-ex.png';
 import discover from '../../assets/images/payments/discover.png';
 import master_card from '../../assets/images/payments/master-card.png';
@@ -92,7 +92,7 @@ export default function Footer() {
                                 <div className="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
                                     <div className="lg:col-span-4 md:col-span-12">
                                         <Link to="/#" className="text-[22px] focus:outline-none">
-                                            <img src={logo_light} alt="" />
+                                            {/* <img src={logo_light} alt="" /> */}
                                         </Link>
                                         <p className="mt-6 text-gray-300">Start working with Tailwind CSS that can provide everything you need to generate awareness, drive traffic, connect.</p>
                                         <ul className="list-none mt-5 space-x-1 space-y-1">
