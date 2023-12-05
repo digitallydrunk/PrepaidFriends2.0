@@ -5,6 +5,8 @@ const PFSelect = ({
   placeholder,
   value,
   isSearchable,
+  disabledOption,
+  required,
   ...props
 }) => {
   const handleChange = (event) => {
@@ -17,14 +19,15 @@ const PFSelect = ({
         <label className="font-semibold">{label}</label>
         <select
           className="form-select form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
-          value={value}
+          value={value || ""}
           placeholder={placeholder}
           onChange={handleChange}
           {...props}
+          required={required}
           isSearchable={isSearchable}
         >
           <option value="" disabled>
-            Country
+            {disabledOption}
           </option>
           {options?.map((option) => (
             <option key={option.value} value={option.value}>

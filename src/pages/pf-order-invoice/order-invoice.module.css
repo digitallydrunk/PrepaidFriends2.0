@@ -1,0 +1,7 @@
+.invoice_total {
+  width: 380px;
+}
+
+.invoice_total ul li {
+  gap: 20px;
+}

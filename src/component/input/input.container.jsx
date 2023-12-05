@@ -14,7 +14,9 @@ const PFInput = ({
   onChange,
   disabled,
   className,
+  maxlength,
   autocomplete,
+
   ...props
 }) => {
   const [hidden, setHidden] = useState(true);

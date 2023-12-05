@@ -2,12 +2,79 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo_dark from "../../assets/images/logo-dark.png";
 import logo_light from "../../assets/images/logo-light.png";
-
+import dayjs from "dayjs";
 import * as Icon from "react-feather";
 import { URLs } from "../../routes/urls";
 import styles from "./order-invoice.module.css";
-
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import { v4 } from "uuid";
+import { message } from "antd";
+import PFButton from "../../component/pf-button";
 const OrderInvoice = () => {
+  const location = useLocation();
+  const state = location?.state || {};
+  const nav = useNavigate();
+  const [isSubmittingInvoice, setIsSubmittingInvoice] = useState(false);
+  const [cookies] = useCookies(["pfAuthToken"]);
+
+  const invoiceId = v4()?.slice(0, 8);
+
+  function handlePrintClick() {
+    window.print();
+  }
+  const totalamt =
+    state?.charges?.items[0]?.quantity * state?.charges?.items[0]?.amount;
+
+  const handleFinalizeInvoice = (e) => {
+    e?.preventDefault();
+    setIsSubmittingInvoice(true);
+    const { personalInfo, selectedProviders, selectedPaymentMethod } = state;
+    axios
+      ?.post(
+        "/api/save-bulk-order-api",
+        {
+          first_name: personalInfo?.firstName,
+          last_name: personalInfo?.lastName,
+          address: personalInfo?.address,
+          city: personalInfo?.city,
+          state: personalInfo?.state,
+          zip: personalInfo?.zipcode,
+          country: personalInfo?.country,
+          phone_no: personalInfo?.phone,
+          broker_id: personalInfo?.brokerId,
+          bin_order: selectedProviders?.map((provider) => provider?.value),
+          business_name: personalInfo?.businessName,
+          email: personalInfo?.email,
+          payment_method: selectedPaymentMethod,
+          guest: cookies?.pfAuthToken ? false : true,
+          items: [
+            {
+              cardType: personalInfo?.selectedCardType,
+              quantity: personalInfo?.cardQuantity,
+              amount: personalInfo?.loadAmount,
+              additional_transactions: false,
+              additional_transactions_no: 0,
+              international_transaction:
+                personalInfo?.isAllowInternationalPurchases,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies?.pfAuthToken}`,
+          },
+        }
+      )
+      ?.then((res) =>
+        message?.success("Invoice has been sent to your email address")
+      )
+      ?.catch((err) => message?.error(err?.response?.data?.error))
+      ?.finally(() => setIsSubmittingInvoice(false));
+  };
+
   return (
     <>
       <section className="relative my-2">
@@ -50,7 +117,11 @@ const OrderInvoice = () => {
                             data-type="iframe"
                             className="lightbox text-slate-400"
                           >
-                            1419 Riverwood Drive, <br /> Redding, CA 96001
+                            {state?.personalInfo?.address},&nbsp;
+                            {state?.personalInfo?.city},&nbsp;
+                            {state?.personalInfo?.state},&nbsp;
+                            {state?.personalInfo?.country},&nbsp;
+                            {state?.personalInfo?.zip}
                           </Link>
                         </li>
 
@@ -60,7 +131,7 @@ const OrderInvoice = () => {
                             to="/mailto:contact@example.com"
                             className="text-slate-400"
                           >
-                            info@techwind.com
+                            {state?.personalInfo?.email}
                           </Link>
                         </li>
 
@@ -70,7 +141,7 @@ const OrderInvoice = () => {
                             to="/tel:+152534-468-854"
                             className="text-slate-400"
                           >
-                            (+12) 1546-456-856
+                            {state?.personalInfo?.phone}
                           </Link>
                         </li>
                       </ul>
@@ -85,36 +156,68 @@ const OrderInvoice = () => {
                     <ul className="list-none">
                       <li className="flex mt-3">
                         <span className="w-24">Invoice No. :</span>
-                        <span className="text-slate-400">land45845621</span>
+                        <span className="text-slate-400">#{invoiceId}</span>
                       </li>
 
                       <li className="flex mt-3">
                         <span className="w-24">Name :</span>
-                        <span className="text-slate-400">Calvin Carlo</span>
+                        <span className="text-slate-400">
+                          {state?.personalInfo?.firstName}{" "}
+                          {state?.personalInfo?.lastName}
+                        </span>
                       </li>
 
                       <li className="flex mt-3">
                         <span className="w-24">Address :</span>
                         <span className="text-slate-400">
-                          1962 Pike Street, <br /> Diego, CA 92123
+                          {state?.personalInfo?.address},&nbsp;
+                          {state?.personalInfo?.city},&nbsp;
+                          {state?.personalInfo?.state},&nbsp;
+                          {state?.personalInfo?.country},&nbsp;
+                          {state?.personalInfo?.zip}
                         </span>
                       </li>
 
                       <li className="flex mt-3">
                         <span className="w-24">Phone :</span>
                         <span className="text-slate-400">
-                          (+45) 4584-458-695
+                          {state?.personalInfo?.phone}
+                        </span>
+                      </li>
+
+                      <li className="flex mt-3">
+                        <span className="w-24">Card Type :</span>
+                        <span className="text-slate-400">
+                          {state?.personalInfo?.selectedCardType}
+                        </span>
+                      </li>
+
+                      <li className="flex mt-3">
+                        <span className="w-24">Broker ID :</span>
+                        <span className="text-slate-400">
+                          {state?.personalInfo?.brokerId}
+                        </span>
+                      </li>
+                      <li className="flex mt-3">
+                        <span className="w-24">Bin:</span>
+                        <span className="text-slate-400">
+                          {state?.selectedProviders?.map(
+                            (provider) => `${provider?.label}, `
+                          )}
                         </span>
                       </li>
                     </ul>
                   </div>
 
-                  <div className="mt-3 md:w-56">
+                  <div className="mt-3 md:w-56 mx-4">
                     <ul className="list-none">
                       <li className="flex mt-3">
                         Date:{" "}
-                        <span className="text-slate-400 ml-1">
-                          15th Oct, 2021
+                        <span
+                          className="text-slate-400 ml-1"
+                          style={{ whiteSpace: "nowrap" }}
+                        >
+                          {dayjs()?.format()}
                         </span>
                       </li>
                     </ul>
@@ -129,16 +232,16 @@ const OrderInvoice = () => {
                           No.
                         </th>
                         <th scope="col" className="px-6 py-3">
-                          Items
+                          Description
                         </th>
                         <th scope="col" className="px-6 py-3 w-20">
                           Qty
                         </th>
-                        <th scope="col" className="px-6 py-3 w-28">
-                          Rate($)
+                        <th scope="col" className="px-6 py-3  w-32">
+                          Unit Price
                         </th>
                         <th scope="col" className="px-6 py-3 w-20">
-                          Total($)
+                          Amount
                         </th>
                       </tr>
                     </thead>
@@ -149,53 +252,58 @@ const OrderInvoice = () => {
                           scope="row"
                           className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
                         >
-                          Visa Card
+                          {state?.personalInfo?.selectedCardType} Card
                         </th>
-                        <td className="px-6 py-4">1</td>
-                        <td className="px-6 py-4">280</td>
-                        <td className="px-6 py-4">$ 280</td>
-                      </tr>
-                      <tr className="bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-gray-700">
-                        <td className="px-6 py-4">2</td>
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
-                        >
-                          Master Card
-                        </th>
-                        <td className="px-6 py-4">1</td>
-                        <td className="px-6 py-4">140</td>
-                        <td className="px-6 py-4">$ 140</td>
-                      </tr>
-                      <tr className="bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-gray-700">
-                        <td className="px-6 py-4">3</td>
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
-                        >
-                          Visa/Master Card
-                        </th>
-                        <td className="px-6 py-4">2</td>
-                        <td className="px-6 py-4">50</td>
-                        <td className="px-6 py-4">$ 100</td>
+                        <td className="px-6 py-4">
+                          {state?.charges?.items[0]?.quantity}
+                        </td>
+                        <td className="px-6 py-4">
+                          {" "}
+                          ${state?.charges?.items[0]?.amount}
+                        </td>
+                        <td className="px-6 py-4">${totalamt}</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
 
-                <div className="w-56 ms-auto p-5">
+                <div className={` ms-auto p-5 ${styles.invoice_total}`}>
                   <ul className="list-none">
-                    <li className="text-slate-400 flex justify-between">
+                    <li className="text-slate-400 flex justify-between ">
                       <span>Subtotal :</span>
-                      <span>$ 520</span>
+                      <span>${state?.charges?.order_subtotal}</span>
                     </li>
-                    <li className="text-slate-400 flex justify-between mt-2">
-                      <span>Taxes :</span>
-                      <span>$ 20</span>
+                    <li className="text-slate-400 flex justify-between">
+                      <span>Cost Per Card :</span>
+                      <span>${state?.costpercardResult.toFixed(3)}</span>
+                    </li>
+                    <li className="text-slate-400 flex justify-between">
+                      <span>International Transaction Fee :</span>
+                      <span>
+                        {" "}
+                        ${state?.charges?.items[0]?.international_cost}
+                      </span>
+                    </li>
+
+                    {state?.selectedPaymentMethod === "BTC" ? (
+                      <li className="text-slate-400 flex justify-between">
+                        <span>BTC Exchange Fee :</span>
+                        <span> ${state?.charges?.transaction_fee}</span>
+                      </li>
+                    ) : (
+                      <li className="text-slate-400 flex justify-between">
+                        <span>Wire Transfer Fee :</span>
+                        <span> ${state?.charges?.transaction_fee}</span>
+                      </li>
+                    )}
+
+                    <li className="text-slate-400 flex justify-between ">
+                      <span> Invoice Identifier Fee :</span>
+                      <span>$1</span>
                     </li>
                     <li className="flex justify-between font-semibold mt-2">
-                      <span>Total :</span>
-                      <span>$ 540</span>
+                      <span className="font-bold">Total Amount :</span>
+                      <span>${state?.charges?.order_total}</span>
                     </li>
                   </ul>
                 </div>
@@ -226,7 +334,26 @@ const OrderInvoice = () => {
                           >
                             Terms & Conditions
                           </Link>
-                        </h6>
+                        </h6>{" "}
+                        <PFButton
+                          type="submit"
+                          buttonText="Print"
+                          className="w-40 mt-2"
+                          onClick={handlePrintClick}
+                        />{" "}
+                        <PFButton
+                          type="submit"
+                          buttonText="Edit Invoice"
+                          className=" w-40 mt-2"
+                          onClick={() => nav("/bulk-order", { state })}
+                        />{" "}
+                        <PFButton
+                          type="submit"
+                          buttonText="Finalize Invoice"
+                          className="w-40 mt-2"
+                          onClick={handleFinalizeInvoice}
+                          disabled={isSubmittingInvoice}
+                        />
                       </div>
                     </div>
                   </div>
