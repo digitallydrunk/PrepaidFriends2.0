@@ -1,0 +1,8 @@
+.ant-switch-inner-checked {
+  color: white !important;
+  font-weight: 600;
+  font-size: 16px;
+}
+.ant-switch-inner {
+  background-color: gray;
+}

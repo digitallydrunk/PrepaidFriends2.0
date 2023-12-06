@@ -15,6 +15,9 @@ import { validateEmail } from "../../utils/validation";
 import { Country, State } from "country-state-city";
 import MultiSelect from "../../component/multi-select";
 import axios from "axios";
+import { message, Switch, Skeleton } from "antd";
+import "./bulk.css";
+
 const paymentMethods = {
   btc: "BTC",
   wireTransfer: "wireTransfer",
@@ -54,6 +57,8 @@ const PFBulkOrder = () => {
   const [selectedProviders, setSelectedProviders] = useState([]);
   const [orderNotes, setOrderNotes] = useState("");
   const [brokerId, setBrokerId] = useState("");
+  const [termsCheck, setTermsCheck] = useState(false);
+
   useEffect(() => {
     const stateOfCountry = State?.getStatesOfCountry(selectedCountry)?.map(
       (state) => ({ value: state?.isoCode, label: state?.name })
@@ -133,6 +138,8 @@ const PFBulkOrder = () => {
 
     if (!values.cardQuantity) {
       errors.cardQuantity = requiredValidation?.error;
+    } else if (values.cardQuantity < 1) {
+      errors.cardQuantity = "value must be > 1";
     }
     if (!values.loadAmount) {
       errors.loadAmount = requiredValidation?.error;
@@ -174,7 +181,6 @@ const PFBulkOrder = () => {
       errors.country = requiredValidation?.error;
     }
 
-    console.log(errors);
     return errors;
   };
 
@@ -193,6 +199,10 @@ const PFBulkOrder = () => {
     },
     validate,
     onSubmit: (values) => {
+      if (!termsCheck) {
+        message?.error("Please check Terms and Conditions");
+        return;
+      }
       // handle form submit here
       nav(URLs.ORDER_INVOICE, {
         state: {
@@ -251,9 +261,7 @@ const PFBulkOrder = () => {
   }, [state]);
 
   useEffect(() => {
-    if (selectedPaymentMethod) {
-      handleCalculateCharges();
-    }
+    handleCalculateCharges();
   }, [
     selectedPaymentMethod,
     formik.values.cardQuantity,
@@ -277,6 +285,15 @@ const PFBulkOrder = () => {
     setOrderNotes(e.target.value);
   };
 
+  const handleErrors = () => {
+    if (Object.keys(formik.errors).length > 0) {
+      message?.error("Form has errors. Please correct them before submitting.");
+    }
+  };
+
+  function handleSwitchChange(checked) {
+    setIsAllowedInternationalPurchases(checked);
+  }
   return (
     <>
       <section className="relative table w-full py-36 bg-[url('../../assets/images/company/aboutus.jpg')] bg-center bg-no-repeat bg-cover">
@@ -400,11 +417,18 @@ const PFBulkOrder = () => {
                       />
                     ) : null}
 
-                    <PFCheckbox
-                      label="Allow International Purchases?"
-                      checked={isAllowInternationalPurchases}
-                      onChange={handleInternationalPurchasePermChange}
-                    />
+                    <div className="flex items-center">
+                      <Switch
+                        checkedChildren="Yes"
+                        unCheckedChildren="No"
+                        onChange={handleSwitchChange}
+                        checked={isAllowInternationalPurchases}
+                        defaultChecked={isAllowInternationalPurchases}
+                      />
+                      <label className="mx-1 font-bold">
+                        Allow International Purchases?
+                      </label>
+                    </div>
                   </div>
 
                   <div>
@@ -546,7 +570,6 @@ const PFBulkOrder = () => {
                       <PFSelect
                         disabledOption="State"
                         placeholder="State"
-                        required={true}
                         options={stateOfCountry}
                         value={selectedState}
                         onChange={setSelectedState}
@@ -604,7 +627,11 @@ const PFBulkOrder = () => {
                   <div className="mt-4">
                     <PFButton
                       type="submit"
-                      buttonText="Add to Invoice"
+                      disabled={reCalculatingCharges}
+                      onClick={handleErrors}
+                      buttonText={
+                        reCalculatingCharges ? "Processing" : "Add to Invoice"
+                      }
                       className="w-full"
                     />
                   </div>
@@ -625,19 +652,31 @@ const PFBulkOrder = () => {
                     <div className="p-3 flex justify-between items-center">
                       <div className="flex  items-center">
                         <h5 className="font-semibold">Cost per Card</h5>{" "}
-                        <p className="text-slate-400 font-semibold mx-2">
-                          {" "}
-                          {(calculatedCharges?.items &&
-                            calculatedCharges?.items[0]?.quantity) ||
-                            state?.personalInfo?.cardQuantity ||
-                            0}
-                          x $
-                          {(calculatedCharges?.items &&
-                            calculatedCharges?.items[0]?.cost) ||
-                            (state?.charges?.items &&
-                              state?.charges?.items[0]?.cost) ||
-                            0}
-                        </p>
+                        {reCalculatingCharges ? (
+                          <Skeleton.Button
+                            size="small"
+                            shape="square"
+                            active
+                            style={{
+                              // marginBottom: "0.8rem",
+                              marginLeft: "0.2rem",
+                            }}
+                          />
+                        ) : (
+                          <p className="text-slate-400 font-semibold mx-2">
+                            {" "}
+                            {(calculatedCharges?.items &&
+                              calculatedCharges?.items[0]?.quantity) ||
+                              state?.personalInfo?.cardQuantity ||
+                              0}
+                            x $
+                            {(calculatedCharges?.items &&
+                              calculatedCharges?.items[0]?.cost) ||
+                              (state?.charges?.items &&
+                                state?.charges?.items[0]?.cost) ||
+                              0}
+                          </p>
+                        )}
                       </div>
                       <p className="text-slate-400 font-semibold mx-2">
                         ${costpercardResult.toFixed(3)}
@@ -646,10 +685,22 @@ const PFBulkOrder = () => {
                     <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                       <div className="flex  items-center">
                         <h5 className="font-semibold">Value Per Card:</h5>
-                        <p className="text-slate-400 font-semibold mx-2">
-                          {formik.values.cardQuantity || 0}x $
-                          {formik.values.loadAmount || 0}
-                        </p>
+                        {reCalculatingCharges ? (
+                          <Skeleton.Button
+                            size="small"
+                            shape="square"
+                            active
+                            style={{
+                              // marginBottom: "0.8rem",
+                              marginLeft: "0.2rem",
+                            }}
+                          />
+                        ) : (
+                          <p className="text-slate-400 font-semibold mx-2">
+                            {formik.values.cardQuantity || 0}x $
+                            {formik.values.loadAmount || 0}
+                          </p>
+                        )}
                       </div>
 
                       <p className="text-slate-400 font-semibold">
@@ -662,10 +713,21 @@ const PFBulkOrder = () => {
                         <div>
                           <h5 className="font-semibold">Wire Transfer Fee:</h5>
                         </div>
-
-                        <p className="text-slate-400 font-semibold">
-                          ${calculatedCharges?.transaction_fee}
-                        </p>
+                        {reCalculatingCharges ? (
+                          <Skeleton.Button
+                            size="small"
+                            shape="square"
+                            active
+                            style={{
+                              // marginBottom: "0.8rem",
+                              marginLeft: "0.2rem",
+                            }}
+                          />
+                        ) : (
+                          <p className="text-slate-400 font-semibold">
+                            ${calculatedCharges?.transaction_fee}
+                          </p>
+                        )}
                       </div>
                     )}
                     {selectedPaymentMethod === paymentMethods?.btc && (
@@ -673,10 +735,21 @@ const PFBulkOrder = () => {
                         <div>
                           <h5 className="font-semibold">BTC Exchange Fee:</h5>
                         </div>
-
-                        <p className="text-slate-400 font-semibold">
-                          ${calculatedCharges?.transaction_fee}
-                        </p>
+                        {reCalculatingCharges ? (
+                          <Skeleton.Button
+                            size="small"
+                            shape="square"
+                            active
+                            style={{
+                              // marginBottom: "0.8rem",
+                              marginLeft: "0.2rem",
+                            }}
+                          />
+                        ) : (
+                          <p className="text-slate-400 font-semibold">
+                            ${calculatedCharges?.transaction_fee}
+                          </p>
+                        )}
                       </div>
                     )}
                     {selectedPaymentMethod === paymentMethods?.wireTransfer && (
@@ -689,75 +762,117 @@ const PFBulkOrder = () => {
                           Brief description
                         </p> */}
                         </div>
-
-                        <p className="text-slate-400 font-semibold">
-                          ${calculatedCharges?.invoice_identifier_fee || 1}
-                        </p>
+                        {reCalculatingCharges ? (
+                          <Skeleton.Button
+                            size="small"
+                            shape="square"
+                            active
+                            style={{
+                              // marginBottom: "0.8rem",
+                              marginLeft: "0.2rem",
+                            }}
+                          />
+                        ) : (
+                          <p className="text-slate-400 font-semibold">
+                            ${calculatedCharges?.invoice_identifier_fee || 1}
+                          </p>
+                        )}
                       </div>
                     )}
 
-                    <div className="p-3 flex justify-between  border border-gray-100 dark:border-gray-800">
-                      <div className="flex  items-start">
-                        <h5 className={styles.cartdescp}>
-                          International Transaction Fee
-                        </h5>
-                        <p className="text-slate-400 font-semibold mx-1 ">
-                          {formik.values.cardQuantity || 0} x 0.25
-                        </p>
+                    {isAllowInternationalPurchases === true ? (
+                      <div className="p-3 flex justify-between  border border-gray-100 dark:border-gray-800">
+                        <div className="flex  items-start">
+                          <h5 className={styles.cartdescp}>
+                            International Transaction Fee
+                          </h5>{" "}
+                          {reCalculatingCharges ? (
+                            <Skeleton.Button
+                              size="small"
+                              shape="square"
+                              active
+                              style={{
+                                // marginBottom: "0.8rem",
+                                marginLeft: "0.2rem",
+                              }}
+                            />
+                          ) : (
+                            <p className="text-slate-400 font-semibold  ">
+                              {formik.values.cardQuantity || 0} x 0.25
+                            </p>
+                          )}
+                        </div>
+                        <p className="text-slate-400 font-semibold">
+                          {" "}
+                          $
+                          {(calculatedCharges?.items &&
+                            calculatedCharges?.items[0]?.international_cost) ||
+                            (state?.charges?.items &&
+                              state?.charges?.items[0]?.international_cost) ||
+                            0}
+                        </p>{" "}
                       </div>
+                    ) : null}
 
-                      {isAllowInternationalPurchases === true ? (
-                        <p className="text-slate-400 font-semibold">
-                          {" "}
-                          $
-                          {(calculatedCharges?.items &&
-                            calculatedCharges?.items[0]?.international_cost) ||
-                            (state?.charges?.items &&
-                              state?.charges?.items[0]?.international_cost) ||
-                            0}
-                        </p>
-                      ) : (
-                        <p className="text-slate-400 font-semibold">
-                          {" "}
-                          $
-                          {(calculatedCharges?.items &&
-                            calculatedCharges?.items[0]?.international_cost) ||
-                            (state?.charges?.items &&
-                              state?.charges?.items[0]?.international_cost) ||
-                            0}
-                        </p>
-                      )}
-                    </div>
                     <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                       <div>
                         <h5 className="font-semibold">Total (USD)</h5>
                       </div>
-
-                      <p className="font-semibold">
-                        $
-                        {calculatedCharges?.order_total ||
-                          state?.charges?.order_total ||
-                          0}
-                      </p>
+                      {reCalculatingCharges ? (
+                        <Skeleton.Button
+                          size="small"
+                          shape="square"
+                          active
+                          style={{
+                            // marginBottom: "0.8rem",
+                            marginLeft: "0.2rem",
+                          }}
+                        />
+                      ) : (
+                        <p className="font-semibold">
+                          $
+                          {calculatedCharges?.order_total ||
+                            state?.charges?.order_total ||
+                            0}
+                        </p>
+                      )}
                     </div>
                     {selectedPaymentMethod === paymentMethods?.btc && (
                       <div className="p-3 flex justify-between items-center border border-gray-100 dark:border-gray-800">
                         <div>
                           <h5 className="font-semibold">Total (BTC)</h5>
                         </div>
-
-                        <p className="font-semibold">0.122323</p>
+                        {reCalculatingCharges ? (
+                          <Skeleton.Button
+                            size="small"
+                            shape="square"
+                            active
+                            style={{
+                              // marginBottom: "0.8rem",
+                              marginLeft: "0.2rem",
+                            }}
+                          />
+                        ) : (
+                          <p className="font-semibold">0.122323</p>
+                        )}
                       </div>
                     )}
                     <div className="p-3">
-                      <PFCheckbox label="Agree terms & Conditions" />
+                      <PFCheckbox
+                        label="Agree terms & Conditions"
+                        onClick={() => setTermsCheck(!termsCheck)}
+                      />
                     </div>
                   </div>
                   <div className="py-3">
                     <PFButton
                       className={"w-full"}
                       type="submit"
-                      buttonText={"Add to Invoice"}
+                      disabled={reCalculatingCharges}
+                      onClick={handleErrors}
+                      buttonText={
+                        reCalculatingCharges ? "Processing" : "Add to Invoice"
+                      }
                     ></PFButton>
                   </div>
                 </div>
