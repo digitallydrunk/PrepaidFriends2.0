@@ -45,12 +45,14 @@ const PFBulkOrder = () => {
   ];
   const [total, setTotal] = useState(60);
   const [isAllowInternationalPurchases, setIsAllowedInternationalPurchases] =
-    useState(false);
+    useState(state?.personalInfo?.isAllowInternationalPurchases || false);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedCardType, setSelectedCardType] = useState("master/visa");
   const [stateOfCountry, setStateOfCountry] = useState([]);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(
+    state?.selectedPaymentMethod || ""
+  );
   const [calculatedCharges, setCalculatedCharges] = useState(null);
   const [bins, setBins] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -106,6 +108,7 @@ const PFBulkOrder = () => {
     const loadAmount = formik.values.loadAmount || 0;
     const additionalPurchaseQt = 0;
     const isUsedForInternationalTransaction = isAllowInternationalPurchases;
+
     const cardType = selectedCardType;
 
     setReCalculatingCharges(true);
@@ -124,7 +127,7 @@ const PFBulkOrder = () => {
           },
         ],
       })
-      ?.then((res) => setCalculatedCharges(res?.data))
+      ?.then((res) => setCalculatedCharges({ ...res?.data }))
       ?.catch((err) => console.error(err))
       ?.finally(() => setReCalculatingCharges(false));
   };
@@ -199,10 +202,15 @@ const PFBulkOrder = () => {
     },
     validate,
     onSubmit: (values) => {
+      if (selectedPaymentMethod == "") {
+        message?.error("Please select Payment Method");
+        return;
+      }
       if (!termsCheck) {
         message?.error("Please check Terms and Conditions");
         return;
       }
+
       // handle form submit here
       nav(URLs.ORDER_INVOICE, {
         state: {
@@ -233,16 +241,6 @@ const PFBulkOrder = () => {
         selectedPaymentMethod,
         notes,
       } = state;
-      formik.values.email = personalInfo?.email;
-      formik.values.cardQuantity = personalInfo?.cardQuantity;
-      formik.values.loadAmount = personalInfo?.loadAmount;
-      formik.values.firstName = personalInfo?.firstName;
-      formik.values.lastName = personalInfo?.lastName;
-      formik.values.businessName = personalInfo?.businessName;
-      formik.values.city = personalInfo?.city;
-      formik.values.address = personalInfo?.address;
-      formik.values.phone = personalInfo?.phone;
-      formik.values.zip = personalInfo?.zip;
       setCalculatedCharges({ ...charges });
       setSelectedProviders(selectedProviders);
       handleBrokerIdState(personalInfo?.brokerId);
@@ -257,6 +255,16 @@ const PFBulkOrder = () => {
       if (personalInfo?.loadAmount >= 500 && selectedPaymentMethod == "BTC") {
         setSelectedPaymentMethod("");
       }
+      formik.values.email = personalInfo?.email;
+      formik.values.cardQuantity = personalInfo?.cardQuantity;
+      formik.values.loadAmount = personalInfo?.loadAmount;
+      formik.values.firstName = personalInfo?.firstName;
+      formik.values.lastName = personalInfo?.lastName;
+      formik.values.businessName = personalInfo?.businessName;
+      formik.values.city = personalInfo?.city;
+      formik.values.address = personalInfo?.address;
+      formik.values.phone = personalInfo?.phone;
+      formik.values.zip = personalInfo?.zip;
     }
   }, [state]);
 
