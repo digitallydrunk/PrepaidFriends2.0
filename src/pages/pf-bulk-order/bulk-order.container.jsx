@@ -466,7 +466,7 @@ const PFBulkOrder = () => {
                             : "gray",
                         }}
                       />
-                      <label className="mx-1 font-bold">
+                      <label className="mx-1 text-slate-400">
                         Allow International Purchases?
                       </label>
                     </div>
