@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useFormik } from "formik";
 import PFInput from "../../component/input/index";
 import PFCheckbox from "../../component/checkbox/index";
@@ -17,7 +17,7 @@ import MultiSelect from "../../component/multi-select";
 import axios from "axios";
 import { message, Switch, Skeleton } from "antd";
 import "./bulk.css";
-
+import { AuthContext } from "../../context/auth-context";
 const paymentMethods = {
   btc: "BTC",
   wireTransfer: "wireTransfer",
@@ -25,6 +25,7 @@ const paymentMethods = {
 
 const PFBulkOrder = () => {
   const location = useLocation();
+  const { user } = useContext(AuthContext);
   const { state } = location;
   const nav = useNavigate();
   const countries = Country?.getAllCountries();
@@ -43,6 +44,7 @@ const PFBulkOrder = () => {
       label: "Visa Card Only",
     },
   ];
+
   const [total, setTotal] = useState(60);
   const [isAllowInternationalPurchases, setIsAllowedInternationalPurchases] =
     useState(state?.personalInfo?.isAllowInternationalPurchases || false);
@@ -60,6 +62,7 @@ const PFBulkOrder = () => {
   const [orderNotes, setOrderNotes] = useState("");
   const [brokerId, setBrokerId] = useState("");
   const [termsCheck, setTermsCheck] = useState(false);
+  const [emailDisabled, setEmailDisabled] = useState(false);
 
   useEffect(() => {
     const stateOfCountry = State?.getStatesOfCountry(selectedCountry)?.map(
@@ -162,12 +165,12 @@ const PFBulkOrder = () => {
     }
     if (!values.phone) {
       errors.phone = requiredValidation?.error;
-    } else if (JSON.stringify(values.phone).length != 10) {
+    } else if (values.phone.length != 10) {
       errors.phone = "10 digits only";
     }
     if (!values.zip) {
       errors.zip = requiredValidation?.error;
-    } else if (JSON.stringify(values.zip).length != 6) {
+    } else if (values.zip.length != 6) {
       errors.zip = "6 digits only";
     }
     if (!values.city) {
@@ -233,6 +236,13 @@ const PFBulkOrder = () => {
   });
 
   useEffect(() => {
+    if (user) {
+      formik.values.email = user?.email;
+      setEmailDisabled(true);
+    }
+  }, [user]);
+
+  useEffect(() => {
     if (state) {
       let {
         personalInfo,
@@ -241,6 +251,7 @@ const PFBulkOrder = () => {
         selectedPaymentMethod,
         notes,
       } = state;
+
       setCalculatedCharges({ ...charges });
       setSelectedProviders(selectedProviders);
       handleBrokerIdState(personalInfo?.brokerId);
@@ -265,6 +276,7 @@ const PFBulkOrder = () => {
       formik.values.address = personalInfo?.address;
       formik.values.phone = personalInfo?.phone;
       formik.values.zip = personalInfo?.zip;
+      setEmailDisabled(true);
     }
   }, [state]);
 
@@ -302,6 +314,22 @@ const PFBulkOrder = () => {
   function handleSwitchChange(checked) {
     setIsAllowedInternationalPurchases(checked);
   }
+
+  const handleChange = (e) => {
+    if (e.target.value >= 1 || e.target.value == "") {
+      formik.handleChange(e);
+    }
+  };
+  const handleZipChange = (e) => {
+    if (!isNaN(e.target.value) && e.target.value.length <= 6) {
+      formik.handleChange(e);
+    }
+  };
+  const handlePhoneChange = (e) => {
+    if (!isNaN(e.target.value) && e.target.value.length <= 10) {
+      formik.handleChange(e);
+    }
+  };
   return (
     <>
       <section className="relative table w-full py-36 bg-[url('../../assets/images/company/aboutus.jpg')] bg-center bg-no-repeat bg-cover">
@@ -347,6 +375,7 @@ const PFBulkOrder = () => {
                       id="email"
                       name="email"
                       type="email"
+                      disabled={emailDisabled}
                       value={formik.values.email}
                       onChange={formik.handleChange}
                     />
@@ -373,9 +402,8 @@ const PFBulkOrder = () => {
                         placeholder="Card Quantity*"
                         id="cardQuantity"
                         name="cardQuantity"
-                        type="number"
                         value={formik.values.cardQuantity}
-                        onChange={formik.handleChange}
+                        onChange={handleChange}
                       />
                       {formik.touched.cardQuantity &&
                       formik.errors.cardQuantity ? (
@@ -393,7 +421,7 @@ const PFBulkOrder = () => {
                         name="loadAmount"
                         id="loadAmount"
                         value={formik.values.loadAmount}
-                        onChange={formik.handleChange}
+                        onChange={handleChange}
                       />
                       {formik.touched.loadAmount && formik.errors.loadAmount ? (
                         <div>
@@ -432,6 +460,11 @@ const PFBulkOrder = () => {
                         onChange={handleSwitchChange}
                         checked={isAllowInternationalPurchases}
                         defaultChecked={isAllowInternationalPurchases}
+                        style={{
+                          backgroundColor: isAllowInternationalPurchases
+                            ? "green"
+                            : "gray",
+                        }}
                       />
                       <label className="mx-1 font-bold">
                         Allow International Purchases?
@@ -593,10 +626,9 @@ const PFBulkOrder = () => {
                         placeholder="ZIP Code*"
                         id="zip"
                         name="zip"
-                        type="number"
                         maxlength="6"
                         value={formik.values.zip}
-                        onChange={formik.handleChange}
+                        onChange={handleZipChange}
                       />
                       {formik.touched.zip && formik.errors.zip ? (
                         <div>
@@ -608,10 +640,9 @@ const PFBulkOrder = () => {
                       <PFInput
                         placeholder="Phone Number"
                         id="phone"
-                        type="number"
                         name="phone"
                         value={formik.values.phone}
-                        onChange={formik.handleChange}
+                        onChange={handlePhoneChange}
                       />
                       {formik.touched.phone && formik.errors.phone ? (
                         <div>
