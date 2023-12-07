@@ -11,7 +11,8 @@ import PFButton from "../../component/pf-button";
 import Navbar from "../../component/navbar1";
 import Carousel from "../../component/pf-carousel";
 import { testimonialsData } from "../../data/testimonials";
-import Payment from "../pf-payment";
+// import Payment from "../pf-payment";
+import ChangePassword from "../../component/pf-changepassword"
 const faqData = [
   {
     key: "1",
@@ -67,7 +68,7 @@ const Sample = () => {
   };
   return (
     <>
-      <Payment />
+      <ChangePassword/>
       <Navbar />
       <Carousel settings={carouselSettings}>
         {testimonialsData?.map((item, index) => (

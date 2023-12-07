@@ -30,12 +30,7 @@ const OrderInvoice = () => {
                       />
                       <div className="flex mt-4">
                         <Link to="#" className="h-4 w-4 me-3 mt-1"></Link>
-                        <Link
-                          to={URLs.BASE}
-                          className="text-indigo-600 dark:text-white font-medium"
-                        >
-                          https://www.prepaidfriends.com
-                        </Link>
+                    
                       </div>
                     </div>
 
