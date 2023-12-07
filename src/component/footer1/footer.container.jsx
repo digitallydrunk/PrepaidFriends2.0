@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import Logo from "../../assets/images/logo-dark.png"
+import Logo from "../../assets/images/logo-light.png"
 import Payment1 from "../../assets/images/payments/american-ex.png"
 import Payment2 from "../../assets/images/payments/discover.png"
 import Payment3 from "../../assets/images/payments/master-card.png"
@@ -32,7 +32,7 @@ const Footer = () => {
             <div className="py-[60px] px-0">
               <div className="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
                 <div className="lg:col-span-3 md:col-span-12">
-                  <Link to="#" className="text-[22px] focus:outline-none">
+                  <Link to="#" className="text-[17px] focus:outline-none">
                     <img src={Logo} alt="" />
                   </Link>
                   <p className="mt-6 text-gray-300">
@@ -42,7 +42,7 @@ const Footer = () => {
                   <ul className="list-none mt-5 space-x-1 space-y-1">
                     <li className="inline">
                       <Link
-                        to="http://linkedin.com/company/shreethemes"
+                        to="https://www.linkedin.com/company/p-friends/"
                         target="_blank"
                         className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 rounded-md hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600"
                       >
@@ -51,7 +51,7 @@ const Footer = () => {
                     </li>
                     <li className="inline">
                       <Link
-                        to="https://www.facebook.com/shreethemes"
+                        to="https://www.facebook.com/prepaidfriendss"
                         target="_blank"
                         className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 rounded-md hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600"
                       >
@@ -60,14 +60,14 @@ const Footer = () => {
                     </li>
                     <li className="inline">
                       <Link
-                        to="https://www.instagram.com/shreethemes/"
+                        to="https://instagram.com/prepaid_friends"
                         target="_blank"
                         className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 rounded-md hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600"
                       >
                         <FaInstagram className="text-sm" />
                       </Link>
                     </li>
-                    <li className="inline">
+                    {/* <li className="inline">
                       <Link
                         to="https://twitter.com/shreethemes"
                         target="_blank"
@@ -75,7 +75,7 @@ const Footer = () => {
                       >
                         <FaTwitter className="text-sm" />
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
 

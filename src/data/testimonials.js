@@ -5,42 +5,42 @@ import image2 from "../assets/images/client/03.jpg";
 export const testimonialsData = [
   {
     description:
-      '" It seems that only fragments of the original text remain in the Lorem Ipsum texts used today. "',
+      ' "PrepaidFriends.com simplifies Bitcoin spending. Quick, secure transactions, and a variety of prepaid cards. A must for crypto users!" ',
     image: imageP,
     name: "Calvin Carlo",
-    role: "Manager",
+    // role: "Manager",
   },
   {
-    description: `" The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century. "`,
+    description: `" Traveling with Bitcoin made easy! PrepaidFriends.com offers convenience and privacy. Love the seamless transactions!"`,
     image: image1,
     name: "Christa Smith",
-    role: "Manager",
+    // role: "Manager",
   },
   {
     description:
-      '" One disadvantage of Lorum Ipsum is that in Latin certain letters appear more frequently than others. "',
+      '"Turning Bitcoin into real-world value? PrepaidFriends.com nails it. Quick, reliable, and a game-changer for crypto enthusiasts."',
     image: image2,
     name: "Jemina CLone",
-    role: "Manager",
+    // role: "Manager",
   },
   {
     description:
-      '" It seems that only fragments of the original text remain in the Lorem Ipsum texts used today. "',
+      '"Practical Bitcoin use at its best. PrepaidFriends.com - simple, secure, and a go-to for turning crypto into everyday purchases."',
     image: imageP,
     name: "Calvin Carlo",
-    role: "Manager",
+    // role: "Manager",
   },
   {
-    description: `" The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century. "`,
+    description: `"Flexibility with Bitcoin spending? Look no further. PrepaidFriends.com is quick, efficient, and an essential financial tool."`,
     image: image1,
     name: "Christa Smith",
-    role: "Manager",
+    // role: "Manager",
   },
   {
     description:
-      '" One disadvantage of Lorum Ipsum is that in Latin certain letters appear more frequently than others. "',
+      '"Privacy matters. PrepaidFriends.com delivers secure Bitcoin transactions. My preferred choice for turning crypto into practical value."',
     image: image2,
     name: "Jemina CLone",
-    role: "Manager",
+    // role: "Manager",
   },
 ];

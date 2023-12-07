@@ -1,15 +1,16 @@
-import { faqData } from "../../data/faq";
-import PFAccordion from "../../component/pf-accordion";
-import { featuresData } from "../../data/features";
-import * as Icon from "react-feather";
-import { Link } from "react-router-dom";
-import PFButton from "../../component/pf-button";
-import { AiFillCreditCard } from "react-icons/ai";
-import { PiCardholder } from "react-icons/pi";
-import Testimonials from "../../component/pf-testimonials";
-import Carousel from "../../component/pf-carousel";
-import { bannerData } from "../../data/home-banner.js";
-import CountUp from "react-countup";
+import { useState } from "react"
+import { faqData } from "../../data/faq"
+import PFAccordion from "../../component/pf-accordion"
+import { featuresData } from "../../data/features"
+import * as Icon from "react-feather"
+import { Link } from "react-router-dom"
+import PFButton from "../../component/pf-button"
+import { AiFillCreditCard } from "react-icons/ai"
+import { PiCardholder } from "react-icons/pi"
+import Testimonials from "../../component/pf-testimonials"
+import Carousel from "../../component/pf-carousel"
+import { bannerData } from "../../data/home-banner.js"
+import CountUp from "react-countup"
 
 const bannerCarouselSettings = {
   container: ".tiny-three-item",
@@ -28,8 +29,13 @@ const bannerCarouselSettings = {
       items: 1,
     },
   },
-};
+}
+
 const Homepage = () => {
+  const [resetCount, setResetCount] = useState(false)
+  const handleEnd = () => {
+    setResetCount(!resetCount);
+  };
   return (
     <>
       <div>
@@ -52,7 +58,7 @@ const Homepage = () => {
                   <p className="text-white/70 text-xl max-w-xl mb-2">
                     {item.info}
                   </p>
-                  <PFButton buttonText={"Know More"} />
+                  <PFButton buttonText={"Get Started"} />
                 </div>
               </div>
             </div>
@@ -67,13 +73,14 @@ const Homepage = () => {
             </h3>
 
             <p className="text-slate-400 max-w-xl mx-auto">
-            Elevate Your Digital Transaction Experience with Our Comprehensive Features.
+              Elevate Your Digital Transaction Experience with Our Comprehensive
+              Features.
             </p>
           </div>
 
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-4 gap-[30px]">
             {featuresData.map((item, index) => {
-              let Icons = item.icon;
+              let Icons = item.icon
               return (
                 <div
                   key={index}
@@ -98,7 +105,7 @@ const Homepage = () => {
                     </p>
                   </div>
                 </div>
-              );
+              )
             })}
           </div>
         </div>
@@ -111,15 +118,22 @@ const Homepage = () => {
           </h3>
 
           <p className="text-slate-400 max-w-xl mx-auto">
-            Start working with Tailwind CSS that can provide everything you need
-            to generate awareness, drive traffic, connect.
+            Over 10,000 Satisfied Customers Have Put Their Trust in Us, Making
+            Us Their Go-To Choice for Digital Solutions
           </p>
         </div>
 
         <div className="relative grid md:grid-cols-3 grid-cols-1 items-center mt-8 gap-[30px] z-1">
           <div className="counter-box text-center">
             <h1 className="lg:text-5xl text-4xl font-semibold mb-2 text-slate-400 dark:text-white">
-              <CountUp className="counter-value" start={1} end={10} />
+              <CountUp
+                className="counter-value"
+                start={1}
+                end={10000}
+                duration={5}
+                onEnd={handleEnd}
+                redraw={resetCount}
+              />
               K+
             </h1>
             <h5 className="counter-head text-lg font-medium">Cards Sold</h5>
@@ -127,7 +141,14 @@ const Homepage = () => {
 
           <div className="counter-box text-center">
             <h1 className="lg:text-5xl text-4xl font-semibold mb-2 text-slate-400 dark:text-white">
-              <CountUp className="counter-value" start={1} end={5} />
+              <CountUp
+                className="counter-value"
+                start={1}
+                end={5000}
+                duration={5}
+                onEnd={handleEnd}
+                redraw={resetCount}
+              />
               K+
             </h1>
             <h5 className="counter-head text-lg font-medium">
@@ -137,7 +158,14 @@ const Homepage = () => {
 
           <div className="counter-box text-center">
             <h1 className="lg:text-5xl text-4xl font-semibold mb-2 text-slate-400 dark:text-white">
-              <CountUp className="counter-value" start={1} end={1.0} />
+              <CountUp
+                className="counter-value"
+                start={0}
+                end={1000000}
+                duration={5}
+                onEnd={handleEnd}
+                redraw={resetCount}
+              />
               M+
             </h1>
             <h5 className="counter-head text-lg font-medium">In Card Value</h5>
@@ -209,7 +237,7 @@ const Homepage = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export { Homepage };
+export { Homepage }
