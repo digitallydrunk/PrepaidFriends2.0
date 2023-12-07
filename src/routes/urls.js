@@ -11,6 +11,7 @@ export const URLs = {
   RESET_PASSWORD: "/reset-password",
   ORDER_INVOICE: "/order-invoice",
   TERMS_AND_CONDITIONS: "/terms-and-conditions",
+  PRIVACY_POLICY: "/privacy-and-policy",
   DASHBOARD: "/dashboard",
   PRICING: "/pricing",
   ORDER_CONFIRMATION: "/order-confirmation",

@@ -1,6 +1,6 @@
-import React from "react";
-import Carousel from "../pf-carousel";
-import { testimonialsData } from "../../data/testimonials";
+import React from "react"
+import Carousel from "../pf-carousel"
+import { testimonialsData } from "../../data/testimonials"
 
 const Testimonials = ({ className }) => {
   const carouselSettings = {
@@ -19,7 +19,7 @@ const Testimonials = ({ className }) => {
         items: 1,
       },
     },
-  };
+  }
 
   return (
     <>
@@ -30,8 +30,8 @@ const Testimonials = ({ className }) => {
           </h3>
 
           <p className="text-slate-400 max-w-xl mx-auto">
-            Start working with Techwind that can provide everything you need to
-            generate awareness, drive traffic, connect.
+            Discover the Bitcoin-Powered Convenience: Hear What Our Users Have
+            to Say about PrepaidFriends.com!
           </p>
         </div>
 
@@ -78,7 +78,7 @@ const Testimonials = ({ className }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export { Testimonials };
+export { Testimonials }
