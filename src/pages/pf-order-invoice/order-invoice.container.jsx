@@ -18,7 +18,6 @@ const OrderInvoice = () => {
   const nav = useNavigate();
   const [isSubmittingInvoice, setIsSubmittingInvoice] = useState(false);
   const [cookies] = useCookies(["pfAuthToken"]);
-
   const invoiceId = v4()?.slice(0, 8);
 
   function handlePrintClick() {
@@ -30,6 +29,7 @@ const OrderInvoice = () => {
   const handleFinalizeInvoice = (e) => {
     e?.preventDefault();
     setIsSubmittingInvoice(true);
+
     const { personalInfo, selectedProviders, selectedPaymentMethod } = state;
     axios
       ?.post(
@@ -96,7 +96,6 @@ const OrderInvoice = () => {
                       />
                       <div className="flex mt-4">
                         <Link to="#" className="h-4 w-4 me-3 mt-1"></Link>
-                    
                       </div>
                     </div>
 
@@ -211,7 +210,16 @@ const OrderInvoice = () => {
                           className="text-slate-400 ml-1"
                           style={{ whiteSpace: "nowrap" }}
                         >
-                          {dayjs()?.format()}
+                          {dayjs().format("YYYY-MM-DD")}
+                        </span>
+                      </li>
+                      <li className="flex mt-3">
+                        Time:{" "}
+                        <span
+                          className="text-slate-400 ml-1"
+                          style={{ whiteSpace: "nowrap" }}
+                        >
+                          {dayjs().format("HH:mm:ss")}
                         </span>
                       </li>
                     </ul>
@@ -246,7 +254,7 @@ const OrderInvoice = () => {
                           scope="row"
                           className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
                         >
-                          {state?.personalInfo?.selectedCardType} Card
+                          {state?.personalInfo?.selectedCardType}
                         </th>
                         <td className="px-6 py-4">
                           {state?.charges?.items[0]?.quantity}
@@ -279,7 +287,7 @@ const OrderInvoice = () => {
                       </span>
                     </li>
 
-                    {state?.selectedPaymentMethod === "BTC" ? (
+                    {state?.selectedPaymentMethod === "btc" ? (
                       <li className="text-slate-400 flex justify-between">
                         <span>BTC Exchange Fee :</span>
                         <span> ${state?.charges?.transaction_fee}</span>
@@ -343,7 +351,11 @@ const OrderInvoice = () => {
                         />{" "}
                         <PFButton
                           type="submit"
-                          buttonText="Finalize Invoice"
+                          buttonText={
+                            isSubmittingInvoice
+                              ? "Processing"
+                              : "Finalize Invoice"
+                          }
                           className="w-40 mt-2"
                           onClick={handleFinalizeInvoice}
                           disabled={isSubmittingInvoice}

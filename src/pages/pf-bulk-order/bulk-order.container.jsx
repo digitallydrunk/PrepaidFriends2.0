@@ -19,8 +19,8 @@ import { message, Switch, Skeleton } from "antd";
 import "./bulk.css";
 import { AuthContext } from "../../context/auth-context";
 const paymentMethods = {
-  btc: "BTC",
-  wireTransfer: "wireTransfer",
+  btc: "btc",
+  wireTransfer: "wire",
 };
 
 const PFBulkOrder = () => {
@@ -32,11 +32,11 @@ const PFBulkOrder = () => {
   const [reCalculatingCharges, setReCalculatingCharges] = useState(null);
   const cardTypes = [
     {
-      value: "master/visa",
+      value: "visa-master ",
       label: "Master Card/Visa",
     },
     {
-      value: "master",
+      value: "masterCard",
       label: "Master Card Only",
     },
     {
@@ -44,13 +44,12 @@ const PFBulkOrder = () => {
       label: "Visa Card Only",
     },
   ];
-
   const [total, setTotal] = useState(60);
   const [isAllowInternationalPurchases, setIsAllowedInternationalPurchases] =
     useState(state?.personalInfo?.isAllowInternationalPurchases || false);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
-  const [selectedCardType, setSelectedCardType] = useState("master/visa");
+  const [selectedCardType, setSelectedCardType] = useState("visa-master ");
   const [stateOfCountry, setStateOfCountry] = useState([]);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(
     state?.selectedPaymentMethod || ""
@@ -71,6 +70,7 @@ const PFBulkOrder = () => {
     setStateOfCountry(stateOfCountry);
   }, [selectedCountry]);
 
+  const [btcMsg, setBtcMsg] = useState(false);
   const handleBrokerIdChange = (e) => {
     const value = e.target.value.toLowerCase();
     setBrokerId(value);
@@ -150,7 +150,7 @@ const PFBulkOrder = () => {
     if (!values.loadAmount) {
       errors.loadAmount = requiredValidation?.error;
     } else {
-      if (values.loadAmount >= 500 && selectedPaymentMethod == "BTC") {
+      if (values.loadAmount >= 500 && selectedPaymentMethod == "btc") {
         setSelectedPaymentMethod("");
       }
     }
@@ -263,7 +263,7 @@ const PFBulkOrder = () => {
       );
       setSelectedCardType(personalInfo?.selectedCardType);
       setOrderNotes(notes);
-      if (personalInfo?.loadAmount >= 500 && selectedPaymentMethod == "BTC") {
+      if (personalInfo?.loadAmount >= 500 && selectedPaymentMethod == "btc") {
         setSelectedPaymentMethod("");
       }
       formik.values.email = personalInfo?.email;
@@ -492,8 +492,16 @@ const PFBulkOrder = () => {
                       checked={selectedPaymentMethod === paymentMethods?.btc}
                       onChange={handleSelectedPaymentMethodChange}
                       disabled={formik.values.loadAmount >= 500}
+                      onMouseOver={() => setBtcMsg(true)}
+                      onMouseLeave={() => setBtcMsg(false)}
                     />
 
+                    {formik.values.loadAmount >= 500 && btcMsg ? (
+                      <p className={styles.required}>
+                        Please note that the specified payment method is not
+                        applicable for transactions exceeding 499 BTC;
+                      </p>
+                    ) : null}
                     {selectedPaymentMethod === "" ? (
                       <p className={styles.required}>required</p>
                     ) : null}

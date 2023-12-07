@@ -8,6 +8,8 @@ function Radio({
   disabled,
   className,
   labelClass,
+  onMouseLeave,
+  onMouseOver,
 }) {
   return (
     <label className={labelClass}>
@@ -18,6 +20,8 @@ function Radio({
         checked={checked}
         onChange={onChange}
         disabled={disabled}
+        onMouseOver={onMouseOver}
+        onMouseLeave={onMouseLeave}
         style={{ cursor: disabled == true ? "not-allowed" : "pointer" }}
       />
       {label}
