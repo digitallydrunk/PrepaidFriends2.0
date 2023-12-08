@@ -121,11 +121,13 @@ const Navbar = () => {
         <ul className="buy-button list-none mb-0">
           <li className="dropdown inline-block relative ms-1" ref={dropdownRef}>
             <button
-              onClick={() =>
-                isLoggedIn
+              onClick={() => {
+                user && user?.customerName
+                  ? nav(URLs.DASHBOARD)
+                  : isLoggedIn
                   ? setIsAccount(!isAccount)
-                  : setIsLoginMenu(!isLoginMenu)
-              }
+                  : setIsLoginMenu(!isLoginMenu);
+              }}
               data-dropdown-toggle="dropdown"
               className="dropdown-toggle h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-indigo-600 hover:bg-indigo-700 border border-indigo-600 hover:border-indigo-700 text-white"
               type="button"
