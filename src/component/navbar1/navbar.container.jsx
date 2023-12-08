@@ -88,6 +88,8 @@ const Navbar = () => {
   };
 
   const handleLoginCustomerClick = () => {
+    setIsLoginMenu(false);
+
     nav(URLs.LOGIN);
   };
 
