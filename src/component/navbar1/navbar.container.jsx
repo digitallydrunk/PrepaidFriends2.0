@@ -189,7 +189,7 @@ const Navbar = () => {
                 data-dropdown-toggle="dropdown"
                 style={{ fontWeight: "700", cursor: "pointer" }}
               >
-                Orders
+                Order Mode
               </p>
 
               {isOrders ? (
