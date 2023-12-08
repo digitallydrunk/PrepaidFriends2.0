@@ -1,16 +1,17 @@
-import { useState } from "react"
-import { faqData } from "../../data/faq"
-import PFAccordion from "../../component/pf-accordion"
-import { featuresData } from "../../data/features"
-import * as Icon from "react-feather"
-import { Link } from "react-router-dom"
-import PFButton from "../../component/pf-button"
-import { AiFillCreditCard } from "react-icons/ai"
-import { PiCardholder } from "react-icons/pi"
-import Testimonials from "../../component/pf-testimonials"
-import Carousel from "../../component/pf-carousel"
-import { bannerData } from "../../data/home-banner.js"
-import CountUp from "react-countup"
+import { useState } from "react";
+import { faqData } from "../../data/faq";
+import PFAccordion from "../../component/pf-accordion";
+import { featuresData } from "../../data/features";
+import * as Icon from "react-feather";
+import { Link, useNavigate } from "react-router-dom";
+import PFButton from "../../component/pf-button";
+import { AiFillCreditCard } from "react-icons/ai";
+import { PiCardholder } from "react-icons/pi";
+import Testimonials from "../../component/pf-testimonials";
+import Carousel from "../../component/pf-carousel";
+import { bannerData } from "../../data/home-banner.js";
+import CountUp from "react-countup";
+import { URLs } from "../../routes/urls";
 
 const bannerCarouselSettings = {
   container: ".tiny-three-item",
@@ -29,10 +30,11 @@ const bannerCarouselSettings = {
       items: 1,
     },
   },
-}
+};
 
 const Homepage = () => {
-  const [resetCount, setResetCount] = useState(false)
+  const nav = useNavigate();
+  const [resetCount, setResetCount] = useState(false);
   const handleEnd = () => {
     setResetCount(!resetCount);
   };
@@ -58,7 +60,10 @@ const Homepage = () => {
                   <p className="text-white/70 text-xl max-w-xl mb-2">
                     {item.info}
                   </p>
-                  <PFButton buttonText={"Get Started"} />
+                  <PFButton
+                    buttonText={"Get Started"}
+                    onClick={() => nav(item.link)}
+                  />
                 </div>
               </div>
             </div>
@@ -80,7 +85,7 @@ const Homepage = () => {
 
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-4 gap-[30px]">
             {featuresData.map((item, index) => {
-              let Icons = item.icon
+              let Icons = item.icon;
               return (
                 <div
                   key={index}
@@ -105,7 +110,7 @@ const Homepage = () => {
                     </p>
                   </div>
                 </div>
-              )
+              );
             })}
           </div>
         </div>
@@ -192,6 +197,7 @@ const Homepage = () => {
                   <p>Buy Single Card</p>
                 </div>
               }
+              onClick={() => nav(URLs.SINGLE_ORDER)}
               className={"mr-4"}
             />
             <PFButton
@@ -201,6 +207,7 @@ const Homepage = () => {
                   <p>Order In Bulk</p>
                 </div>
               }
+              onClick={() => nav(URLs.BULK_ORDER)}
               className={"mr-4"}
             />
           </div>
@@ -237,7 +244,7 @@ const Homepage = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export { Homepage }
+export { Homepage };

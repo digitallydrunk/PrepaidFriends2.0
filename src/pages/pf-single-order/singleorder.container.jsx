@@ -15,7 +15,7 @@ import { usdToBTC } from "../../utils/helper";
 import { useCookies } from "react-cookie";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
-
+import { Skeleton } from "antd";
 export default function SingleOrder() {
   const navigate = useNavigate();
   const [cookies] = useCookies(["pfAuthToken"]);
@@ -24,6 +24,7 @@ export default function SingleOrder() {
   const [btcRate, setBtcRate] = useState(0);
   const { user } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [reCalculatingCharges, setRecalculatingCharges] = useState(false);
   const handleManualAmountInput = async (e) => {
     const inputValue =
       e.target.value !== "" ? parseFloat(e.target.value) : e.target.value;
@@ -37,6 +38,7 @@ export default function SingleOrder() {
   };
 
   const getItemCalculation = (price) => {
+    setRecalculatingCharges(true);
     axios
       ?.post("/api/order-calculation-api", {
         order_type: "preOwned",
@@ -48,7 +50,10 @@ export default function SingleOrder() {
           },
         ],
       })
-      ?.then((res) => setAdditionalCharges(res?.data))
+      ?.then((res) => {
+        setAdditionalCharges(res?.data);
+        setRecalculatingCharges(false);
+      })
       ?.catch((err) => console.error(err));
   };
 
@@ -301,7 +306,20 @@ export default function SingleOrder() {
                                     styles["additional-transaction-value"]
                                   }
                                 >
-                                  {additionalCharges?.transaction_fee || 0} USD
+                                  {reCalculatingCharges ? (
+                                    <Skeleton.Button
+                                      size="small"
+                                      shape="square"
+                                      active
+                                      style={{
+                                        // marginBottom: "0.8rem",
+                                        marginLeft: "0.2rem",
+                                      }}
+                                    />
+                                  ) : (
+                                    additionalCharges?.transaction_fee || 0
+                                  )}{" "}
+                                  USD
                                 </span>
                               </div>
                             </div>
@@ -322,10 +340,23 @@ export default function SingleOrder() {
                                     styles["additional-transaction-value"]
                                   }
                                 >
-                                  {additionalCharges?.items &&
-                                  additionalCharges?.items?.length > 0
-                                    ? additionalCharges?.items?.[0]?.cost
-                                    : 0}{" "}
+                                  {" "}
+                                  {reCalculatingCharges ? (
+                                    <Skeleton.Button
+                                      size="small"
+                                      shape="square"
+                                      active
+                                      style={{
+                                        // marginBottom: "0.8rem",
+                                        marginLeft: "0.2rem",
+                                      }}
+                                    />
+                                  ) : additionalCharges?.items &&
+                                    additionalCharges?.items?.length > 0 ? (
+                                    additionalCharges?.items?.[0]?.cost
+                                  ) : (
+                                    0
+                                  )}{" "}
                                   USD
                                 </span>
                               </div>
@@ -347,7 +378,21 @@ export default function SingleOrder() {
                                     styles["additional-transaction-value"]
                                   }
                                 >
-                                  {additionalCharges?.order_total || 0} USD
+                                  {" "}
+                                  {reCalculatingCharges ? (
+                                    <Skeleton.Button
+                                      size="small"
+                                      shape="square"
+                                      active
+                                      style={{
+                                        // marginBottom: "0.8rem",
+                                        marginLeft: "0.2rem",
+                                      }}
+                                    />
+                                  ) : (
+                                    additionalCharges?.order_total || 0
+                                  )}{" "}
+                                  USD
                                 </span>
                               </div>
                             </div>
@@ -368,10 +413,23 @@ export default function SingleOrder() {
                                     styles["additional-transaction-value"]
                                   }
                                 >
-                                  {usdToBTC(
-                                    additionalCharges?.order_total,
-                                    btcRate
-                                  ) || 0}{" "}
+                                  {" "}
+                                  {reCalculatingCharges ? (
+                                    <Skeleton.Button
+                                      size="small"
+                                      shape="square"
+                                      active
+                                      style={{
+                                        // marginBottom: "0.8rem",
+                                        marginLeft: "0.2rem",
+                                      }}
+                                    />
+                                  ) : (
+                                    usdToBTC(
+                                      additionalCharges?.order_total,
+                                      btcRate
+                                    ) || 0
+                                  )}{" "}
                                   BTC
                                 </span>
                               </div>

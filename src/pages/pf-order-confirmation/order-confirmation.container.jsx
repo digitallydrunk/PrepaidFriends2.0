@@ -1,9 +1,29 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FiThumbsUp } from "../../assets/icons/icons";
 import styles from "./order-confirmation.module.css";
 
 function OrderConfirmation() {
+  const nav = useNavigate();
+  const [isRedirecting, setIsRedirecting] = useState(true);
+  const [countdown, setCountdown] = useState(20);
+
+  useEffect(() => {
+    if (isRedirecting) {
+      const redirectionTimeout = setTimeout(() => {
+        nav("/");
+      }, 20000);
+
+      const countdownInterval = setInterval(() => {
+        setCountdown((prevCountdown) => prevCountdown - 1);
+      }, 1000);
+
+      return () => {
+        clearTimeout(redirectionTimeout);
+        clearInterval(countdownInterval);
+      };
+    }
+  }, [isRedirecting, nav]);
   return (
     <>
       <section
@@ -50,10 +70,10 @@ function OrderConfirmation() {
                 You will receive a confirmation of your order on your provided
                 email address.
               </p>
-
+              You will Redirect to home page in {countdown} seconds
               <div className="mt-6">
                 <Link
-                  to="/index"
+                  to="/"
                   className="py-2 px-5 inline-block font-semibold tracking-wide border align-middle transition duration-500 ease-in-out text-base text-center bg-indigo-600/5 hover:bg-indigo-600 border-indigo-600/10 hover:border-indigo-600 text-indigo-600 hover:text-white rounded-md"
                 >
                   Back to Home
