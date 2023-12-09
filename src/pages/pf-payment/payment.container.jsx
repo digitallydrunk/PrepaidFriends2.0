@@ -9,7 +9,7 @@ import axios from "axios";
 import styles from "./paymentcontainer.module.css";
 import useInterval from "../../hooks/useInterval";
 import { QRCode } from "antd";
-
+import { URLs } from "../../routes/urls";
 function Payment() {
   const nav = useNavigate();
   const { user } = useContext(AuthContext);
@@ -18,12 +18,14 @@ function Payment() {
   const isBulkOrder = orderType === "bulk-order";
   const [btcRate, setBtcRate] = useState(1);
   const [displayTextIndex, setDisplayTextIndex] = useState(0);
+  const [timer, setTimer] = useState({ min: 1, sec: 30 });
   const texts = [
     "Processing your request",
     "Gathering card information ",
     "Preparing your card details",
     "Waiting for Payment Confirmation",
   ];
+  const [isImgLoad, setImgLoad] = useState(false);
 
   useEffect(() => {
     getBtcRate();
@@ -71,6 +73,33 @@ function Payment() {
     return () => clearInterval(intervalId);
   }, []);
   const currentText = texts[displayTextIndex];
+
+  useEffect(() => {
+    getTime();
+  }, []);
+
+  const getTime = () => {
+    let m = timer.min;
+    let s = timer.sec;
+    let timerInterval = setInterval(() => {
+      if (s == 0 && m == 0) {
+        clearInterval(timerInterval);
+        nav(URLs.ORDER_CONFIRMATION);
+      } else if (s > 0) {
+        s--;
+      } else if (s == 0 && m > 0) {
+        m--;
+        s = 59;
+      }
+      setTimer({ min: m, sec: s });
+    }, 1000);
+  };
+  function checkLoad() {
+    setImgLoad(true);
+  }
+  function checkError() {
+    setImgLoad(false);
+  }
   return (
     <section className="container">
       <div className="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 gap-[30px]">
@@ -80,12 +109,22 @@ function Payment() {
               Order Details
             </h1>
 
-            <div className={`lg:col-span-6 ${styles.image_container}`}>
+            <div
+              className={
+                !isImgLoad
+                  ? `lg:col-span-6 ${styles.image_container}`
+                  : `lg:col-span-6 ${styles.image_container_div}`
+              }
+            >
               {/* Replace with correct card details */}{" "}
               <div className={styles.loader}>
                 <p className={styles.payment_confirmation}>{currentText}</p>
               </div>
-              <img src="https://prepaidfriends.com/static/media/Visacartpage.09617a67e50bb7c4004c.png" />
+              <img
+                src="https://prepaidfriends.com/static/media/Visacartpage.09617a67e50bb7c4004c.png"
+                onLoad={checkLoad}
+                onError={checkError}
+              />
             </div>
             <div className="border-b border-solid border-slate-50 pb-2">
               <h6 className="font-bold">Email Address</h6>
@@ -292,7 +331,6 @@ function Payment() {
                 ? "Pay with Wire Transfer"
                 : "Pay with Bitcoin"}
             </h1>
-
             {data?.payment_method === "wire" ? (
               <div className="flex justify-center">
                 <h6 className="font-bold">Wire Transfer</h6>
@@ -311,7 +349,16 @@ function Payment() {
                   {data?.btc_amount} BTC
                 </p>
               </>
-            )}
+            )}{" "}
+            <div className=" flex justify-end text-4xl items-center ">
+              <span className={styles.timer_color}>
+                {timer.min < 10 ? `0${timer.min}` : timer.min}
+              </span>
+              <b>:</b>
+              <span className={styles.timer_color}>
+                {timer.sec < 10 ? `0${timer.sec}` : timer.sec}
+              </span>
+            </div>
           </div>
         </div>
       </div>

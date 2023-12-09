@@ -1,6 +1,6 @@
 // TODO: This component needs to be re-factored @Vedansh
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import image from "../../assets/images/client/05.jpg";
 import * as Icon from "react-feather";
 import {
@@ -19,11 +19,14 @@ import styles from "./customer-dashboard.module.css";
 import { AuthContext } from "../../context/auth-context";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { useAuth } from "../../hooks/useAuth";
 const CustomerDashboard = () => {
   const [isOpenTab, setisOpen] = useState(0);
   const { user } = useContext(AuthContext);
-  const [cookies] = useCookies(["pfAuthToken"]);
+  const [cookies, removeCookie] = useCookies(["pfAuthToken"]);
   const [isLoading, setIsLoading] = useState(false);
+  const { logout } = useAuth();
+  const nav = useNavigate();
 
   const handleTabClick = (index) => {
     if (index == 1) {
@@ -90,9 +93,7 @@ const CustomerDashboard = () => {
               </div>
             </div>
 
-            <div className="lg:col-span-9 md:col-span-7">
-           
-            </div>
+            <div className="lg:col-span-9 md:col-span-7"></div>
 
             <div className="lg:col-span-3 md:col-span-5">
               <div className="sticky top-20">
@@ -204,9 +205,12 @@ const CustomerDashboard = () => {
                   </li>
 
                   <li role="presentation">
-                    <Link
-                      to="/auth-login"
-                      onClick={() => handleTabClick(5)}
+                    <button
+                      onClick={() => {
+                        removeCookie("pfAuthToken", { path: "/" });
+                        nav("/");
+                        logout();
+                      }}
                       className={`${
                         isOpenTab === 5
                           ? "text-white bg-indigo-600 hover:text-white"
@@ -221,7 +225,7 @@ const CustomerDashboard = () => {
                     >
                       <LiaSignOutAltSolid className="text-[20px] me-2 align-middle" />
                       Logout
-                    </Link>
+                    </button>
                   </li>
                 </ul>
               </div>

@@ -16,7 +16,8 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { user } = useContext(AuthContext);
   const dropdownRef = useRef(null);
-
+  const dropdownRefOrder = useRef(null);
+  const [isOrders, setOrders] = useState(false);
   window.addEventListener("scroll", () => {
     setNavbarSticky(
       document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50
@@ -56,11 +57,27 @@ const Navbar = () => {
         setIsLoginMenu(false);
       }
     });
+    window.addEventListener("click", (e) => {
+      if (
+        dropdownRefOrder.current &&
+        !dropdownRefOrder.current.contains(e.target)
+      ) {
+        setOrders(false);
+      }
+    });
 
     return () => {
       window.removeEventListener("click", (e) => {
         if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
           setIsLoginMenu(false);
+        }
+      });
+      window.removeEventListener("click", (e) => {
+        if (
+          dropdownRefOrder.current &&
+          !dropdownRefOrder.current.contains(e.target)
+        ) {
+          setOrders(false);
         }
       });
     };
@@ -71,6 +88,8 @@ const Navbar = () => {
   };
 
   const handleLoginCustomerClick = () => {
+    setIsLoginMenu(false);
+
     nav(URLs.LOGIN);
   };
 
@@ -104,11 +123,13 @@ const Navbar = () => {
         <ul className="buy-button list-none mb-0">
           <li className="dropdown inline-block relative ms-1" ref={dropdownRef}>
             <button
-              onClick={() =>
-                isLoggedIn
+              onClick={() => {
+                user && user?.customerName
+                  ? nav(URLs.DASHBOARD)
+                  : isLoggedIn
                   ? setIsAccount(!isAccount)
-                  : setIsLoginMenu(!isLoginMenu)
-              }
+                  : setIsLoginMenu(!isLoginMenu);
+              }}
               data-dropdown-toggle="dropdown"
               className="dropdown-toggle h-9 w-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-indigo-600 hover:bg-indigo-700 border border-indigo-600 hover:border-indigo-700 text-white"
               type="button"
@@ -156,23 +177,59 @@ const Navbar = () => {
                 Home
               </Link>
             </li>
-
-            <li className="has-submenu parent-menu-item">
-              <Link
-                to={URLs.SINGLE_ORDER}
-                className={`sub-menu-item ${isLinkActive(URLs.SINGLE_ORDER)}`}
+            <li
+              className="has-submenu parent-menu-item "
+              ref={dropdownRefOrder}
+            >
+              <p
+                className={`sub-menu-item ${isLinkActive(
+                  URLs.HOW_IT_WORKS
+                )} mt-6`}
+                onClick={() => setOrders(!isOrders)}
+                data-dropdown-toggle="dropdown"
+                style={{ fontWeight: "700", cursor: "pointer" }}
               >
-                Single Order
-              </Link>
-            </li>
+                Orders
+              </p>
 
-            <li className="has-submenu parent-menu-item">
-              <Link
-                to={URLs.BULK_ORDER}
-                className={`sub-menu-item ${isLinkActive(URLs.BULK_ORDER)}`}
-              >
-                Bulk Order
-              </Link>
+              {isOrders ? (
+                <div
+                  className={`dropdown-menu absolute   m-0 mt-5  z-10 w-52 rounded-md bg-white dark:bg-slate-900 shadow  `}
+                >
+                  <ul
+                    className="py-2 text-start px-4"
+                    aria-labelledby="dropdownLogin"
+                  >
+                    <li
+                      className="has-submenu parent-menu-item mb-1"
+                      onClick={() => setOrders(false)}
+                    >
+                      <Link
+                        to={URLs.SINGLE_ORDER}
+                        className={`sub-menu-item ${isLinkActive(
+                          URLs.SINGLE_ORDER
+                        )}`}
+                      >
+                        Single Order
+                      </Link>
+                    </li>
+
+                    <li
+                      className="has-submenu parent-menu-item"
+                      onClick={() => setOrders(false)}
+                    >
+                      <Link
+                        to={URLs.BULK_ORDER}
+                        className={`sub-menu-item ${isLinkActive(
+                          URLs.BULK_ORDER
+                        )}`}
+                      >
+                        Bulk Order
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              ) : null}
             </li>
 
             <li className="has-submenu parent-menu-item">
