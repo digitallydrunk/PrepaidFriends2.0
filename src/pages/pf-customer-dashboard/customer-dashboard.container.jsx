@@ -1,5 +1,5 @@
 // TODO: This component needs to be re-factored @Vedansh
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import image from "../../assets/images/client/05.jpg";
 import * as Icon from "react-feather";
@@ -28,6 +28,9 @@ const CustomerDashboard = () => {
   const { logout } = useAuth();
   const nav = useNavigate();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const handleTabClick = (index) => {
     if (index == 1) {
       setIsLoading(true);

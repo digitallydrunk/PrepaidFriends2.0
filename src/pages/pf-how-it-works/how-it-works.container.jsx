@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import * as Icon from "react-feather";
 import {
@@ -9,6 +9,9 @@ import {
 } from "../../assets/icons/icons";
 
 const HowItWorks = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <div className="py-4">

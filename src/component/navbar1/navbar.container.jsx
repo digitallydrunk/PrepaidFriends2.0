@@ -99,7 +99,7 @@ const Navbar = () => {
       className={`${navbarSticky ? "nav-sticky" : "defaultscroll"}`}
     >
       <div className="container relative">
-        <Link className="logo" to="/index">
+        <Link className="logo" to="/">
           <img src={logo_dark} className="inline-block dark:hidden" alt="" />
           {/* <img src={logo_light} className="hidden dark:inline-block" alt="" /> */}
         </Link>

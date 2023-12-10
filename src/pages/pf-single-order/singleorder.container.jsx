@@ -130,6 +130,8 @@ export default function SingleOrder() {
   }
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     getBtcRate();
     setIsLoading(false);
   }, []);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import contact from "../../assets/images/contact.svg";
 import { useFormik } from "formik";
@@ -15,6 +15,9 @@ import { notification } from "antd";
 import styles from "./contact.module.css";
 
 const Contact = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const contactData = [
     {
       icon: FiPhone,

@@ -28,6 +28,7 @@ function Payment() {
   const [isImgLoad, setImgLoad] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     getBtcRate();
   }, []);
   const getBtcRate = async () => {

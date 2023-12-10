@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import PFInput from "../../component/input/index";
 import PFCheckbox from "../../component/checkbox/index";
@@ -9,8 +9,8 @@ import PFButton from "../../component/pf-button";
 import { Radio } from "../../component/pf-radio/radio.container";
 import { useNavigate } from "react-router-dom";
 import { URLs } from "../../routes/urls";
-import { Link } from "react-router-dom"
-import { MdKeyboardArrowRight } from "../../assets/icons/icons"
+import { Link } from "react-router-dom";
+import { MdKeyboardArrowRight } from "../../assets/icons/icons";
 
 const paymentMethods = {
   btc: "BTC",
@@ -19,6 +19,10 @@ const paymentMethods = {
 
 const PFBulkOrder = () => {
   const nav = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const countries = [
     {
@@ -143,7 +147,7 @@ const PFBulkOrder = () => {
 
   return (
     <>
-          <section className="relative table w-full py-36 bg-[url('../../assets/images/company/aboutus.jpg')] bg-center bg-no-repeat bg-cover">
+      <section className="relative table w-full py-36 bg-[url('../../assets/images/company/aboutus.jpg')] bg-center bg-no-repeat bg-cover">
         <div className="absolute inset-0 bg-black opacity-75"></div>
         <div className="container relative">
           <div className="grid grid-cols-1 pb-8 text-center mt-10">

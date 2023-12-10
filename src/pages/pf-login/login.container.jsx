@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo_icon_64 from "../../assets/images/logo-icon-64.png";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -19,6 +19,10 @@ const LoginPage = () => {
   const [_, setCookie] = useCookies(["pfAuthToken"]);
   const { login } = useAuth();
   const [rememberMe, setRememberMe] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const validate = (values) => {
     const errors = {};
 

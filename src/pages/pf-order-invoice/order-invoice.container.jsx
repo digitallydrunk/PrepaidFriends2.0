@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo_dark from "../../assets/images/logo-dark.png";
 // import logo_light from "../../assets/images/logo-light.png";
@@ -8,6 +8,9 @@ import { URLs } from "../../routes/urls";
 import styles from "./order-invoice.module.css";
 
 const OrderInvoice = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <section className="relative my-2">
@@ -30,7 +33,6 @@ const OrderInvoice = () => {
                       />
                       <div className="flex mt-4">
                         <Link to="#" className="h-4 w-4 me-3 mt-1"></Link>
-                    
                       </div>
                     </div>
 

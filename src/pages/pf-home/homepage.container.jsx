@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { faqData } from "../../data/faq";
 import PFAccordion from "../../component/pf-accordion";
 import { featuresData } from "../../data/features";
@@ -38,6 +38,10 @@ const Homepage = () => {
   const handleEnd = () => {
     setResetCount(!resetCount);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <div>

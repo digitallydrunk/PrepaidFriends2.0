@@ -1,9 +1,12 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import { MdKeyboardArrowRight, FaArrowRight } from "../../assets/icons/icons"
+import { MdKeyboardArrowRight, FaArrowRight } from "../../assets/icons/icons";
 
 const PagePrivacy = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <section className="relative table w-full py-32 lg:py-40 bg-gray-50 dark:bg-slate-800">
@@ -128,7 +131,7 @@ const PagePrivacy = () => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export { PagePrivacy }
+export { PagePrivacy };

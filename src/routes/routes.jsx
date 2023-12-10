@@ -1,23 +1,24 @@
-import React from "react"
-import { createBrowserRouter } from "react-router-dom"
-import "../assets/libs/@mdi/font/css/materialdesignicons.min.css"
-import Homepage from "../pages/pf-home"
-import Sample from "../pages/sample"
-import Layout from "../component/layout"
-import { URLs } from "./urls"
-import LoginPage from "../pages/pf-login"
-import Contact from "../pages/pf-contact"
-import SingleOrder from "../pages/pf-single-order/singleorder.container"
-import BulkOrder from "../pages/pf-bulk-order"
-import OrderInvoice from "../pages/pf-order-invoice"
-import Payment from "../pages/pf-payment"
-import SignUp from "../pages/pf-signup"
-import CustomerDashboard from "../pages/pf-customer-dashboard"
-import HowItWorks from "../pages/pf-how-it-works"
-import ForgotPassword from "../pages/pf-forgot-password"
-import OrderConfirmation from "../pages/pf-order-confirmation"
-import PagePrivacy from "../pages/pf-policy"
-import PageTerms from "../pages/pf-terms"
+import React from "react";
+import { createBrowserRouter } from "react-router-dom";
+import "../assets/libs/@mdi/font/css/materialdesignicons.min.css";
+import Homepage from "../pages/pf-home";
+import Sample from "../pages/sample";
+import Layout from "../component/layout";
+import { URLs } from "./urls";
+import LoginPage from "../pages/pf-login";
+import Contact from "../pages/pf-contact";
+import SingleOrder from "../pages/pf-single-order/singleorder.container";
+import BulkOrder from "../pages/pf-bulk-order";
+import OrderInvoice from "../pages/pf-order-invoice";
+import Payment from "../pages/pf-payment";
+import SignUp from "../pages/pf-signup";
+import CustomerDashboard from "../pages/pf-customer-dashboard";
+import HowItWorks from "../pages/pf-how-it-works";
+import ForgotPassword from "../pages/pf-forgot-password";
+import OrderConfirmation from "../pages/pf-order-confirmation";
+import PagePrivacy from "../pages/pf-policy";
+import PageTerms from "../pages/pf-terms";
+import PageError from "../pages/special/pageError";
 
 const router = createBrowserRouter([
   {
@@ -84,8 +85,12 @@ const router = createBrowserRouter([
         path: URLs.TERMS_AND_CONDITIONS,
         element: <PageTerms />,
       },
+      {
+        path: "/*",
+        element: <PageError />,
+      },
     ],
   },
-])
+]);
 
-export default router
+export default router;
