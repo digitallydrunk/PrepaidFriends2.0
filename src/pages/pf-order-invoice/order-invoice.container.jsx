@@ -67,9 +67,10 @@ const OrderInvoice = () => {
           },
         }
       )
-      ?.then((res) =>
-        message?.success("Invoice has been sent to your email address")
-      )
+      ?.then((res) => {
+        message?.success("Invoice has been sent to your email address");
+        nav(URLs.ORDER_CONFIRMATION);
+      })
       ?.catch((err) => message?.error(err?.response?.data?.error))
       ?.finally(() => setIsSubmittingInvoice(false));
   };
