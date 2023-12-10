@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import image from "../../assets/images/client/05.jpg";
 import * as Icon from "react-feather";
+import "./style.css";
 import {
   FiPhone,
   FiEdit,
@@ -20,12 +21,16 @@ import { AuthContext } from "../../context/auth-context";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useAuth } from "../../hooks/useAuth";
+import ReactPaginate from "react-paginate";
+import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai"; // icons form react-icons
+import { IconContext } from "react-icons"; // for customizing icons
 const CustomerDashboard = () => {
   const [isOpenTab, setisOpen] = useState(0);
   const { user } = useContext(AuthContext);
   const [cookies, removeCookie] = useCookies(["pfAuthToken"]);
   const [isLoading, setIsLoading] = useState(false);
   const { logout } = useAuth();
+
   const nav = useNavigate();
 
   useEffect(() => {
@@ -33,23 +38,28 @@ const CustomerDashboard = () => {
   }, []);
   const handleTabClick = (index) => {
     if (index == 1) {
-      setIsLoading(true);
-      getIndividualData();
+      if (index != isOpenTab) {
+        setIsLoading(true);
+        getIndividualData();
+      }
     } else if (index == 2) {
-      setIsLoading(true);
-      getBulkOrders();
+      if (index != isOpenTab) {
+        setIsLoading(true);
+        getBulkOrders();
+      }
     }
     setisOpen(index);
   };
 
   const [isOpenAccordion, setIsOpenAccordion] = useState(false);
-  let [individualOrders, setIndividualOrders] = useState([]);
+  const [individualOrders, setIndividualOrders] = useState([]);
   const [bulkOrders, setBulkOrders] = useState([]);
 
   const toggleAccordion = () => {
     setIsOpenAccordion(!isOpenAccordion);
   };
   const getIndividualData = () => {
+    setPage(0);
     axios
       ?.get("/api/my-order-individual-api", {
         headers: {
@@ -62,6 +72,7 @@ const CustomerDashboard = () => {
   };
 
   const getBulkOrders = () => {
+    setBulkPage(0);
     axios
       ?.get("/api/get-order-bulk-api", {
         headers: {
@@ -72,6 +83,27 @@ const CustomerDashboard = () => {
       ?.catch((err) => console?.error(err))
       ?.finally(() => setIsLoading(false));
   };
+
+  const [page, setPage] = useState(0);
+  const n = 3;
+  const [filterData, setFilterData] = useState([]);
+  const [bulkPage, setBulkPage] = useState(0);
+
+  const [bulkFilterData, setBulkFilterData] = useState([]);
+  useEffect(() => {
+    setFilterData(
+      individualOrders.filter((item, index) => {
+        return index >= page * n && index < (page + 1) * n;
+      })
+    );
+  }, [page, individualOrders]);
+  useEffect(() => {
+    setBulkFilterData(
+      bulkOrders.filter((item, index) => {
+        return index >= bulkPage * n && index < (bulkPage + 1) * n;
+      })
+    );
+  }, [bulkPage, bulkOrders]);
 
   return (
     <>
@@ -211,8 +243,8 @@ const CustomerDashboard = () => {
                     <button
                       onClick={() => {
                         removeCookie("pfAuthToken", { path: "/" });
-                        nav("/");
                         logout();
+                        nav("/");
                       }}
                       className={`${
                         isOpenTab === 5
@@ -240,187 +272,235 @@ const CustomerDashboard = () => {
                 className="p-6 bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 rounded-md"
               >
                 {isOpenTab === 1 ? (
-                  <div id="order" role="tabpanel" aria-labelledby="order-tab">
-                    <div className="relative overflow-x-auto shadow dark:shadow-gray-800 rounded-md">
-                      <h1 className={styles.individualthead}>
-                        Individual Order
-                      </h1>
-                      <table className="w-full text-start text-slate-500 dark:text-slate-400">
-                        <thead className="text-sm uppercase bg-slate-50 dark:bg-slate-800">
-                          <tr className="text-start">
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Order Id
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Order Number
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Payment Method
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Sub Total
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Transaction Fee
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Order Total
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Order Status
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Date
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Actions
-                            </th>
-                          </tr>
-                        </thead>
-                        {isLoading ? (
-                          <h1>Loading...</h1>
-                        ) : (
-                          <tbody>
-                            {individualOrders?.map((item, idx) => {
-                              return (
-                                <tr
-                                  className="bg-white dark:bg-slate-900 text-start"
-                                  key={idx}
-                                >
-                                  <th
-                                    className="px-2 py-3 text-start"
-                                    scope="row"
+                  <>
+                    <div id="order" role="tabpanel" aria-labelledby="order-tab">
+                      <div className="relative overflow-x-auto shadow dark:shadow-gray-800 rounded-md">
+                        <h1 className={styles.individualthead}>
+                          Individual Order
+                        </h1>
+                        <table className="w-full text-start text-slate-500 dark:text-slate-400">
+                          <thead className="text-sm uppercase bg-slate-50 dark:bg-slate-800">
+                            <tr className="text-start">
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Order Id
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Order Number
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Payment Method
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Sub Total
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Transaction Fee
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Order Total
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Order Status
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Date
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Actions
+                              </th>
+                            </tr>
+                          </thead>
+                          {isLoading ? (
+                            <h1>Loading...</h1>
+                          ) : (
+                            <tbody>
+                              {filterData?.map((item, idx) => {
+                                return (
+                                  <tr
+                                    className="bg-white dark:bg-slate-900 text-start"
+                                    key={idx}
                                   >
-                                    {item?.id}
-                                  </th>
-                                  <td className="px-2 py-3 text-start">
-                                    {item?.order_number}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.payment_method}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_subtotal}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.transaction_fee}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_total}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_status}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_date}
-                                  </td>
+                                    <th
+                                      className="px-2 py-3 text-start"
+                                      scope="row"
+                                    >
+                                      {item?.id}
+                                    </th>
+                                    <td className="px-2 py-3 text-start">
+                                      {item?.order_number}
+                                    </td>
+                                    <td className="px-2 py-3 text-start ">
+                                      {item?.payment_method}
+                                    </td>
+                                    <td className="px-2 py-3 text-start ">
+                                      {item?.order_subtotal}
+                                    </td>
+                                    <td className="px-2 py-3 text-start ">
+                                      {item?.transaction_fee}
+                                    </td>
+                                    <td className="px-2 py-3 text-start ">
+                                      {item?.order_total}
+                                    </td>
+                                    <td className="px-2 py-3 text-start ">
+                                      {item?.order_status}
+                                    </td>
+                                    <td className="px-2 py-3 text-start ">
+                                      {item?.order_date}
+                                    </td>
 
-                                  <td className="px-2 py-3 text-start">
-                                    <Link className="text-indigo-600 flex items-center">
-                                      View{" "}
-                                      <FaArrowRight className="ms-2 text-[10px]" />
-                                    </Link>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        )}
-                      </table>
+                                    <td className="px-2 py-3 text-start">
+                                      <Link className="text-indigo-600 flex items-center">
+                                        View{" "}
+                                        <FaArrowRight className="ms-2 text-[10px]" />
+                                      </Link>
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          )}
+                        </table>
+                      </div>
                     </div>
-                  </div>
+                    <ReactPaginate
+                      containerClassName={"pagination"}
+                      pageClassName={"page-item"}
+                      activeClassName={"active"}
+                      onPageChange={(event) => setPage(event.selected)}
+                      pageCount={Math.ceil(individualOrders?.length / n)}
+                      breakLabel="..."
+                      previousLabel={
+                        <IconContext.Provider
+                          value={{ color: "#B8C1CC", size: "36px" }}
+                        >
+                          <AiFillLeftCircle />
+                        </IconContext.Provider>
+                      }
+                      nextLabel={
+                        <IconContext.Provider
+                          value={{ color: "#B8C1CC", size: "36px" }}
+                        >
+                          <AiFillRightCircle />
+                        </IconContext.Provider>
+                      }
+                    />
+                  </>
                 ) : (
                   ""
                 )}
 
                 {isOpenTab === 2 ? (
-                  <div id="order" role="tabpanel" aria-labelledby="order-tab">
-                    <div className="relative overflow-x-auto shadow dark:shadow-gray-800 rounded-md">
-                      <h1 className={styles.bulkthead}>Bulk Order</h1>
-                      <table className="w-full text-start text-slate-500 dark:text-slate-400">
-                        <thead className="text-sm uppercase bg-slate-50 dark:bg-slate-800">
-                          <tr className="text-start">
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Order Id
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Order Number
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Payment Method
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Sub Total
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Transaction Fee
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Order Total
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Order Status
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Date
-                            </th>
-                            <th scope="col" className="px-2 py-3 text-start">
-                              Actions
-                            </th>
-                          </tr>
-                        </thead>
-                        {isLoading ? (
-                          <h1>Loading...</h1>
-                        ) : (
-                          <tbody>
-                            {bulkOrders?.map((item, idx) => {
-                              return (
-                                <tr
-                                  className="bg-white dark:bg-slate-900 text-start"
-                                  key={idx}
-                                >
-                                  <th
-                                    className="px-2 py-3 text-start"
-                                    scope="row"
+                  <>
+                    <div id="order" role="tabpanel" aria-labelledby="order-tab">
+                      <div className="relative overflow-x-auto shadow dark:shadow-gray-800 rounded-md">
+                        <h1 className={styles.bulkthead}>Bulk Order</h1>
+                        <table className="w-full text-start text-slate-500 dark:text-slate-400">
+                          <thead className="text-sm uppercase bg-slate-50 dark:bg-slate-800">
+                            <tr className="text-start">
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Order Id
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Order Number
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Payment Method
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Sub Total
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Transaction Fee
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Order Total
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Order Status
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Date
+                              </th>
+                              <th scope="col" className="px-2 py-3 text-start">
+                                Actions
+                              </th>
+                            </tr>
+                          </thead>
+                          {isLoading ? (
+                            <h1>Loading...</h1>
+                          ) : (
+                            <tbody>
+                              {bulkFilterData?.map((item, idx) => {
+                                return (
+                                  <tr
+                                    className="bg-white dark:bg-slate-900 text-start"
+                                    key={idx}
                                   >
-                                    {item?.id}
-                                  </th>
-                                  <td className="px-2 py-3 text-start">
-                                    {item?.order_number}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.payment_method}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_subtotal}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.transaction_fee}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_total}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_status}
-                                  </td>
-                                  <td className="px-2 py-3 text-start ">
-                                    {item?.order_date}
-                                  </td>
+                                    <th
+                                      className="px-2 py-3 text-start"
+                                      scope="row"
+                                    >
+                                      {item?.id}
+                                    </th>
+                                    <td className="px-2 py-3 text-start">
+                                      {item?.order_number}
+                                    </td>
+                                    <td className="px-2 py-3 text-start ">
+                                      {item?.payment_method}
+                                    </td>
+                                    <td className="px-2 py-3 text-start ">
+                                      {item?.order_subtotal}
+                                    </td>
+                                    <td className="px-2 py-3 text-start ">
+                                      {item?.transaction_fee}
+                                    </td>
+                                    <td className="px-2 py-3 text-start ">
+                                      {item?.order_total}
+                                    </td>
+                                    <td className="px-2 py-3 text-start ">
+                                      {item?.order_status}
+                                    </td>
+                                    <td className="px-2 py-3 text-start ">
+                                      {item?.order_date}
+                                    </td>
 
-                                  <td className="px-2 py-3 text-start">
-                                    <Link className="text-indigo-600 flex items-center">
-                                      View{" "}
-                                      <FaArrowRight className="ms-2 text-[10px]" />
-                                    </Link>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        )}
-                      </table>
+                                    <td className="px-2 py-3 text-start">
+                                      <Link className="text-indigo-600 flex items-center">
+                                        View{" "}
+                                        <FaArrowRight className="ms-2 text-[10px]" />
+                                      </Link>
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          )}
+                        </table>
+                      </div>
                     </div>
-                  </div>
+                    <ReactPaginate
+                      containerClassName={"pagination-bulk"}
+                      pageClassName={"page-item-bulk"}
+                      activeClassName={"active_bulk"}
+                      onPageChange={(event) => setBulkPage(event.selected)}
+                      pageCount={Math.ceil(bulkOrders?.length / n)}
+                      breakLabel="..."
+                      previousLabel={
+                        <IconContext.Provider
+                          value={{ color: "#B8C1CC", size: "36px" }}
+                        >
+                          <AiFillLeftCircle />
+                        </IconContext.Provider>
+                      }
+                      nextLabel={
+                        <IconContext.Provider
+                          value={{ color: "#B8C1CC", size: "36px" }}
+                        >
+                          <AiFillRightCircle />
+                        </IconContext.Provider>
+                      }
+                    />
+                  </>
                 ) : (
                   ""
                 )}

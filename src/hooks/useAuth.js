@@ -11,7 +11,7 @@ const useAuth = () => {
     if (user) {
       addUser(JSON.parse(user));
     }
-  }, [addUser, getItem]);
+  }, []);
 
   const login = (user) => {
     addUser(user);
