@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo_dark from "../../assets/images/logo-dark.png";
 import dayjs from "dayjs";
@@ -75,6 +75,9 @@ const OrderInvoice = () => {
       ?.finally(() => setIsSubmittingInvoice(false));
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <section className="relative my-2">

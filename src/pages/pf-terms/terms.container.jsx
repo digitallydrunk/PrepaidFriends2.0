@@ -1,17 +1,20 @@
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import { MdKeyboardArrowRight, FaArrowRight } from "../../assets/icons/icons"
+import { MdKeyboardArrowRight, FaArrowRight } from "../../assets/icons/icons";
 
 const PageTerms = () => {
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(0);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const toggleAccordion = (index) => {
     if (activeIndex === index) {
-      setActiveIndex(0)
+      setActiveIndex(0);
     } else {
-      setActiveIndex(index)
+      setActiveIndex(index);
     }
-  }
+  };
   const accordionData = [
     {
       title:
@@ -36,7 +39,7 @@ const PageTerms = () => {
       content:
         "Prepaid Friends reserves the right to terminate or suspend any user's account at its discretion. Users also have the option to terminate their accounts by contacting customer support.",
     },
-  ]
+  ];
 
   return (
     <>
@@ -263,7 +266,7 @@ const PageTerms = () => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export { PageTerms }
+export { PageTerms };

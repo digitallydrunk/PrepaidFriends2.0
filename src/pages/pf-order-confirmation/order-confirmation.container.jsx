@@ -9,6 +9,9 @@ function OrderConfirmation() {
   const [countdown, setCountdown] = useState(20);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  useEffect(() => {
     if (isRedirecting) {
       const redirectionTimeout = setTimeout(() => {
         nav("/");

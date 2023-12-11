@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo_icon_64 from "../../assets/images/logo-icon-64.png";
 import { useFormik } from "formik";
@@ -13,6 +13,10 @@ import { message, notification } from "antd";
 const SignUp = () => {
   const [api, contextHolder] = notification.useNotification();
   const nav = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const formik = useFormik({
     initialValues: {
       firstName: "",

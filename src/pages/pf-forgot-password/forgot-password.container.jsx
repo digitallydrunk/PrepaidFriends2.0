@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import logo_icon_64 from "../../assets/images/logo-icon-64.png";
@@ -12,6 +12,10 @@ import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
   const nav = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const formik = useFormik({
     initialValues: {

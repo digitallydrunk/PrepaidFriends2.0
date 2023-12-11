@@ -1,5 +1,5 @@
 import PFAccordion from "../../component/pf-accordion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PFSelect from "../../component/select";
 import PFCheckbox from "../../component/checkbox";
 import PFInput from "../../component/input";
@@ -12,7 +12,7 @@ import Navbar from "../../component/navbar1";
 import Carousel from "../../component/pf-carousel";
 import { testimonialsData } from "../../data/testimonials";
 // import Payment from "../pf-payment";
-import ChangePassword from "../../component/pf-changepassword"
+import ChangePassword from "../../component/pf-changepassword";
 const faqData = [
   {
     key: "1",
@@ -66,9 +66,13 @@ const Sample = () => {
   const handleRadioChange = (e) => {
     setSelectedOption(e.target.value);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
-      <ChangePassword/>
+      <ChangePassword />
       <Navbar />
       <Carousel settings={carouselSettings}>
         {testimonialsData?.map((item, index) => (
