@@ -341,9 +341,9 @@ function Payment() {
                   {/* Replace with actual QR code */}
                   <QRCode value={data?.bitcon_address} size={180} />
                 </div>
-                <h6 className="font-bold">Payment Details</h6>
+                <h6 className="font-bold">Payment Details</h6><br/>
                 <h6 className="font-bold">Payment Unique Address</h6>
-                <h6 className="font-bold">{data?.bitcon_address}</h6>
+                <h6 className="font-bold">{data?.bitcon_address}</h6><br/>
                 <h6 className="font-bold">Amount to pay</h6>{" "}
                 <p className="text-sm font-bold text-green-600">
                   {data?.btc_amount} BTC
