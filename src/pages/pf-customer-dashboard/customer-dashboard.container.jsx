@@ -24,6 +24,7 @@ import { useAuth } from "../../hooks/useAuth";
 import ReactPaginate from "react-paginate";
 import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai"; // icons form react-icons
 import { IconContext } from "react-icons"; // for customizing icons
+import { ChangePassword } from "../../component/pf-changepassword/changepassword.container";
 const CustomerDashboard = () => {
   const [isOpenTab, setisOpen] = useState(0);
   const { user } = useContext(AuthContext);
@@ -58,6 +59,13 @@ const CustomerDashboard = () => {
   const toggleAccordion = () => {
     setIsOpenAccordion(!isOpenAccordion);
   };
+
+  useEffect(() => {
+    if (isOpenTab == 1 || isOpenTab == 2) {
+      return;
+    }
+    setIsOpenAccordion(false);
+  }, [isOpenTab]);
   const getIndividualData = () => {
     setPage(0);
     axios
@@ -184,13 +192,21 @@ const CustomerDashboard = () => {
                       {isOpenAccordion && (
                         <div className={styles.accordioncontent}>
                           <p
-                            className={styles.individual}
+                            className={
+                              isOpenTab == 1
+                                ? `${styles.individual}  ${styles.active_order}`
+                                : styles.individual
+                            }
                             onClick={() => handleTabClick(1)}
                           >
                             Individual Order
                           </p>
                           <p
-                            className={styles.bulk}
+                            className={
+                              isOpenTab == 2
+                                ? `${styles.bulk} ${styles.active_order}`
+                                : styles.bulk
+                            }
                             onClick={() => handleTabClick(2)}
                           >
                             Bulk Order
@@ -203,8 +219,9 @@ const CustomerDashboard = () => {
                   <li role="presentation">
                     {user && user?.customerName ? (
                       <button
+                        onClick={() => handleTabClick(5)}
                         className={`${
-                          isOpenTab === 4
+                          isOpenTab === 5
                             ? "text-white bg-indigo-600 hover:text-white"
                             : ""
                         } px-4 py-2 text-start font-semibold rounded-md w-full mt-3 hover:text-indigo-600 transition-all duration-500 ease-in-out flex items-center`}
@@ -247,7 +264,7 @@ const CustomerDashboard = () => {
                         nav("/");
                       }}
                       className={`${
-                        isOpenTab === 5
+                        isOpenTab === 6
                           ? "text-white bg-indigo-600 hover:text-white"
                           : ""
                       } px-4 py-2 text-start font-semibold rounded-md w-full mt-3 hover:text-indigo-600 transition-all duration-500 ease-in-out flex items-center`}
@@ -388,7 +405,6 @@ const CustomerDashboard = () => {
                 ) : (
                   ""
                 )}
-
                 {isOpenTab === 2 ? (
                   <>
                     <div id="order" role="tabpanel" aria-labelledby="order-tab">
@@ -504,7 +520,6 @@ const CustomerDashboard = () => {
                 ) : (
                   ""
                 )}
-
                 {isOpenTab === 3 ? (
                   <div
                     id="address"
@@ -582,7 +597,6 @@ const CustomerDashboard = () => {
                 ) : (
                   ""
                 )}
-
                 {isOpenTab === 4 ? (
                   <div
                     id="accountdetail"
@@ -792,7 +806,10 @@ const CustomerDashboard = () => {
                   </div>
                 ) : (
                   ""
-                )}
+                )}{" "}
+                {isOpenTab === 5 ? (
+                  <ChangePassword handleTabClick={handleTabClick} />
+                ) : null}
               </div>
             </div>
           </div>
