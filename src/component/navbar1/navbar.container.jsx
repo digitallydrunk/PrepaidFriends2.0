@@ -4,7 +4,7 @@ import logo_dark from "../../assets/images/logo-dark.png";
 // import logo_light from "../../assets/images/logo-light.png";
 import { AiOutlineUser, PiNoteDuotone } from "../../assets/icons/icons";
 import { URLs } from "../../routes/urls";
-import style from "./navbar.module.css";
+import styles from "./navbar.module.css";
 import { AuthContext } from "../../context/auth-context";
 const Navbar = () => {
   const nav = useNavigate();
@@ -87,6 +87,13 @@ const Navbar = () => {
     return location.pathname === path ? "active" : "";
   };
 
+  const isCheckBulk = (path) => {
+    return location.pathname === "/bulk-order" ? `${styles.blue_color}` : "";
+  };
+
+  const isCheckSingle = (path) => {
+    return location.pathname === "/single-order" ? `${styles.blue_color}` : "";
+  };
   const handleLoginCustomerClick = () => {
     setIsLoginMenu(false);
 
@@ -100,7 +107,7 @@ const Navbar = () => {
     >
       <div className="container relative">
         <Link className="logo" to="/">
-          <img src={logo_dark} className="inline-block dark:hidden" alt="" />
+          <img src={logo_dark} className="inline-block dark:hidden  " alt="" />
           {/* <img src={logo_light} className="hidden dark:inline-block" alt="" /> */}
         </Link>
 
@@ -182,9 +189,7 @@ const Navbar = () => {
               ref={dropdownRefOrder}
             >
               <p
-                className={`sub-menu-item ${isLinkActive(
-                  URLs.HOW_IT_WORKS
-                )} mt-6`}
+                className={`  mt-6`}
                 onClick={() => setOrders(!isOrders)}
                 data-dropdown-toggle="dropdown"
                 style={{ fontWeight: "700", cursor: "pointer" }}
@@ -206,7 +211,7 @@ const Navbar = () => {
                     >
                       <Link
                         to={URLs.SINGLE_ORDER}
-                        className={`sub-menu-item ${isLinkActive(
+                        className={`sub-menu-item ${isCheckSingle(
                           URLs.SINGLE_ORDER
                         )}`}
                       >
@@ -220,7 +225,7 @@ const Navbar = () => {
                     >
                       <Link
                         to={URLs.BULK_ORDER}
-                        className={`sub-menu-item ${isLinkActive(
+                        className={`sub-menu-item ${isCheckBulk(
                           URLs.BULK_ORDER
                         )}`}
                       >

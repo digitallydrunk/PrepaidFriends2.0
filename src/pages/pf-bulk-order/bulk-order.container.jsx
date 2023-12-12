@@ -908,6 +908,8 @@ const PFBulkOrder = () => {
                       <PFCheckbox
                         label="Agree terms & Conditions"
                         onClick={() => setTermsCheck(!termsCheck)}
+                        redirect={true}
+                        url={URLs.TERMS_AND_CONDITIONS}
                       />
                     </div>
                   </div>
